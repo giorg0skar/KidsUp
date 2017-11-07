@@ -14,7 +14,7 @@
 
 *  `Δράγαζης         Νικόλαος       03113162    ndragazis@outlook.com.gr`
 
-*  `Καράκος          Γεώργιος       03113204    karakosg@hotmail.com`
+*  `Καράκος          Γεώργιος       03113204    karakosg@hotmail.gr`
 
 *  `Καραμουσαδάκης   Μιχάλης        03113030    mike95gr@hotmail.com`
 
