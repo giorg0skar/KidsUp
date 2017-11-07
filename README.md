@@ -10,7 +10,7 @@
 
 *  `Αδάμης           Δημήτριος      03113114    dimitrisadamis1994@gmail.com`
 
-*  `Αθανασόπουλος    Γεώργιος      03113085    athanasopoulosgeorge95@gmail.com`
+*  `Αθανασόπουλος    Γεώργιος       03113085    athanasopoulosgeorge95@gmail.com`
 
 *  `Δράγαζης         Νικόλαος       03113162    ndragazis@outlook.com.gr`
 
