@@ -20,6 +20,6 @@
 
 *  `Πέτρου           Γεώργιος       03113145    tedroark7@gmail.com`
             			   												      
-*  `Σκουράς          Κωνσταντίνος   03113096    konst.skouras@gmail.com` 
+*  `Σκούρας          Κωνσταντίνος   03113096    konst.skouras@gmail.com` 
   
 
