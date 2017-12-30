@@ -14,6 +14,8 @@ create table Parent
      latitude float not null,
      longitude float not null,
      Points int,
+     online bit(1) not null,
+     activated bit(1) not null,
      primary key(ParEmail),
      check ((PostalCode between 0 and 99999) and PhoneNumber > 1999999999)
 );
@@ -31,6 +33,8 @@ create table Provider
      VAT bigint unsigned not null,
      CompanyDescription text,
      IBAN bigint unsigned not null,
+     online bit(1) not null,
+     activated bit(1) not null,
      primary key(ProvEmail),
      check ((PostalCode between 0 and 99999) and PhoneNumber > 1999999999)
 );
@@ -46,6 +50,7 @@ create table Admin
      streetNumber smallint unsigned not null,
      PostalCode int,
      PhoneNumber bigint unsigned not null,
+     online bit(1) not null,
      primary key(email),
      check ((PostalCode between 0 and 99999) and PhoneNumber > 1999999999)    
 );
@@ -59,9 +64,8 @@ create table Activity
     actDate datetime not null,
     MinAge smallint unsigned not null,
     MaxAge smallint unsigned not null,
-    ticketsAtomic int unsigned,
-    ticketsTwoPersons int unsigned,
-    ticketsFourPersons int unsigned,
+    maxTickets int unsigned not null,
+    availableTickets int unsigned not null,
     town VARCHAR(20) not null,
     streetName VARCHAR(20) not null,
     streetNumber smallint unsigned not null,
@@ -83,9 +87,7 @@ create table Sell
     ParEmail VARCHAR(50) not null,
     ActID bigint unsigned not null,
     SellDate datetime not null,
-    ticketsAtomic int unsigned,
-    ticketsTwoPersons int unsigned,
-    ticketsFourPersons int unsigned,
+    numberofTickets int unsigned not null,
     totalCost int unsigned not null,
     primary key(SellID),
     foreign key(ParEmail) references Parent(ParEmail),
