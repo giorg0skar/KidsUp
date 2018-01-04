@@ -22,6 +22,52 @@
   </head>
 
 <body>
+
+	<!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+      <div class="container">
+        <a class="navbar-brand" href="index.html">KidsUp</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="index.html">Αρχική
+                <span class="sr-only">(current)</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#about">Σχετικά με εμάς</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#services">Υπηρεσίες</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#contact">Επικοινωνία</a>
+            </li>
+            <li class="nav-item dropdown">
+			  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownSignUp" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Σύνδεση ως</a>
+			  <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownSignUp">
+                  <a class="dropdown-item" href="parent-signin.html">Γονέας</a>
+                  <a class="dropdown-item" href="provider-signin.html">Πάροχος</a>
+              </div>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownSignUp" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Εγγραφή ως
+              </a>
+              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownSignUp">
+                  <a class="dropdown-item" href="parent-signup.html">Γονέας</a>
+                  <a class="dropdown-item" href="provider-signup.html">Πάροχος</a>
+              </div>
+            </li>            
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+
     <div class="container">
         <div class="row mb-3">
             <div class="col-lg-12 well">
@@ -31,46 +77,46 @@
         <div class="row">
         <div class="col-lg-12 well">
         <div class="row">
-                    <div class="row">
-                    <form>
+                <div class="row">
+                    <form action="parent-signin.html">
                         <div class="col-sm-12">
                             <div class="row">
                                 <div class="col-sm-6 form-group">
-                                    <input type="text" placeholder="Όνομα" class="form-control">
+                                    <input type="text" placeholder="Όνομα" class="form-control" required autofocus>
                                 </div>
                                 <div class="col-sm-6 form-group">
-                                    <input type="text" placeholder="Επώνυμο" class="form-control">
+                                    <input type="text" placeholder="Επώνυμο" class="form-control" required >
                                 </div>
                             </div>
                             <div class="row">					
                                 <div class="col-sm-6 form-group">
-                                    <input type="text" placeholder="Οδός κατοικίας" class="form-control">
+                                    <input type="text" placeholder="Οδός κατοικίας" class="form-control" required >
                                 </div>	
                                 <div class="col-sm-6 form-group">
-                                    <input type="text" placeholder="Αριθμός οδού κατοικίας" class="form-control">
+                                    <input type="number" min="1" placeholder="Αριθμός οδού κατοικίας" class="form-control" required >
                                 </div>
                             </div>
                             <div class="row">    	    
                                 <div class="col-sm-6 form-group">
-                                    <input type="text" placeholder="Πόλη κατοικίας" class="form-control">
+                                    <input type="text" placeholder="Πόλη κατοικίας" class="form-control" required >
                                 </div>			
                                 <div class="col-sm-6 form-group">
-                                        <input type="text" placeholder="Ταχυδρομικός κώδικας" class="form-control">
+                                        <input type="number" min="10000"placeholder="Ταχυδρομικός κώδικας" class="form-control" required  >
                                 </div>                                			                                    
                             </div>
                         <div class="form-group">
-                            <input type="text" placeholder="Τηλέφωνο" class="form-control">
+                            <input type="number" min="100000000"placeholder="Τηλέφωνο" class="form-control" required >
                         </div>		
                         <div class="form-group">
-                            <input type="text" placeholder="Email" class="form-control">
+                            <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required >
                         </div>	
                         <div class="form-group">
-                            <input type="password" placeholder="Password" class="form-control">
+                            <input type="password" placeholder="Password" class="form-control" required >
                         </div>
-                        <button type="button" class="btn btn-sm btn-info">Υποβολή Δήλωσης</button>					
+							<input type="submit" class="btn btn-sm btn-info" value="Υποβολή Δήλωσης" ></input>				
                         </div>
                     </form> 
-                    </div>
+                </div>
         </div>
         </div>
         </div>
@@ -85,7 +131,7 @@
               <p class="m-0 text-center text-white">Copyright &copy; KidsUp 2017</p>
             </div>
             <!-- /.container -->
-          </footer>
+	</footer>
 
     <!-- Bootstrap core JavaScript -->
     <script src="vendor/jquery/jquery.min.js"></script>
