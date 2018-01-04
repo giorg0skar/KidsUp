@@ -20,7 +20,37 @@
     <link href="css/eventCss.css" rel="stylesheet">
 
   </head>
-
+<style type="text/css">
+  .container.my-container {
+    margin-top: 40px;
+  }
+  .container.footer {
+    color: #00EFB7;
+  }
+  .py-5.custom{
+    position: fixed;
+    /*position: absolute;*/
+    /*position: relative;*/
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    clear: both;
+    }
+    .pt-5,.py-5{
+    padding-top:1rem!important
+    }
+    .pr-5,.px-5{
+    padding-right:0rem!important
+    }
+    .pb-5,.py-5{
+    padding-bottom:1rem!important
+    }
+    .pl-5,.px-5{
+    padding-left:0rem!important
+    }
+</style>
   <body>
 
     <!-- Navigation -->
@@ -94,17 +124,14 @@
     
 
     <!-- Footer -->
-    <footer class="py-5 bg-dark" >
-      <div class="container" >         
-          <address class="text-white">
-              <b>Team 42</b><br>
-              SoftEng Project 2017<br>
-              NTUA<br>
-          </address>
-        <p class="m-0 text-center text-white">Copyright &copy; KidsUp 2017</p>
-      </div>
-      <!-- /.container -->
-    </footer>
+    <footer class="py-5 bg-dark custom">
+    <div class="footer container">
+        <b>Team 42</b> - 
+        SoftEng Project 2017 - 
+        NTUA
+    <p class="m-0 text-center text-white">Copyright &copy; KidsUp 2017</p>
+    </div>
+  </footer>
 
     <!-- Bootstrap core JavaScript -->
     <script src="vendor/jquery/jquery.min.js"></script>
