@@ -5,7 +5,7 @@
  */
 
 body {
-  padding-top: 54px;
+  padding-top: 80px;
   font-family: 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif; }
   
   h1,
@@ -20,7 +20,7 @@ body {
 
 @media (min-width: 992px) {
   body {
-    padding-top: 56px;
+    padding-top: 90px;
   }
 }
 
@@ -32,7 +32,7 @@ header.masthead {
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
-  padding-top: 8rem;
+  padding-top: 3rem;
   padding-bottom: 8rem; 
   height: auto;
 }
@@ -52,7 +52,8 @@ header.masthead {
       padding-bottom: 12rem; }
       header.masthead h1 {
         font-size: 3rem; } }
-.container.my-container {
+
+		.container.my-container {
     margin-top: 40px;
   }
   .container.footer {
@@ -82,7 +83,10 @@ header.masthead {
     padding-left:0rem!important
     }
 footer.footer {
-  padding-top: 4rem;
-  padding-bottom: 4rem; 
+	position: absolute;
+	bottom:0px;
+  padding-top: 0px;
+  padding-bottom: 0px;
+	
 }
         

@@ -3,10 +3,17 @@
  * Copyright 2013-2017 Start Bootstrap
  * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-shop-homepage/blob/master/LICENSE)
  */
-
+html{
+  overflow-x: scroll;
+  overflow-y: scroll;
+}
 body {
+  overflow-y: scroll;
+  overflow-x: scroll;
   padding-top: 54px;
-  font-family: 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+  font-family: 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  margin-bottom: 150px;
+}
   
   h1,
   h2,
@@ -52,6 +59,7 @@ header.masthead {
       padding-bottom: 12rem; }
       header.masthead h1 {
         font-size: 3rem; } }
+
 .container.my-container {
     margin-top: 40px;
   }
@@ -83,6 +91,5 @@ header.masthead {
     }
 footer.footer {
   padding-top: 4rem;
-  padding-bottom: 4rem; 
+  padding-bottom: 4rem;
 }
-        
