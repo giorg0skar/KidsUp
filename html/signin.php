@@ -7,13 +7,13 @@
     <meta name="author" content="">
 
     <title>Σύνδεση</title>
-    <link rel="shortcut icon" type="image" href="./img/favicon.ico"/>
+    <link rel="shortcut icon" type="image" href="../assets/img/favicon.ico"/>
 
     <!-- Bootstrap core CSS -->
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="./css/signin.css" rel="stylesheet">
+    <link href="../assets/css/signin.css" rel="stylesheet">
   </head>
 
   <body>

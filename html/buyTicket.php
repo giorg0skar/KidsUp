@@ -9,11 +9,11 @@
     <meta name="author" content="">
 
     <title>KidsUp</title>
-    <link rel="shortcut icon" type="image" href="./img/favicon.ico"/>
+    <link rel="shortcut icon" type="image" href="../assets/img/favicon.ico"/>
 
     <!-- Bootstrap core CSS -->
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="../assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../assets/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
 
     <!-- Custom styles for this template -->
@@ -23,7 +23,7 @@
         font-family: 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif;
       }
     </style> -->
-    <link href="css/TicketCSS.css" rel="stylesheet">
+    <link href="../assets/css/TicketCSS.css" rel="stylesheet">
 
   </head>
 
@@ -118,8 +118,8 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.min.js"></script>
     <!-- Bootstrap core JavaScript -->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../assets/jquery/jquery.min.js"></script>
+    <script src="../assets/bootstrap/js/bootstrap.bundle.min.js"></script>
 
   </body>
 
