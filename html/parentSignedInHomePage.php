@@ -14,30 +14,26 @@
     <!-- Bootstrap core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    
+
 
     <!-- Custom styles for this template -->
     <link href="css/homepage.css" rel="stylesheet">
 
   </head>
 
-  
-  
-  
-  
   <body>
 
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
       <div class="container">
-        <a class="navbar-brand" href="index.html">KidsUp</a>
+        <a class="navbar-brand" href="index.php">KidsUp</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav ml-auto">
             <li class="nav-item active">
-              <a class="nav-link" href="index.html">Αρχική
+              <a class="nav-link" href="index.php">Αρχική
                 <span class="sr-only">(current)</span>
               </a>
             </li>
@@ -50,22 +46,12 @@
             <li class="nav-item">
               <a class="nav-link" href="#contact">Επικοινωνία</a>
             </li>
-            <li class="nav-item dropdown">
-			  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownSignUp" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Σύνδεση ως</a>
-			  <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownSignUp">
-                  <a class="dropdown-item" href="parent-signin.html">Γονέας</a>
-                  <a class="dropdown-item" href="provider-signin.html">Πάροχος</a>
-              </div>
+            <li class="nav-item">
+              <a class="nav-link" href="index.php">Έξοδος</a>
             </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownSignUp" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Εγγραφή ως
-              </a>
-              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownSignUp">
-                  <a class="dropdown-item" href="parent-signup.html">Γονέας</a>
-                  <a class="dropdown-item" href="provider-signup.html">Πάροχος</a>
-              </div>
-            </li>            
+			<li class="nav-item">
+				<a class="nav-link" href="parentProfile.php">Όνομα Επώνυμο<br>Πόντοι:</a>
+            </li>
           </ul>
         </div>
       </div>
@@ -86,7 +72,7 @@
                 <div class="form-row">
                   <div class="col-12 col-md-9 mb-2 mb-md-0" style="display: flex;flex-direction:row">
                     <input  type="search" class="form-control form-control-md" placeholder="Γράψτε τον όρο αναζήτησης...">
-					<input  type="search" class="form-control form-control-md" placeholder="Περιοχή">
+
                   </div>
                   <div class="col-12 col-md-3">
                     <button type="submit" class="btn btn-block btn-md btn-primary">Αναζήτηση</button>
@@ -107,7 +93,7 @@
                 <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
                 <div class="card-body">
                   <h4 class="card-title">
-                    <a href="#">Item One</a>
+                    <a href="eventClicked.php">Item One</a>
                   </h4>
                   <h5>$24.99</h5>
                   <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!</p>
@@ -213,8 +199,8 @@
     <!-- Footer -->
     <footer class="py-5 bg-dark custom">
     <div class="footer container">
-        <b>Team 42</b> - 
-        SoftEng Project 2017 - 
+        <b>Team 42</b> -
+        SoftEng Project 2017 -
         NTUA
     <p class="m-0 text-center text-white">Copyright &copy; KidsUp 2017</p>
     </div>

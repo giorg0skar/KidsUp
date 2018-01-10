@@ -14,7 +14,7 @@
   <!-- Bootstrap core CSS -->
   <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <link href="css/font-awesome.min.css" rel="stylesheet" type="text/css">
-  
+
 
   <!-- Custom styles for this template -->
   <link href="css/activity.css" rel="stylesheet">
@@ -26,14 +26,14 @@
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
-    <a class="navbar-brand" href="index.html">KidsUp</a>
+    <a class="navbar-brand" href="index.php">KidsUp</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarResponsive">
       <ul class="navbar-nav ml-auto">
       <li class="nav-item active">
-        <a class="nav-link" href="index.html">Αρχική
+        <a class="nav-link" href="index.php">Αρχική
         <span class="sr-only">(current)</span>
         </a>
       </li>
@@ -47,11 +47,11 @@
         <a class="nav-link" href="#contact">Επικοινωνία</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link"  href="index.html">Έξοδος</a>
+        <a class="nav-link"  href="index.php">Έξοδος</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="parentProfile.html">Όνομα παρόχου ή εταιρείας</a>
-      </li>            
+        <a class="nav-link" href="parentProfile.php">Όνομα παρόχου ή εταιρείας</a>
+      </li>
       </ul>
     </div>
     </div>
@@ -64,12 +64,12 @@
     <div class="row mb-4">
       <div class="col-lg-12 well ">
         <h1 align=left>Φόρμα Εισαγωγής Δραστηριότητας</h1>
-      </div>    
+      </div>
     </div>
     <div class="row">
     <div class="col-lg-12 well">
           <div class="row">
-          <form action="parentProfile.html">
+          <form action="parentProfile.php">
             <div class="col-sm-12">
               <div class="form-group">
                   <input type="text" placeholder="Τίτλος Δραστηριότητας" class="form-control" required>
@@ -84,30 +84,30 @@
                   <option>Άλλο</option>
                   </select>
               </div>
-              <div class="row">      
+              <div class="row">
                 <div class="col-sm-5 form-group">
                   <input type="text" placeholder="Πόλη Δραστηριότητας" class="form-control" required="true">
-                </div>              
+                </div>
                 <div class="col-sm-4 form-group">
                   <input type="text" placeholder="Οδός Δραστηριότητας" class="form-control" required>
-                </div>  
+                </div>
                 <div class="col-sm-3 form-group">
                   <input type="number" min = "1" placeholder="Αριθμός οδού " class="form-control" required>
                 </div>
               </div>
 
-              <div class="row">   
-                &nbsp;&nbsp;&nbsp;   
+              <div class="row">
+                &nbsp;&nbsp;&nbsp;
                 <label for="age1">Ηλικία Από:</label>
                 <div class="col-sm-4 form-group">
                   <input type="text" type="number" min = "1" id="age1" placeholder="Ελάχιστη" class="form-control" required="true">
-                </div>     
-                <label for="age2">Έως:</label>         
+                </div>
+                <label for="age2">Έως:</label>
                 <div class="col-sm-4 form-group">
                   <input type="text" type="number" max = "18" id="age2" placeholder="Μέγιστη" class="form-control" required>
-                </div>  
-              </div>    
-              
+                </div>
+              </div>
+
               <div class="row">
                   &nbsp;&nbsp;&nbsp;
                   <label for="example-date-input" class="col-xs-3 control-label">Date:</label>
@@ -126,7 +126,7 @@
 					<div id="dv1" class="col-xs-3">
 						&nbsp;
 						&nbsp;
-						Price: 
+						Price:
 						<input type="number" step="any" min = "1" id="txtPassportNumber" required/>Πόντοι
 					</div>
 					<div id="dv1" class="col-xs-3">
@@ -137,7 +137,7 @@
 					</div>
 				</div>
             </div>
-			
+
             <div class="form-group">
 				<label for="exampleFormControlFile1">Φωτογραφία Δραστηριότητας:</label>
 				<input type="file" class="form-control-file" id="exampleFormControlFile1" required>
@@ -146,9 +146,9 @@
                <label for="exampleFormControlTextarea1">Περιγραφή</label>
                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" required></textarea>
             </div>
-				<input type="submit" class="btn btn-sm btn-info" value="Υποβολή Δήλωσης" ></input>	                
+				<input type="submit" class="btn btn-sm btn-info" value="Υποβολή Δήλωσης" ></input>
             </div>
-          </form> 
+          </form>
           </div>
     </div>
     </div>
@@ -157,8 +157,8 @@
     <!-- Footer -->
   <footer class="custom py-5 fixed-bottom bg-dark">
     <div class="footer container">
-        <b>Team 42</b> - 
-        SoftEng Project 2017 - 
+        <b>Team 42</b> -
+        SoftEng Project 2017 -
         NTUA
     <p class="m-0 text-center text-white">Copyright &copy; KidsUp 2017</p>
     </div>

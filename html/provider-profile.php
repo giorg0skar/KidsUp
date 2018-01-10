@@ -21,31 +21,31 @@
         <div class="sidebar" data-image="../assets/img/sidebar-5.jpg" data-color="black">
             <div class="sidebar-wrapper">
                 <div class="logo">
-                    <a href="./index.html" class="simple-text">
+                    <a href="./index.php" class="simple-text">
                         KidsUp
                     </a>
                 </div>
                 <ul class="nav">
                     <li>
-                        <a class="nav-link" href="./provider-dashboard.html">
+                        <a class="nav-link" href="./provider-dashboard.php">
                             <i class="ti-blackboard"></i>
                             <p>Διαχείριση</p>
                         </a>
                     </li>
                     <li class="nav-item active">
-                        <a class="nav-link" href="./provider-profile.html">
+                        <a class="nav-link" href="./provider-profile.php">
                             <i class="ti-user"></i>
                             <p>Προφίλ</p>
                         </a>
                     </li>
                     <li>
-                        <a class="nav-link" href="./activities.html">
+                        <a class="nav-link" href="#activities">
                             <i class="ti-view-list-alt"></i>
                             <p>Δραστηριότητες</p>
                         </a>
                     </li>
                     <li>
-                        <a class="nav-link" href="./statistics.html">
+                        <a class="nav-link" href="#statistics">
                             <i class="ti-panel"></i>
                             <p>Στατιστικά</p>
                         </a>
@@ -228,7 +228,7 @@
 
                         </ul>
                         <p class="copyright text-center">
-                            Copyright &copy; <script>document.write(new Date().getFullYear())</script>, made with <i class="fa fa-heart heart"></i> by <a href="./index.html">Team42</a>
+                            Copyright &copy; <script>document.write(new Date().getFullYear())</script>, made with <i class="fa fa-heart heart"></i> by <a href="./index.php">Team42</a>
                         </p>
                     </nav>
                 </div>

@@ -21,14 +21,14 @@
 	<!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
       <div class="container">
-        <a class="navbar-brand" href="index.html">KidsUp</a>
+        <a class="navbar-brand" href="index.php">KidsUp</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav ml-auto">
             <li class="nav-item active">
-              <a class="nav-link" href="index.html">Αρχική
+              <a class="nav-link" href="index.php">Αρχική
                 <span class="sr-only">(current)</span>
               </a>
             </li>
@@ -44,8 +44,8 @@
             <li class="nav-item dropdown">
 			  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownSignUp" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Σύνδεση ως</a>
 			  <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownSignUp">
-                  <a class="dropdown-item" href="parent-signin.html">Γονέας</a>
-                  <a class="dropdown-item" href="provider-signin.html">Πάροχος</a>
+                  <a class="dropdown-item" href="parent-signin.php">Γονέας</a>
+                  <a class="dropdown-item" href="provider-signin.php">Πάροχος</a>
               </div>
             </li>
             <li class="nav-item dropdown">
@@ -53,15 +53,16 @@
                 Εγγραφή ως
               </a>
               <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownSignUp">
-                  <a class="dropdown-item" href="parent-signup.html">Γονέας</a>
-                  <a class="dropdown-item" href="provider-signup.html">Πάροχος</a>
+                  <a class="dropdown-item" href="parent-signup.php">Γονέας</a>
+                  <a class="dropdown-item" href="provider-signup.php">Πάροχος</a>
               </div>
-            </li>            
+            </li>
           </ul>
         </div>
       </div>
     </nav>
-  
+
+
     <div class="container">
 
       <form class="form-signin">
@@ -73,6 +74,7 @@
         <button class="btn btn-lg btn-primary btn-block" type="submit">Σύνδεση</button>
       </form>
 
-    </div> <!-- /container -->
+    </div>
+	<!-- /container -->
   </body>
 </html>
