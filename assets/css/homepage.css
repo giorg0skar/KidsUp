@@ -52,35 +52,7 @@ header.masthead {
       padding-bottom: 12rem; }
       header.masthead h1 {
         font-size: 3rem; } }
-.container.my-container {
-    margin-top: 40px;
-  }
-  .container.footer {
-    color: #00EFB7;
-  }
-  .py-5.custom{
-    /*position: fixed;*/
-    /*position: absolute;*/
-    /*position: relative;*/
-    right: 0;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    text-align: center;
-    clear: both;
-    }
-    .pt-5,.py-5{
-    padding-top:1rem!important
-    }
-    .pr-5,.px-5{
-    padding-right:0rem!important
-    }
-    .pb-5,.py-5{
-    padding-bottom:1rem!important
-    }
-    .pl-5,.px-5{
-    padding-left:0rem!important
-    }
+
 footer.footer {
   padding-top: 4rem;
   padding-bottom: 4rem; 
