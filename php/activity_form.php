@@ -9,7 +9,7 @@
   <meta name="author" content="">
 
   <title>Νέα Δραστηριότητα</title>
-  <link rel="shortcut icon" type="image" href="../assets/img/favicon.ico"/>
+  <link rel="shortcut icon" type="image" href="../favicon.ico"/>
 
   <!-- Bootstrap core CSS -->
   <link href="../assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -58,6 +58,76 @@
   </nav>
 
 
+<div class="container">
+		<div class="row mb-3">
+            <div class="col-lg-12 well">
+				<?php
+				//=$_SESSION['provider_company_name']; 
+				header('Content-type: text/html; charset=UTF-8');
+				mb_internal_encoding('UTF-8');
+				mb_http_input("utf-8");
+				if($_SERVER["REQUEST_METHOD"] == "POST"){
+					$flag=0;
+					
+					$ProvEmail = "haldirakos@gmail.com"; // $_SESSION['provider_email'];
+					$actName = trim($_POST['actName']);
+					$actType = trim($_POST['actType']);
+					$actDate = trim($_POST['actDate']);
+					$actTime = trim($_POST['actTime']);
+					$price = trim($_POST['price']);
+					$MinAge = trim($_POST['MinAge']);
+					$MaxAge = trim($_POST['MaxAge']);
+					$maxTickets = trim($_POST['maxTickets']);
+					$availableTickets = $maxTickets;
+					$town = trim($_POST['town']);
+					$streetName = trim($_POST['streetName']);
+					$streetNumber = trim($_POST['streetNumber']);
+					$PostalCode = trim($_POST['PostalCode']);
+					$PhoneNumber = trim($_POST['PhoneNumber']);
+					$actDescription = trim($_POST['actDescription']);
+					$pictureURL = trim($_POST['pictureURL']);
+					$visits = 0;
+					
+					$address = $streetName . ' ' .$streetNumber .' , ' .$PostalCode .' , ' .$town;
+					$url='https://maps.google.com/maps/api/geocode/json?address='.urlencode($address).'&key=AIzaSyBsLUCKMjlmcDrvL6IXYlaHez6AUb01O8U&sensor=false';
+					$geocode = file_get_contents($url);
+					$output= json_decode($geocode , true);
+					$latitude = $output['results'][0]['geometry']['location']['lat'];
+					$longitude = $output['results'][0]['geometry']['location']['lng'];
+					
+					if( $streetNumber<=0 || $PostalCode<=9999 || $PostalCode>=100000 || $PhoneNumber<=0 || $PhoneNumber>=10000000000 || $MinAge>$MaxAge) // kialloi elegxoi
+						$flag=1;
+						if ( $flag==0){
+							require_once('./mysqli_connect.php');
+							$query = "INSERT INTO activity( ActID,ProvEmail,actName , actType , actDate , actTime , price, MinAge , MaxAge , maxTickets , availableTickets ,town, streetName , streetNumber , PostalCode , PhoneNumber, latitude , longitude , actDescription, pictureURL , visits) VALUES ( NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+							$stmt = mysqli_prepare($dbc, $query);
+							mysqli_stmt_bind_param($stmt, "sssssiiiiissiiiddssi", $ProvEmail, $actName, $actType , $actDate , $actTime , $price , $MinAge, $MaxAge, $maxTickets, $availableTickets, $town, $streetName , $streetNumber , $PostalCode , $PhoneNumber , $latitude , $longitude , $actDescription , $pictureURL , $visits);
+							mysqli_stmt_execute($stmt);
+							$affected_rows = mysqli_stmt_affected_rows($stmt);
+							if($affected_rows == 1){
+								echo '<h1>Επιτυχής δημιουργία δραστηριότητας  !</h1>';
+								mysqli_stmt_close($stmt);
+								mysqli_close($dbc); 
+								header("location: provider-profile.php");	
+							} else {
+								echo 'Το email αυτό ήδη χρησιμοποιείται! Παρακαλώ διαλέξτε ένα άλλο<br/>';
+								mysqli_stmt_close($stmt);
+								mysqli_close($dbc);
+							}
+						}
+						else {
+							echo '<h3>Remember:</h3> Ο ταχυδρομικός κώδικας είναι ένας 5ψήφιος αριθμός<br/>
+											Ο αριθμός τηλεφώνου είναι ένας 10ψήφιος αριθμός<br/>
+											Η ελάχιστη ηλικία παιδιών στην οποία απευθύνεται η δραστηριότητα πρέπει να είναι μικρότερη από την μέγιστη ηλικία <br/>
+											
+											';
+						}
+					 
+				}
+				//=$_SESSION['provider_email'];
+?>
+  
+  
 
 
  <div class="my-container container">
@@ -69,54 +139,54 @@
     <div class="row">
     <div class="col-lg-12 well">
           <div class="row">
-          <form action="parentProfile.php">
+          <form action="activity_form.php" method="post">
             <div class="col-sm-12">
               <div class="form-group">
-                  <input type="text" placeholder="Τίτλος Δραστηριότητας" class="form-control" required>
+                  <input type="text" name="actName" placeholder="Τίτλος Δραστηριότητας" class="form-control" required>
               </div>
               <div class="form-group">
-                  <label for="exampleFormControlSelect1">Είδος Δραστηριότητας:</label>
-                  <select class="form-control" id="exampleFormControlSelect1">
-                  <option selected="">Μουσική</option>
-                  <option>Άθλημα</option>
-                  <option>Θέατρο</option>
-                  <option>Παιδικό Πάρτυ</option>
-                  <option>Άλλο</option>
-                  </select>
+					<input type="text" name="actType" placeholder="Τύπος Δραστηριότητας" class="form-control" required>
               </div>
               <div class="row">
-                <div class="col-sm-5 form-group">
-                  <input type="text" placeholder="Πόλη Δραστηριότητας" class="form-control" required="true">
+                <div class="col-sm-6 form-group">
+                  <input type="text" name="streetName" placeholder="Οδός Δραστηριότητας" class="form-control" required>
                 </div>
-                <div class="col-sm-4 form-group">
-                  <input type="text" placeholder="Οδός Δραστηριότητας" class="form-control" required>
-                </div>
-                <div class="col-sm-3 form-group">
-                  <input type="number" min = "1" placeholder="Αριθμός οδού " class="form-control" required>
+                <div class="col-sm-6 form-group">
+                  <input type="number" name="streetNumber"  min = "1" placeholder="Αριθμός οδού " class="form-control" required>
                 </div>
               </div>
-
+			<div class="row">
+				<div class="col-sm-6 form-group">
+                  <input type="text" name="town" placeholder="Πόλη Δραστηριότητας" class="form-control" required="true">
+                </div>
+				<div class="col-sm-6 form-group">
+					<input type="text" name="PostalCode" placeholder="Ταχυδρομικός Κώδικας" class="form-control" required="true">
+				</div>
+			</div>
+			<div class="form-group">
+                  <input type="number" min="1000000000"name="PhoneNumber" placeholder="Τηλέφωνο Επικοινωνίας" class="form-control" required>
+              </div>
               <div class="row">
                 &nbsp;&nbsp;&nbsp;
                 <label for="age1">Ηλικία Από:</label>
                 <div class="col-sm-4 form-group">
-                  <input type="text" type="number" min = "1" id="age1" placeholder="Ελάχιστη" class="form-control" required="true">
+                  <input type="text" name="MinAge" type="number" min = "1" id="age1" placeholder="Ελάχιστη" class="form-control" required="true">
                 </div>
                 <label for="age2">Έως:</label>
                 <div class="col-sm-4 form-group">
-                  <input type="text" type="number" max = "18" id="age2" placeholder="Μέγιστη" class="form-control" required>
+                  <input type="text" name="MaxAge"type="number" min="1" max = "18" id="age2" placeholder="Μέγιστη" class="form-control" required>
                 </div>
               </div>
 
               <div class="row">
                   &nbsp;&nbsp;&nbsp;
-                  <label for="example-date-input" class="col-xs-3 control-label">Date:</label>
+                  <label for="example-date-input" class="col-xs-6 control-label">Date:</label>
                   <div class="col-sm-4">
-                    <input class="form-control" type="date" value="2017-08-19" id="example-date-input">
+                    <input class="form-control" name="actDate" type="date" value="2017-08-19" id="example-date-input">
                     </div>
-                  <label for="example-time-input" class="col-xs-3 control-label">Time:</label>
+                  <label for="example-time-input"  class="col-xs-6 control-label">Time:</label>
                   <div class="col-sm-4">
-                    <input class="form-control" type="time" value="13:45:00" id="example-time-input">
+                    <input class="form-control" name="actTime" type="time" value="13:45:00" id="example-time-input">
                   </div>
               </div>
               <br>
@@ -126,25 +196,25 @@
 					<div id="dv1" class="col-xs-3">
 						&nbsp;
 						&nbsp;
-						Price:
-						<input type="number" step="any" min = "1" id="txtPassportNumber" required/>Πόντοι
+						Τιμή:
+						<input type="number" name="price" step="any" min = "1" id="txtPassportNumber" required/>Πόντοι
 					</div>
 					<div id="dv1" class="col-xs-3">
 						&nbsp;
 						&nbsp;
-						Available Tickets:
-						<input type="number" min = "1" id="txtPassportNumber" required/>
+						Διαθέσιμα Εισητήρια:
+						<input type="number" name="maxTickets" min = "1" id="txtPassportNumber" required/>
 					</div>
 				</div>
             </div>
 
             <div class="form-group">
 				<label for="exampleFormControlFile1">Φωτογραφία Δραστηριότητας:</label>
-				<input type="file" class="form-control-file" id="exampleFormControlFile1" required>
+				<input type="file" name="pictureURL" class="form-control-file" id="exampleFormControlFile1" required>
             </div>
             <div class="form-group">
                <label for="exampleFormControlTextarea1">Περιγραφή</label>
-               <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" required></textarea>
+               <textarea name="actDescription" class="form-control" id="exampleFormControlTextarea1" rows="3" required></textarea>
             </div>
 				<input type="submit" class="btn btn-sm btn-info" value="Υποβολή Δήλωσης" ></input>
             </div>
