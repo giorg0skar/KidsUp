@@ -23,6 +23,20 @@
 
   <body>
 
+  <?php
+	mb_internal_encoding('UTF-8');
+	mb_http_input("utf-8");
+	session_start();
+	if(!isset($_SESSION['login_user'])){
+      header("location:parent-signin.php");
+   }
+	$user_check = $_SESSION['login_user'];
+	$firstname = $_SESSION['firstname'];
+	$lastname = $_SESSION['lastname'];
+	$Points = $_SESSION['Points'];
+  
+  ?>
+  
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
       <div class="container">
@@ -47,10 +61,10 @@
               <a class="nav-link" href="#contact">Επικοινωνία</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="index.php">Έξοδος</a>
+              <a class="nav-link" href="logout.php">Έξοδος</a>
             </li>
 			<li class="nav-item">
-				<a class="nav-link" href="parentProfile.php">Όνομα Επώνυμο<br>Πόντοι:</a>
+				<a class="nav-link" href="parentProfile.php"><?php echo $firstname . ' ' . $lastname; ?><br>Πόντοι:<?php echo $Points; ?></a>
             </li>
           </ul>
         </div>
