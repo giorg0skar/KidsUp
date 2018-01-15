@@ -61,17 +61,59 @@
         </div>
       </div>
     </nav>
-
+ <div class="container">
+ <h4 class="form-signin" style="text-align:center;">
+	<?php
+   include("mysqli_connect.php");
+   session_start();
+   mb_internal_encoding('UTF-8');
+   mb_http_input("utf-8");
+   if($_SERVER["REQUEST_METHOD"] == "POST") {
+      // username and password sent from form 
+      
+      $myusername = mysqli_real_escape_string($dbc,$_POST['ParEmail']);
+      $mypassword = mysqli_real_escape_string($dbc,$_POST['pwd']); 
+      
+      $sql = "SELECT * FROM parent WHERE parEmail = '$myusername' and pwd = '$mypassword'";
+      $result = mysqli_query($dbc,$sql);
+      $row = mysqli_fetch_array($result);
+      
+      $count = mysqli_num_rows($result);
+      
+      // If result matched $myusername and $mypassword, table row must be 1 row
+		
+      if($count == 1) {
+		  if($row['activated']==0){
+			  session_destroy();
+			  header("location: waiting_activation.php");
+		  }
+         $_SESSION['login_user'] = $myusername;
+		 $_SESSION['firstname'] = $row['firstname'];
+		 $_SESSION['lastname'] = $row['lastname'];
+		 $_SESSION['Points'] = $row['Points'];
+         
+         header("location: parentSignedInHomePage.php");
+      }else {
+         $error = "Your Login Name or Password is invalid";
+		 echo   $error;
+      }
+   }
+?>
+</h4>
+</div>	
+	
+	
+	
 
     <div class="container">
 
-      <form class="form-signin">
+      <form class="form-signin" action="./parent-signin.php" method="post">
         <h2 class="form-signin-heading">Εισάγετε τα στοιχεία σας</h2>
         <label for="inputEmail" class="sr-only">Email address</label>
-        <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+        <input type="email" id="inputEmail" name="ParEmail" class="form-control" placeholder="Email address" required autofocus>
         <label for="inputPassword" class="sr-only">Password</label>
-        <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Σύνδεση</button>
+        <input type="password" id="inputPassword"  name="pwd" class="form-control" placeholder="Password" required>
+		<input type="submit" class="btn btn-sm btn-info" value="Σύνδεση" ></input>
       </form>
 
     </div>
