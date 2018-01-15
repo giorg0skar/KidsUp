@@ -9,7 +9,7 @@
     <meta name="author" content="">
 
     <title>Εγγραφή</title>
-    <link rel="shortcut icon" type="image" href="../assets/img/favicon.ico"/>
+    <link rel="shortcut icon" type="image" href="../favicon.ico"/>
 
     <!-- Bootstrap core CSS -->
     <link href="../assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -97,7 +97,62 @@
       </div>
     </nav>
 
-
+	
+	<div class="container">
+		<div class="row mb-3">
+            <div class="col-lg-12 well">
+				<?php
+				header('Content-type: text/html; charset=UTF-8');
+				mb_internal_encoding('UTF-8');
+				mb_http_input("utf-8");
+				if($_SERVER["REQUEST_METHOD"] == "POST"){
+					$flag=0;
+					
+					$ProvEmail = trim($_POST['ProvEmail']);
+					$pwd = trim($_POST['pwd']);
+					$companyName = trim($_POST['companyName']);
+					$town= trim($_POST['town']);
+					$streetName = trim($_POST['streetName']);
+					$streetNumber = trim($_POST['streetNumber']);
+					$PostalCode = trim($_POST['PostalCode']);
+					$PhoneNumber = trim($_POST['PhoneNumber']);
+					$VAT = trim($_POST['VAT']);
+					$IBAN = trim($_POST['IBAN']);
+					$online = 1;
+					$activated =1;
+					if( $streetNumber<=0 || $PostalCode<=9999 || $PostalCode>=100000 || $PhoneNumber<=0 || $PhoneNumber>=10000000000)
+						$flag=1;
+						if ( $flag==0){
+							require_once('./mysqli_connect.php');
+							$query = "INSERT INTO provider(ProvEmail, pwd , companyName , town, streetName , streetNumber , PostalCode , PhoneNumber , VAT ,IBAN, online, activated) VALUES ( ?,?,?,?,?,?,?,?,?,?,?,?)";
+							$stmt = mysqli_prepare($dbc, $query);
+							mysqli_stmt_bind_param($stmt, "sssssiiiiiii", $ProvEmail, $pwd , $companyName , $town, $streetName , $streetNumber , $PostalCode , $PhoneNumber , $VAT , $IBAN , intval($online), intval($activated));
+							mysqli_stmt_execute($stmt);
+							$affected_rows = mysqli_stmt_affected_rows($stmt);
+							if($affected_rows == 1){
+								echo '<h1>Εγγραφήκατε επιτυχώς !</h1>';
+								mysqli_stmt_close($stmt);
+								mysqli_close($dbc); 
+								header("location: waiting_activation.php");	
+							} else {
+								echo 'Το email αυτό ήδη χρησιμοποιείται! Παρακαλώ διαλέξτε ένα άλλο<br/>';
+								mysqli_stmt_close($stmt);
+								mysqli_close($dbc);
+							}
+						}
+						else {
+							echo 'Remember: Ο ταχυδρομικός κώδικας είναι ένας 5ψήφιος αριθμός<br/>
+											Ο αριθμός τηλεφώνου είναι ένας 10ψήφιος αριθμός<br/>
+											';
+						}
+					 
+				}
+?>
+	
+	
+	
+	
+	
 
     <div class="container">
         <div class="row mb-3">
@@ -109,43 +164,43 @@
         <div class="col-lg-12 well">
         <div class="row">
                 <div class="row">
-                    <form action="provider-signin.php">
+                    <form action="provider-signup.php" method="post">
                         <div class="col-sm-12">
                             <div class="row">
                                 <div class="col-sm-6 form-group">
-									<input type="text" placeholder="Όνομα εταιρείας" class="form-control" required >
+									<input type="text" name="companyName" placeholder="Όνομα εταιρείας" class="form-control" required >
                                 </div>
                                 <div class="col-sm-6 form-group">
-                                        <input type="text" placeholder="ΑΦΜ" class="form-control" required >
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-6 form-group">
-                                    <input type="text" placeholder="Οδός κατοικίας" class="form-control" required>
-                                </div>
-                                <div class="col-sm-6 form-group">
-                                    <input type="number" min="1" placeholder="Αριθμός οδού κατοικίας" class="form-control" required>
+                                        <input type="text" name="VAT" placeholder="ΑΦΜ" class="form-control" required >
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-sm-6 form-group">
-                                    <input type="text" placeholder="Πόλη κατοικίας" class="form-control" required>
+                                    <input type="text"  name="streetName" placeholder="Οδός κατοικίας" class="form-control" required>
                                 </div>
                                 <div class="col-sm-6 form-group">
-                                        <input type="number" min="10000" placeholder="Ταχυδρομικός κώδικας" class="form-control" required>
+                                    <input type="number" name="streetNumber" min="1" placeholder="Αριθμός οδού κατοικίας" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6 form-group">
+                                    <input type="text" name="town" placeholder="Πόλη κατοικίας" class="form-control" required>
+                                </div>
+                                <div class="col-sm-6 form-group">
+                                        <input type="number" name="PostalCode" min="10000" placeholder="Ταχυδρομικός κώδικας" class="form-control" required>
                                 </div>
                             </div>
                         <div class="form-group">
 						<div class="form-group">
-                            <input type="text" placeholder="Αριθμός Τραπεζικού Λογαριασμού" class="form-control" required >
+                            <input type="text"  name="IBAN" placeholder="Αριθμός Τραπεζικού Λογαριασμού" class="form-control" required >
                         </div>
-                            <input type="number" min="1000000000"placeholder="Τηλέφωνο" class="form-control">
-                        </div>
-                        <div class="form-group">
-                            <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required >
+                            <input type="number"  name="PhoneNumber" min="1000000000"placeholder="Τηλέφωνο" class="form-control">
                         </div>
                         <div class="form-group">
-                            <input type="password" placeholder="Password" class="form-control" required>
+                            <input type="email" id="inputEmail" name="ProvEmail" class="form-control" placeholder="Email address" required >
+                        </div>
+                        <div class="form-group">
+                            <input type="password" name="pwd" placeholder="Password" class="form-control" required>
                         </div>
 							<input type="submit" class="btn btn-sm btn-info" value="Υποβολή Δήλωσης" ></input>
                         </div>

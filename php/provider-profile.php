@@ -17,6 +17,27 @@
 </head>
 
 <body>
+<?php
+				mb_internal_encoding('UTF-8');
+				mb_http_input("utf-8");
+				session_start();
+				if(!isset($_SESSION['login_user'])){
+					header("location:./provider-signin.php");
+				}
+				$provider_user = $_SESSION['login_user'];
+				$pwd = $_SESSION['pwd'];
+				$town = $_SESSION['town'];
+				$companyName = $_SESSION['companyName'];
+				$streetName = $_SESSION['streetName'];
+				$streetNumber = $_SESSION['streetNumber'];
+				$PostalCode = $_SESSION['PostalCode'];
+				$PhoneNumber = $_SESSION['PhoneNumber'];
+				$VAT = $_SESSION['VAT'];
+				$IBAN = $_SESSION['IBAN'];
+				
+				
+  
+			?>
     <div class="wrapper">
         <div class="sidebar" data-image="../assets/img/sidebar-5.jpg" data-color="black">
             <div class="sidebar-wrapper">
@@ -76,7 +97,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#do_something">
+                                <a class="nav-link" href="logout.php">
                                     <span class="no-icon">Αποσύνδεση</span>
                                 </a>
                             </li>
@@ -85,6 +106,10 @@
                 </div>
             </nav>
             <!-- End Navbar -->
+			
+
+			
+			
             <div class="content">
                 <div class="container-fluid">
 
@@ -98,19 +123,13 @@
                                             <div class="col-md-5">
                                                 <div class="form-group">
                                                     <label for="company-name">Εταιρία</label>
-                                                    <input type="text" class="form-control border-input" id="company-name" disabled placeholder="Company" value="Ελαφροχέρης ΑΕ - Basket Training">
-                                                </div>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <div class="form-group">
-                                                    <label for="company-title">Διακριτικός Τίτλος</label>
-                                                    <input type="text" class="form-control border-input" id="company-title" placeholder="Διακριτικός Τίτλος" value="Μάθε μπάσκετ με τον Πρίντεζη">
+                                                    <input type="text" class="form-control border-input" id="company-name" disabled placeholder="Company" value="<?php echo $companyName; ?>">
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label for="afm">ΑΦΜ</label>
-                                                    <input type="text" class="form-control border-input" id="afm" placeholder="Εταιρικό ΑΦΜ" value="">
+                                                    <input type="text" class="form-control border-input" id="afm" placeholder="Εταιρικό ΑΦΜ" value="<?php echo $VAT;?>">
                                                 </div>
                                             </div>
                                         </div>
@@ -118,30 +137,15 @@
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <label for="bank-account">Τραπεζικός Λογαριασμός</label>
-                                                    <input type="text" class="form-control border-input" id="bank-account" placeholder="Τραπεζικός Λογαριασμός για λήψη χρημάτων">
+                                                    <input type="text" class="form-control border-input" id="bank-account" placeholder="Τραπεζικός Λογαριασμός για λήψη χρημάτων" value="<?php echo $IBAN; ?>">
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label for="provider-name">Ονομα Υπευθύνου</label>
-                                                    <input type="text" class="form-control border-input" id="provider-name" placeholder="Ονομα υπευθύνου" value="">
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label for="provider-lastname">Επώνυμο Υπευθύνου</label>
-                                                    <input type="text" class="form-control border-input" id="provider-lastname" placeholder="Επώνυμο Υπευθύνου" value="">
-                                                </div>
-                                            </div>
-                                        </div>
-
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <label for="company-town">Εδρα Εταιρίας</label>
-                                                    <input type="text" class="form-control border-input" id="company-town" placeholder="Πόλη" value="">
+                                                    <input type="text" class="form-control border-input" id="company-town" placeholder="Πόλη" value="<?php echo $town; ?>">
                                                 </div>
                                             </div>
                                         </div>
@@ -150,19 +154,19 @@
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label for="company-street">Οδός</label>
-                                                    <input type="text" class="form-control border-input" id="company-street" placeholder="Οδός" value="">
+                                                    <input type="text" class="form-control border-input" id="company-street" placeholder="Οδός" value="<?php echo $streetName; ?>">
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label for="company-street-number">Αριθμός</label>
-                                                    <input type="number" class="form-control border-input" id="company-street-number" placeholder="Αριθμός">
+                                                    <input type="number" class="form-control border-input" id="company-street-number" placeholder="Αριθμός" value="<?php echo $streetNumber; ?>">
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label for="company-tk">ΤΚ</label>
-                                                    <input type="number" class="form-control border-input" id="company-tk" placeholder="Ταχυδρομικός κώδικας">
+                                                    <input type="number" class="form-control border-input" id="company-tk" placeholder="Ταχυδρομικός κώδικας" value="<?php  echo $PostalCode;?>">
                                                 </div>
                                             </div>
                                         </div>
@@ -170,32 +174,23 @@
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label for="company-phone">Τηλέφωνο</label>
-                                                    <input type="text" class="form-control border-input" id="company-phone" placeholder="Τηλέφωνο" >
+                                                    <input type="text" class="form-control border-input" id="company-phone" placeholder="Τηλέφωνο" value="<?php echo $PhoneNumber?> ">
                                                 </div>
                                             </div>
 
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label for="company-email">Email</label>
-                                                    <input type="email" class="form-control border-input" id="company-email" placeholder="Email">
+                                                    <input type="email" class="form-control border-input" id="company-email" placeholder="Email" value="<?php echo $provider_user; ?>">
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label for="provider-password">Κωδικός</label>
-                                                    <input type="password" class="form-control border-input" id="provider-password" placeholder="Κωδικός Πρόσβασης">
+                                                    <input type="text" class="form-control border-input" id="provider-password" placeholder="Κωδικός Πρόσβασης" value="<?php echo $pwd;?>">
                                                 </div>
                                             </div>
                                         </div> <!--Επιβεβαίωση για την αλλαγή κωδικού, ισως με popup. Η αντικατάσταση αυτού του div με κουμπί που να πάει σε άλλη σελίδα για αλλαγή κωδικού-->
-
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <div class="form-group">
-                                                    <label for="company-description">Περιγραφή</label>
-                                                    <textarea rows="5" class="form-control border-input" id="company-description" placeholder="Προσθέστε μία περιγραφή για την Εταιρία σας">Προσθέστε μία περιγραφή για την Εταιρία σας</textarea>
-                                                </div>
-                                            </div>
-                                        </div>
                                         <div class="text-center">
                                         <button type="submit" class="btn btn-info btn-fill btn-wd">Ενημέρωση Προφίλ</button>
                                     </div>
