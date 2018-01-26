@@ -130,7 +130,7 @@
 						$flag=1;
 						if ( $flag==0){
 							require_once('./mysqli_connect.php');
-							$query = "INSERT INTO parent(ParEmail, pwd , firstname , lastname , town, streetName , streetNumber , PostalCode , PhoneNumber , latitude , longitude , Points , online, activated) VALUES ( ?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+							$query = "INSERT INTO Parent(ParEmail, pwd , firstname , lastname , town, streetName , streetNumber , PostalCode , PhoneNumber , latitude , longitude , Points , online, activated) VALUES ( ?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 							$stmt = mysqli_prepare($dbc, $query);
 							mysqli_stmt_bind_param($stmt, "ssssssiiiddiii", $ParEmail, $pwd , $firstname , $lastname , $town, $streetName , $streetNumber , $PostalCode , $PhoneNumber , $latitude , $longitude , $Points , intval($online), intval($activated));
 							mysqli_stmt_execute($stmt);

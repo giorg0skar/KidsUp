@@ -2,12 +2,12 @@ create database KidsUp CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 create table Parent
 (
-     ParEmail VARCHAR(50) not null,
-     pwd VARCHAR(50) not null,
-     firstname VARCHAR(20) not null,
-     lastname VARCHAR(20) not null,
-     town VARCHAR(20) not null,
-     streetName VARCHAR(20) not null,
+     ParEmail VARCHAR(100) not null,
+     pwd VARCHAR(100) not null,
+     firstname VARCHAR(100) not null,
+     lastname VARCHAR(100) not null,
+     town VARCHAR(100) not null,
+     streetName VARCHAR(100) not null,
      streetNumber smallint unsigned not null,
      PostalCode int,
      PhoneNumber bigint unsigned not null,
@@ -22,11 +22,11 @@ create table Parent
 
 create table Provider
 (
-     ProvEmail VARCHAR(50) not null,
-     pwd VARCHAR(50) not null,
-     companyName VARCHAR(20) not null,
-     town VARCHAR(20) not null,
-     streetName VARCHAR(20) not null,
+     ProvEmail VARCHAR(100) not null,
+     pwd VARCHAR(100) not null,
+     companyName VARCHAR(100) not null,
+     town VARCHAR(100) not null,
+     streetName VARCHAR(100) not null,
      streetNumber smallint unsigned not null,
      PostalCode int,
      PhoneNumber bigint unsigned not null,
@@ -41,12 +41,12 @@ create table Provider
 
 create table Admin
 (
-     email VARCHAR(50) not null,
-     pwd VARCHAR(50) not null,
-     firstname VARCHAR(20) not null,
-     lastname VARCHAR(20) not null,
-     town VARCHAR(20) not null,
-     streetName VARCHAR(20) not null,
+     email VARCHAR(100) not null,
+     pwd VARCHAR(100) not null,
+     firstname VARCHAR(100) not null,
+     lastname VARCHAR(100) not null,
+     town VARCHAR(100) not null,
+     streetName VARCHAR(100) not null,
      streetNumber smallint unsigned not null,
      PostalCode int,
      PhoneNumber bigint unsigned not null,
@@ -58,16 +58,17 @@ create table Admin
 create table Activity
 (
     ActID serial,
-    ProvEmail VARCHAR(50) not null,
-    actName VARCHAR(50) not null,
+    ProvEmail VARCHAR(100) not null,
+    actName VARCHAR(100) not null,
     actType VARCHAR(100) not null,
     actDate datetime not null,
+    price smallint unsigned not null,
     MinAge smallint unsigned not null,
     MaxAge smallint unsigned not null,
     maxTickets int unsigned not null,
     availableTickets int unsigned not null,
-    town VARCHAR(20) not null,
-    streetName VARCHAR(20) not null,
+    town VARCHAR(100) not null,
+    streetName VARCHAR(100) not null,
     streetNumber smallint unsigned not null,
     PostalCode int,
     PhoneNumber bigint unsigned not null,
@@ -84,7 +85,7 @@ create table Activity
 create table Sell
 (
     SellID serial not null,
-    ParEmail VARCHAR(50) not null,
+    ParEmail VARCHAR(100) not null,
     ActID bigint unsigned not null,
     SellDate datetime not null,
     numberofTickets int unsigned not null,
@@ -96,7 +97,7 @@ create table Sell
 
 create table Review
 (
-    ParEmail VARCHAR(50) not null,
+    ParEmail VARCHAR(100) not null,
     ActID bigint unsigned not null,
     review text not null,
     primary key(ParEmail,ActID),

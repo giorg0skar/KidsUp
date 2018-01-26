@@ -27,7 +27,7 @@
                     </a>
                 </div>
                 <ul class="nav">
-                    <li class="nav-item active">
+                    <li>
                         <a class="nav-link" href="./provider-dashboard.php">
                             <i class="ti-blackboard"></i>
                             <p>Διαχείριση</p>
@@ -39,7 +39,7 @@
                             <p>Προφίλ</p>
                         </a>
                     </li>
-                    <li>
+                    <li class="nav-item active">
                         <a class="nav-link" href="./provider-activities.php">
                             <i class="ti-view-list-alt"></i>
                             <p>Δραστηριότητες</p>
@@ -93,6 +93,7 @@
 
                             <div class="card">
                                 <div class="card-body">
+                                    <a class="btn btn-info btn-fill btn-wd" href="./activity_form.php" role="button">Νέα Δραστηριότητα</a>
                                 </div>
                             </div>
 

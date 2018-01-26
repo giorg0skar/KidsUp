@@ -69,14 +69,27 @@
 
     <!-- Page Content -->
 
+<?php
+
+  include("full_text_search.php");
+  mb_internal_encoding('UTF-8');
+  mb_http_input("utf-8");
+  if($_SERVER["REQUEST_METHOD"] == "POST") {
+    //first check if the index is created in ES and create it if necessary
+    create_index();
+    $search = trim($_POST['search']);
+    $area = trim($_POST['area']);
+    $results = do_search($search);
+    $activities = $results[0];
+    $hits = $results[1];
+  }
+
+?>
+
     <!-- Masthead -->
-      <header class="masthead text-white text-center">
-        <div class="overlay"></div>
-        <div class="container">
-          <div class="row">
-            <div class="col-xl-9 mx-auto">
-              <h1 class="mb-5">Αναζητήστε δραστηριότητες για τα παιδιά σας!</h1>
-            </div>
+    <header>
+    <div class="container">
+          <p>
             <div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
               <form action="./search_activities.php" method="post">
                 <div class="form-row">
@@ -90,28 +103,18 @@
                 </div>
               </form>
             </div>
-          </div>
-        </div>
-      </header>
-
+        </p>
+    </div>
+    </header>
     <div class="container mt-5">
 
           <div class="row">
 
 <?php
 
-  include("full_text_search.php");
-  //include("mysqli_connect.php");
-  mb_internal_encoding('UTF-8');
-  mb_http_input("utf-8");
-  if($_SERVER["REQUEST_METHOD"] == "POST") {
-   $search = trim($_POST['search']);
-   $area = trim($_POST['area']);
-   $results = do_search($search);
-   $activities = $results[0];
-   $hits = $results[1];
-   for($i=0; $i<$hits; $i++){
-      ?>
+  for($i=0; $i<$hits; $i++){
+    $datetime = explode(" ", $activities[$i]['actDate']);
+    ?>
             <div class="col-lg-4 col-md-6 mb-4">
               <div class="card h-100">
                 <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
@@ -119,8 +122,10 @@
                   <h4 class="card-title">
                     <a href="#"><?php echo $activities[$i]['actName']?></a>
                   </h4>
-                  <h5>Τιμή εισιτηρίου:$24.99</h5>
-                  <p class="card-text">Οργανωτής:<?php echo $activities[$i]['ProvEmail']?></p>
+                  <h5>Τιμή εισιτηρίου: <?php echo $activities[$i]['price']?> πόντοι</h5>
+				          <p class="card-text">Ημερομηνία: <?php echo $datetime[0]?></p>
+				          <p class="card-text">Ώρα: <?php echo $datetime[1]?></p>
+                  <p class="card-text">Οργανωτής: <?php echo $activities[$i]['ProvEmail']?></p>
 				          <p class="card-text">Πόλη: <?php echo $activities[$i]['town']?></p>
 				          <p class="card-text">Διεύθυνση: <?php echo $activities[$i]['streetName']?> <?php echo $activities[$i]['streetNumber']?></p>
 				          <p class="card-text">ΤΚ: <?php echo $activities[$i]['PostalCode']?></p>
@@ -133,44 +138,6 @@
               </div>
             </div>
 <?php
-    }
-  }else{
-    include("mysqli_connect.php");
-    mb_internal_encoding('UTF-8');
-    mb_http_input("utf-8");
-      
-    $sql = "SELECT * FROM Activity";
-    $result = mysqli_query($dbc,$sql);
-    for($i=0; $i< mysqli_num_rows($result); $i++){
-        $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
-        $datetime = explode(" ", $row['actDate']);
-        ?>
-            <div class="col-lg-4 col-md-6 mb-4">
-              <div class="card h-100">
-                <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
-                <div class="card-body">
-                  <h4 class="card-title">
-                    <a href="#"><?php echo $row['actName']?></a>
-                  </h4>
-                  <h5>Τιμή εισιτηρίου: <?php echo $row['price']?> πόντοι</h5>
-				          <p class="card-text">Ημερομηνία: <?php echo $datetime[0]?></p>
-				          <p class="card-text">Ώρα: <?php echo $datetime[1]?></p>
-                  <p class="card-text">Οργανωτής: <?php echo $row['ProvEmail']?></p>
-				          <p class="card-text">Πόλη: <?php echo $row['town']?></p>
-				          <p class="card-text">Διεύθυνση: <?php echo $row['streetName']?> <?php echo $row['streetNumber']?></p>
-				          <p class="card-text">ΤΚ: <?php echo $row['PostalCode']?></p>
-
-                  <p class="card-text"><?php echo $row['actDescription']?></p>
-                </div>
-                <div class="card-footer">
-                  <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
-                </div>
-              </div>
-            </div>
-        
-        <?php
-    }
-
   }
 ?>              
       </div>

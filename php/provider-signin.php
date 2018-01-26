@@ -75,34 +75,35 @@
       $myusername = mysqli_real_escape_string($dbc,$_POST['ProvEmail']);
       $mypassword = mysqli_real_escape_string($dbc,$_POST['pwd']);
 
-      $sql = "SELECT * FROM provider WHERE ProvEmail = '$myusername' and pwd = '$mypassword'";
+      $sql = "SELECT * FROM Provider WHERE ProvEmail = '$myusername' and pwd = '$mypassword'";
       $result = mysqli_query($dbc,$sql);
-      $row = mysqli_fetch_array($result);
+      $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
 
       $count = mysqli_num_rows($result);
 
       // If result matched $myusername and $mypassword, table row must be 1 row
 
       if($count == 1) {
-		  if($row['activated']==0){
-			  session_destroy();
-			  header("location: waiting_activation.php");
-		  }
-      $_SESSION['login_user'] = $myusername;
-      $_SESSION['pwd'] = $mypassword;
-      $_SESSION['companyName'] = $row['companyName'];
-      $_SESSION['town'] = $row['town'];
-      $_SESSION['streetName'] = $row['streetName'];
-      $_SESSION['streetNumber'] = $row['streetNumber'];
-      $_SESSION['PostalCode'] = $row['PostalCode'];
-      $_SESSION['PhoneNumber'] = $row['PhoneNumber'];
-      $_SESSION['VAT'] = $row['VAT'];
-      $_SESSION['IBAN'] = $row['IBAN'];
+        if($row['activated']=='0'){
+          session_destroy();
+          header("location: waiting_activation.php");
+        }else{
+          $_SESSION['login_user'] = $myusername;
+          $_SESSION['pwd'] = $mypassword;
+          $_SESSION['companyName'] = $row['companyName'];
+          $_SESSION['town'] = $row['town'];
+          $_SESSION['streetName'] = $row['streetName'];
+          $_SESSION['streetNumber'] = $row['streetNumber'];
+          $_SESSION['PostalCode'] = $row['PostalCode'];
+          $_SESSION['PhoneNumber'] = $row['PhoneNumber'];
+          $_SESSION['VAT'] = $row['VAT'];
+          $_SESSION['IBAN'] = $row['IBAN'];
 
-      header("location: provider-profile.php");
+          header("location: provider-profile.php");
+        }
       }else {
          $error = "Your Login Name or Password is invalid";
-		 echo   $error;
+		     echo $error;
       }
    }
 ?>

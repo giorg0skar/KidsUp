@@ -60,7 +60,7 @@
                         </a>
                     </li>
                     <li>
-                        <a class="nav-link" href="#activities">
+                        <a class="nav-link" href="provider-activities.php">
                             <i class="ti-view-list-alt"></i>
                             <p>Δραστηριότητες</p>
                         </a>

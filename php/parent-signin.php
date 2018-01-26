@@ -74,28 +74,29 @@
       $myusername = mysqli_real_escape_string($dbc,$_POST['ParEmail']);
       $mypassword = mysqli_real_escape_string($dbc,$_POST['pwd']); 
       
-      $sql = "SELECT * FROM parent WHERE parEmail = '$myusername' and pwd = '$mypassword'";
+      $sql = "SELECT * FROM Parent WHERE ParEmail = '$myusername' and pwd = '$mypassword'";
       $result = mysqli_query($dbc,$sql);
-      $row = mysqli_fetch_array($result);
+      $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
       
       $count = mysqli_num_rows($result);
       
       // If result matched $myusername and $mypassword, table row must be 1 row
 		
       if($count == 1) {
-		  if($row['activated']==0){
-			  session_destroy();
-			  header("location: waiting_activation.php");
-		  }
-         $_SESSION['login_user'] = $myusername;
-		 $_SESSION['firstname'] = $row['firstname'];
-		 $_SESSION['lastname'] = $row['lastname'];
-		 $_SESSION['Points'] = $row['Points'];
-         
-         header("location: parentSignedInHomePage.php");
+		    if($row['activated']=='0'){
+          session_destroy();
+			    header("location: waiting_activation.php");
+		    }else{
+          $_SESSION['login_user'] = $myusername;
+          $_SESSION['firstname'] = $row['firstname'];
+          $_SESSION['lastname'] = $row['lastname'];
+          $_SESSION['Points'] = $row['Points'];
+          
+          header("location: parentSignedInHomePage.php");
+        }
       }else {
          $error = "Your Login Name or Password is invalid";
-		 echo   $error;
+		     echo $error;
       }
    }
 ?>

@@ -50,7 +50,7 @@
         <a class="nav-link"  href="index.php">Έξοδος</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="parentProfile.php">Όνομα παρόχου ή εταιρείας</a>
+        <a class="nav-link" href="provider-profile.php"><?php session_start(); echo $_SESSION['companyName']; ?></a>
       </li>
       </ul>
     </div>
@@ -62,14 +62,14 @@
 		<div class="row mb-3">
             <div class="col-lg-12 well">
 				<?php
-				//=$_SESSION['provider_company_name']; 
+
 				header('Content-type: text/html; charset=UTF-8');
 				mb_internal_encoding('UTF-8');
 				mb_http_input("utf-8");
 				if($_SERVER["REQUEST_METHOD"] == "POST"){
 					$flag=0;
 					
-					$ProvEmail = "haldirakos@gmail.com"; // $_SESSION['provider_email'];
+					$ProvEmail = $_SESSION['login_user'];
 					$actName = trim($_POST['actName']);
 					$actType = trim($_POST['actType']);
 					$actDate = trim($_POST['actDate']);
@@ -86,7 +86,8 @@
 					$PhoneNumber = trim($_POST['PhoneNumber']);
 					$actDescription = trim($_POST['actDescription']);
 					$pictureURL = trim($_POST['pictureURL']);
-					$visits = 0;
+          $visits = 0;
+          $actDateTime = $actDate." ".$actTime;
 					
 					$address = $streetName . ' ' .$streetNumber .' , ' .$PostalCode .' , ' .$town;
 					$url='https://maps.google.com/maps/api/geocode/json?address='.urlencode($address).'&key=AIzaSyBsLUCKMjlmcDrvL6IXYlaHez6AUb01O8U&sensor=false';
@@ -99,16 +100,35 @@
 						$flag=1;
 						if ( $flag==0){
 							require_once('./mysqli_connect.php');
-							$query = "INSERT INTO activity( ActID,ProvEmail,actName , actType , actDate , actTime , price, MinAge , MaxAge , maxTickets , availableTickets ,town, streetName , streetNumber , PostalCode , PhoneNumber, latitude , longitude , actDescription, pictureURL , visits) VALUES ( NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+							$query = "INSERT INTO Activity(ProvEmail,actName,actType,actDate,price,MinAge,MaxAge,maxTickets,availableTickets,town,streetName,streetNumber,PostalCode,PhoneNumber,latitude,longitude,actDescription,pictureURL,visits) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 							$stmt = mysqli_prepare($dbc, $query);
-							mysqli_stmt_bind_param($stmt, "sssssiiiiissiiiddssi", $ProvEmail, $actName, $actType , $actDate , $actTime , $price , $MinAge, $MaxAge, $maxTickets, $availableTickets, $town, $streetName , $streetNumber , $PostalCode , $PhoneNumber , $latitude , $longitude , $actDescription , $pictureURL , $visits);
-							mysqli_stmt_execute($stmt);
+              mysqli_stmt_bind_param($stmt, "ssssiiiiissiiiddssi", $ProvEmail, $actName, $actType, $actDateTime, $price, $MinAge, $MaxAge, $maxTickets, $availableTickets, $town, $streetName, $streetNumber, $PostalCode, $PhoneNumber, $latitude, $longitude, $actDescription, $pictureURL, $visits);
+              mysqli_stmt_execute($stmt);
 							$affected_rows = mysqli_stmt_affected_rows($stmt);
 							if($affected_rows == 1){
-								echo '<h1>Επιτυχής δημιουργία δραστηριότητας  !</h1>';
+                echo '<h1>Επιτυχής δημιουργία δραστηριότητας  !</h1>';
+                
+                //get the auto-increment key from the last-insert (PROBLEM IN CONCURRENT SUBMITS) 
+                $id = mysqli_insert_id($dbc);
+                $new_activity = [
+                  'ActID' => $id,
+                  'actName' => $actName,
+                  'actType' => $actType,
+                  'actDate' => $actDateTime,
+                  'MinAge' => $MinAge,
+                  'MaxAge' => $MaxAge,
+                  'availableTickets' => $availableTickets,
+                  'latitude' => $latitude,
+                  'longitude' => $longitude,
+                  'actDescription' => $actDescription
+                ];
+                include('./full_text_search.php');
+                //insert new activity to ElasticSearch
+                insert_activity($new_activity);
+
 								mysqli_stmt_close($stmt);
 								mysqli_close($dbc); 
-								header("location: provider-profile.php");	
+								header("location: provider-activities.php");	
 							} else {
 								echo 'Το email αυτό ήδη χρησιμοποιείται! Παρακαλώ διαλέξτε ένα άλλο<br/>';
 								mysqli_stmt_close($stmt);
@@ -124,7 +144,7 @@
 						}
 					 
 				}
-				//=$_SESSION['provider_email'];
+				
 ?>
   
   
@@ -202,7 +222,7 @@
 					<div id="dv1" class="col-xs-3">
 						&nbsp;
 						&nbsp;
-						Διαθέσιμα Εισητήρια:
+						Διαθέσιμα Εισιτήρια:
 						<input type="number" name="maxTickets" min = "1" id="txtPassportNumber" required/>
 					</div>
 				</div>

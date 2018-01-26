@@ -124,7 +124,7 @@
 						$flag=1;
 						if ( $flag==0){
 							require_once('./mysqli_connect.php');
-							$query = "INSERT INTO provider(ProvEmail, pwd , companyName , town, streetName , streetNumber , PostalCode , PhoneNumber , VAT ,IBAN, online, activated) VALUES ( ?,?,?,?,?,?,?,?,?,?,?,?)";
+							$query = "INSERT INTO Provider(ProvEmail, pwd , companyName , town, streetName , streetNumber , PostalCode , PhoneNumber , VAT ,IBAN, online, activated) VALUES ( ?,?,?,?,?,?,?,?,?,?,?,?)";
 							$stmt = mysqli_prepare($dbc, $query);
 							mysqli_stmt_bind_param($stmt, "sssssiiiiiii", $ProvEmail, $pwd , $companyName , $town, $streetName , $streetNumber , $PostalCode , $PhoneNumber , $VAT , $IBAN , intval($online), intval($activated));
 							mysqli_stmt_execute($stmt);
