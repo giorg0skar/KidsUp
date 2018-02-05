@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
 
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-    <title>Dashboard</title>
+    <title>Δραστηριότητες</title>
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
     <!--     Fonts and icons     -->
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
@@ -18,6 +18,20 @@
 </head>
 
 <body>
+    <?php
+            include("./mysqli_connect.php");
+            mb_internal_encoding('UTF-8');
+    		mb_http_input("utf-8");
+    		session_start();
+    		if(!isset($_SESSION['login_user'])){
+    			header("location:./provider-signin.php");
+			}
+			$provider_user = $_SESSION['login_user'];
+    		$companyName = $_SESSION['companyName'];
+            $sql = "SELECT * FROM Activity WHERE ProvEmail = '$provider_user'";
+            $result = mysqli_query($dbc,$sql);
+
+    ?>
     <div class="wrapper">
         <div class="sidebar" data-image="../assets/img/sidebar-5.jpg" data-color="black">
             <div class="sidebar-wrapper">
@@ -87,17 +101,86 @@
             </nav>
             <!-- End Navbar -->
 
-			
+
             <div class="content">
                 <div class="container-fluid">
+                    <div class="card">
+                        <div class="card-body">
+                            <a class="btn btn-info btn-fill btn-wd" href="./activity_form.php" role="button">Νέα Δραστηριότητα</a>                            </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card strpied-tabled-with-hover">
+                                <div class="card-header ">
+                                    <h4 class="card-title">Ενεργές Δραστηριότητες</h4>
+                                </div>
+                                <div class="card-body table-full-width table-responsive">
+                                    <table class="table table-hover table-striped">
+                                        <thead>
+                                            <th>Φωτογραφία</th>
+                                            <th>Δραστηριότητα</th>
+                                            <th>Ημερομηνία Δραστηριότητας</th>
+                                            <th>Προβολές</th>
+                                            <th>Αγορασμένα Εισιτήρια</th>
+                                            <th>Κέρδη</th>
+                                        </thead>
+                                        <tbody>
+                                            <?php
+                                                if($result){
+                                                    while($row = mysqli_fetch_array($result,MYSQLI_ASSOC)){
+                                                        echo '<tr>';
+                                                                $image_name = $row['pictureURL'];
+                                                                echo '<td>'. '<img src="'.$image_name.'" alt="HTML5 Icon" style="width:128px;height:128px">'.'</td>';
+                                                                echo '<td>'. $row['actName'].'</td>';
+                                                                echo '<td>'. $row['actDate'].'</td>';
+                                                                echo '<td>'. $row['visits'].'</td>';
+                                                                $bought_tickets = $row['maxTickets'] - $row['availableTickets'];
+                                                                echo '<td>'. $bought_tickets .' / '.$row['maxTickets'] .'</td>'; # bought_tickets ανά maxTickets
+                                                                $earnings = $bought_tickets * $row['price'] / 10; # convert earnings in Euros
+                                                                echo '<td>'.$earnings.' €</td>';
+                                                        echo '</tr>';
 
-                            <div class="card">
-                                <div class="card-body">
-                                    <a class="btn btn-info btn-fill btn-wd" href="./activity_form.php" role="button">Νέα Δραστηριότητα</a>
+                                                    }
+                                                }
+                                             ?>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="card card-plain table-plain-bg">
+                                <div class="card-header ">
+                                    <h4 class="card-title">Ανενεργές Δραστηριότητες</h4>
+                                </div>
+                                <div class="card-body table-full-width table-responsive">
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <th>Φωτογραφία</th>
+                                            <th>Δραστηριότητα</th>
+                                            <th>Ημερομηνία Δημιουργίας</th>
+                                            <th>Προβολές</th>
+                                            <th>Αγορασμένα Εισιτήρια</th>
+                                            <th>Κέρδη</th>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
 
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+
             </div>
 
 
