@@ -87,19 +87,19 @@
         		  if($row['activated']==0){
         			  session_destroy();
         			  header("location: waiting_activation.php");
-        		  }
-              $_SESSION['login_user'] = $myusername;
-              $_SESSION['parent_pwd'] = $mypassword;  
-          		$_SESSION['parent_firstname'] = $row['firstname'];
-          		$_SESSION['parent_lastname'] = $row['lastname'];
-          		$_SESSION['parent_points'] = $row['Points'];
-              $_SESSION['parent_street'] = $row['streetName'];
-              $_SESSION['parent_street_num'] = $row['streetNumber'];
-              $_SESSION['parent_town'] = $row['town'];
-              $_SESSION['parent_zipcode'] = $row['PostalCode']; 
-              header("location: parentSignedInHomePage.php");
-            }
-            else {
+        		  }else{
+                $_SESSION['login_user'] = $myusername;
+                $_SESSION['parent_pwd'] = $mypassword;  
+                $_SESSION['parent_firstname'] = $row['firstname'];
+                $_SESSION['parent_lastname'] = $row['lastname'];
+                $_SESSION['parent_points'] = $row['Points'];
+                $_SESSION['parent_street'] = $row['streetName'];
+                $_SESSION['parent_street_num'] = $row['streetNumber'];
+                $_SESSION['parent_town'] = $row['town'];
+                $_SESSION['parent_zipcode'] = $row['PostalCode']; 
+                header("location: parentSignedInHomePage.php");
+              }
+            }else {
               $error = "Your Login Name or Password is invalid";
       		    echo   $error;
             }

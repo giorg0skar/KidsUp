@@ -13,11 +13,25 @@
 
     <!-- Bootstrap core CSS -->
     <link href="../assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="../assets/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="../assets/css/font-awesome.min.css" rel="stylesheet">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
 
     <!-- Custom styles for this template -->
     <link href="../assets/css/homepage.css" rel="stylesheet">
+    <link href="../assets/css/search_sidebar.css" rel="stylesheet">
+
+		<!-- external JS file containing initiate_filters() onload event listener (has to be loaded before entering body) -->
+		<script src="../assets/js/search.js"></script>
+
+		<style>
+      #map {
+        height: 300px;
+				width: 98%;
+				margin: auto;
+				margin-bottom: 1rem;
+       }
+    </style>
 
   </head>
 
@@ -77,8 +91,26 @@
   if($_SERVER["REQUEST_METHOD"] == "POST") {
     //first check if the index is created in ES and create it if necessary
     create_index();
-    $search = trim($_POST['search']);
-    $area = trim($_POST['area']);
+		$search = array();
+		$search['search'] = trim($_POST['search']);
+		$search['area'] = trim($_POST['area']);
+		if(isset($_POST['age']))
+			$search['age'] = trim($_POST['age']);
+		else
+			$search['age'] = NULL;
+		if(isset($_POST['distance']))	
+			$search['distance'] = trim($_POST['distance']);
+		else
+			$search['distance'] = NULL;
+		if(isset($_POST['act_kind']))
+			$search['act_kind'] = trim($_POST['act_kind']);
+		else
+			$search['act_kind'] = NULL;
+		if(isset($_POST['interval']))
+			$search['interval'] = trim($_POST['interval']);
+		else
+			$search['interval'] = NULL;
+
     $results = do_search($search);
     $activities = $results[0];
     $hits = $results[1];
@@ -91,24 +123,245 @@
     <div class="container">
           <p>
             <div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
-              <form action="./search_activities.php" method="post">
-                <div class="form-row">
-                  <div class="col-12 col-md-9 mb-2 mb-md-0" style="display: flex;flex-direction:row">
-                    <input  type="search" name="search" class="form-control form-control-md" placeholder="Γράψτε τον όρο αναζήτησης...">
-					          <input  type="search" name="area" class="form-control form-control-md" placeholder="Περιοχή">
-                  </div>
-                  <div class="col-12 col-md-3">
-                    <button type="submit" class="btn btn-block btn-md btn-primary">Αναζήτηση</button>
-                  </div>
+              <div class="form-row">
+                <div class="col-12 col-md-9 mb-2 mb-md-0" style="display: flex;flex-direction:row">
+								<input  type="search" name="search" class="form-control form-control-md" placeholder="Γράψτε τον όρο αναζήτησης..."
+									<?php if($_POST['search'] != NULL)
+													echo "value="."\"".$_POST['search']."\"";
+									?>
+								>
+								<input  type="search" name="area" class="form-control form-control-md" placeholder="Περιοχή"
+									<?php if($_POST['area'] != NULL)
+													echo "value="."\"".$_POST['area']."\"";
+									?>
+								>
+								<p id="area_coord" hidden>
+									<?php
+										if($_POST['area'] != NULL)
+											echo implode(",", get_coordinates($_POST['area']));
+									?>
+								</p>
                 </div>
-              </form>
+                <div class="col-12 col-md-3">
+                  <button id="search_button" class="btn btn-block btn-md btn-primary">Αναζήτηση</button>
+                </div>
+              </div>
             </div>
         </p>
     </div>
     </header>
-    <div class="container mt-5">
 
-          <div class="row">
+<div class="container-fluid">
+		
+    <div class="row">
+			<div id="map">
+			</div>
+		</div>
+
+    <div class="row">
+		<div class="col-xs-6 col-sm-3">
+			<div id="accordion" class="panel panel-primary behclick-panel">
+				<div class="panel-heading">
+					<h3 class="panel-title">Φίλτρα Αναζήτησης</h3>
+					<div id="curr_filters" style="color:grey">
+						<p>Εφαρμ. Φίλτρα:</p>
+				  </div>	
+				</div>
+				<div class="panel-body">
+					<div class="panel-heading">
+						<h4 class="panel-title">
+							<a data-toggle="collapse" href="#age">
+								<i class="indicator fa fa-caret-down" aria-hidden="true"></i> Ηλικία
+							</a>
+						</h4>
+					</div>
+					<div id="age" class="panel-collapse collapse in" >
+						<ul class="list-group">
+							<li class="list-group-item">
+								<div class="radio" >
+									<label>
+										<input type="radio" name="age_radio" value="1,3">
+										1-3 έτη
+									</label>
+								</div>
+							</li>
+							<li class="list-group-item">
+								<div class="radio"  >
+									<label>
+										<input type="radio" name="age_radio" value="3,6">
+										3-6 έτη
+									</label>
+								</div>
+							</li>
+							<li class="list-group-item">
+								<div class="radio"  >
+									<label>
+										<input type="radio" name="age_radio" value="6,12">
+										6-12 έτη
+									</label>
+								</div>
+							</li>
+							<li class="list-group-item">
+								<div class="radio"  >
+									<label>
+										<input type="radio" name="age_radio" value="12,15">
+										12-15 έτη
+									</label>
+								</div>
+							</li>
+							<li class="list-group-item">
+								<div class="radio"  >
+									<label>
+										<input type="radio" name="age_radio" value="15,17">
+										15-17 έτη
+									</label>
+								</div>
+							</li>
+						</ul>
+					</div>
+
+					<div class="panel-heading " >
+						<h4 class="panel-title">
+							<a data-toggle="collapse" href="#distance">
+								<i class="indicator fa fa-caret-down" aria-hidden="true"></i> Απόσταση από Τοποθεσία
+							</a>
+						</h4>
+					</div>
+					<div id="distance" class="panel-collapse collapse in" >
+						<ul class="list-group">
+							<li class="list-group-item">
+								<div class="radio">
+									<label>
+										<input type="radio" name="distance_radio" value="1">
+										1km
+									</label>
+								</div>
+							</li>
+							<li class="list-group-item">
+								<div class="radio" >
+									<label>
+										<input type="radio" name="distance_radio" value="5">
+										5km
+									</label>
+								</div>
+							</li>
+							<li class="list-group-item">
+								<div class="radio"  >
+									<label>
+										<input type="radio" name="distance_radio" value="10">
+										10km
+									</label>
+								</div>
+							</li>
+							<li class="list-group-item">
+								<div class="radio"  >
+									<label>
+										<input type="radio" name="distance_radio" value="50">
+										50km
+									</label>
+								</div>
+							</li>
+						</ul>
+					</div>
+					<div class="panel-heading" >
+						<h4 class="panel-title">
+							<a data-toggle="collapse" href="#act_kind"><i class="indicator fa fa-caret-down" aria-hidden="true"></i> Είδος Δραστηριότητας</a>
+						</h4>
+					</div>
+					<div id="act_kind" class="panel-collapse collapse in">
+						<ul class="list-group">
+							<li class="list-group-item">
+								<div class="radio">
+									<label>
+										<input type="radio" name="act_kind_radio" value="Ποδόσφαιρο">
+										Ποδόσφαιρο
+									</label>
+								</div>
+							</li>
+							<li class="list-group-item">
+								<div class="radio" >
+									<label>
+										<input type="radio" name="act_kind_radio" value="Μπάσκετ">
+										Μπάσκετ
+									</label>
+								</div>
+							</li>
+							<li class="list-group-item">
+								<div class="radio"  >
+									<label>
+										<input type="radio" name="act_kind_radio" value="Κολύμβηση">
+										Κολύμβηση
+									</label>
+								</div>
+							</li>
+							<li class="list-group-item">
+								<div class="radio"  >
+									<label>
+										<input type="radio" name="act_kind_radio" value="Γενικού Τύπου">
+										Άλλο
+									</label>
+								</div>
+							</li>
+						</ul>
+					</div>
+					<div class="panel-heading" >
+						<h4 class="panel-title">
+							<a data-toggle="collapse" href="#interval"><i class="indicator fa fa-caret-down" aria-hidden="true"></i> Χρονικό Διάστημα</a>
+						</h4>
+					</div>
+					<div id="interval" class="panel-collapse collapse">
+						<ul class="list-group">
+							<li class="list-group-item">
+								<div class="radio">
+									<label>
+										<input type="radio" name="interval_radio" value="1d">
+										1 μέρα
+									</label>
+								</div>
+							</li>
+							<li class="list-group-item">
+								<div class="radio" >
+									<label>
+										<input type="radio" name="interval_radio" value="10d">
+										10 μέρες
+									</label>
+								</div>
+							</li>
+							<li class="list-group-item">
+								<div class="radio">
+									<label>
+										<input type="radio" name="interval_radio" value="30d">
+										1 μήνας
+									</label>
+								</div>
+							</li>
+							<li class="list-group-item">
+								<div class="radio" >
+									<label>
+										<input type="radio" name="interval_radio" value="90d">
+										3 μήνες
+									</label>
+								</div>
+							</li>
+							<li class="list-group-item">
+								<div class="radio" >
+									<label>
+										<input type="radio" name="interval_radio" value="180d">
+										6 μήνες
+									</label>
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	<!--/div-->
+<!--/div-->
+
+					<div class="col-xs-6 col-sm-9">
+
+						<div class="row" id="activities">
 
 <?php
 
@@ -129,9 +382,9 @@
 				          <p class="card-text">Πόλη: <?php echo $activities[$i]['town']?></p>
 				          <p class="card-text">Διεύθυνση: <?php echo $activities[$i]['streetName']?> <?php echo $activities[$i]['streetNumber']?></p>
 				          <p class="card-text">ΤΚ: <?php echo $activities[$i]['PostalCode']?></p>
-
                   <p class="card-text"><?php echo $activities[$i]['actDescription']?></p>
-                </div>
+									<p class="card-text" hidden><?php echo $activities[$i]['latitude'].','.$activities[$i]['longitude']?></p>
+								</div>
                 <div class="card-footer">
                   <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
                 </div>
@@ -141,8 +394,11 @@
   }
 ?>              
       </div>
+						<!-- row -->
+				</div>	
+				<!-- col-->
+			</div>
       <!-- /.row -->
-
     </div>
     <!-- /.container -->
 
@@ -159,7 +415,33 @@
     <!-- Bootstrap core JavaScript -->
     <script src="../assets/jquery/jquery.min.js"></script>
     <script src="../assets/bootstrap/js/bootstrap.bundle.min.js"></script>
+		<!--script src="../assets/js/search.js"--><!--/script-->
+		<script src="../assets/js/create_map.js"></script>
 
+	<?php
+		if($search['area'] != NULL && $search['area'] != ""){
+	?>	
+    <script async defer
+    	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBsLUCKMjlmcDrvL6IXYlaHez6AUb01O8U&callback=initMap">
+				document.getElementById('map').style.display = 'initial';
+    </script>
+	<?php
+		}else{
+	?>		
+			<script>
+				document.getElementById('map').style.display = 'none';
+			</script>
+	<?php		
+		}
+	?>	
+		<script>
+			document.body.addEventListener("load", initiate_filters());
+			document.getElementById("search_button").addEventListener("click", submit_form);
+			document.getElementById("age").addEventListener("change", submit_form);
+			document.getElementById("distance").addEventListener("change", submit_form); 
+			document.getElementById("act_kind").addEventListener("change", submit_form); 
+			document.getElementById("interval").addEventListener("change", submit_form); 
+	  </script>
   </body>
 
 </html>

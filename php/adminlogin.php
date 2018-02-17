@@ -30,7 +30,7 @@
       $myusername = mysqli_real_escape_string($dbc,$_POST['email']);
       $mypassword = mysqli_real_escape_string($dbc,$_POST['pwd']);
 
-      $sql = "SELECT * FROM admin WHERE email = '$myusername' and pwd = '$mypassword'";
+      $sql = "SELECT * FROM Admin WHERE email = '$myusername' and pwd = '$mypassword'";
       $result = mysqli_query($dbc,$sql);
       $row = mysqli_fetch_array($result);
 
@@ -49,7 +49,7 @@
       $_SESSION['PostalCode'] = $row['PostalCode'];
       $_SESSION['PhoneNumber'] = $row['PhoneNumber'];
 
-      header("location: admin-profile.php");
+      header("location: admin-dashboard.php");
     }
     else {
       $error = "Your Login Name or Password is invalid";
