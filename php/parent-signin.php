@@ -18,7 +18,7 @@
 
   <body>
 
-	<!-- Navigation -->
+  	<!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
       <div class="container">
         <a class="navbar-brand" href="index.php">KidsUp</a>
@@ -42,8 +42,8 @@
               <a class="nav-link" href="#contact">Επικοινωνία</a>
             </li>
             <li class="nav-item dropdown">
-			  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownSignUp" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Σύνδεση ως</a>
-			  <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownSignUp">
+  		  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownSignUp" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Σύνδεση ως</a>
+  		  <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownSignUp">
                   <a class="dropdown-item" href="parent-signin.php">Γονέας</a>
                   <a class="dropdown-item" href="provider-signin.php">Πάροχος</a>
               </div>
@@ -61,68 +61,73 @@
         </div>
       </div>
     </nav>
- <div class="container">
- <h4 class="form-signin" style="text-align:center;">
-	<?php
-   include("mysqli_connect.php");
-   session_start();
-   mb_internal_encoding('UTF-8');
-   mb_http_input("utf-8");
-   if($_SERVER["REQUEST_METHOD"] == "POST") {
-      // username and password sent from form 
-      
-      $myusername = mysqli_real_escape_string($dbc,$_POST['ParEmail']);
-      $mypassword = mysqli_real_escape_string($dbc,$_POST['pwd']); 
-      
-      $sql = "SELECT * FROM Parent WHERE ParEmail = '$myusername' and pwd = '$mypassword'";
-      $result = mysqli_query($dbc,$sql);
-      $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
-      
-      $count = mysqli_num_rows($result);
-      
-      // If result matched $myusername and $mypassword, table row must be 1 row
-		
-      if($count == 1) {
-		    if($row['activated']=='0'){
-          session_destroy();
-			    header("location: waiting_activation.php");
-		    }else{
-          $_SESSION['login_user'] = $myusername;
-          $_SESSION['firstname'] = $row['firstname'];
-          $_SESSION['lastname'] = $row['lastname'];
-          $_SESSION['Points'] = $row['Points'];
-          
-          header("location: parentSignedInHomePage.php");
-        }
-      }else {
-         $error = "Your Login Name or Password is invalid";
-		     echo $error;
-      }
-   }
-?>
-</h4>
-</div>	
-	
-	
-	
+    <div class="container">
+      <h4 class="form-signin" style="text-align:center;">
+      	<?php
+          require("mysqli_connect.php");
+          mysqli_query($dbc,"SET NAMES UTF8");    //to display greek characters correctly
+          session_start();
+          mb_internal_encoding('UTF-8');
+          mb_http_input("utf-8");
+          if($_SERVER["REQUEST_METHOD"] == "POST") {
+            // username and password sent from form 
+              
+            $myusername = mysqli_real_escape_string($dbc,$_POST['ParEmail']);
+            $mypassword = mysqli_real_escape_string($dbc,$_POST['pwd']); 
+            
+            $sql = "SELECT * FROM Parent WHERE ParEmail = '$myusername' and pwd = '$mypassword'";
+            $result = mysqli_query($dbc,$sql);
+            $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
+
+            $count = mysqli_num_rows($result);
+            
+            // If result matched $myusername and $mypassword, table row must be 1 row
+      		
+            if($count == 1) {
+        		  if($row['activated']==0){
+        			  session_destroy();
+        			  header("location: waiting_activation.php");
+        		  }else{
+                $_SESSION['login_user'] = $myusername;
+                $_SESSION['parent_pwd'] = $mypassword;  
+                $_SESSION['parent_firstname'] = $row['firstname'];
+                $_SESSION['parent_lastname'] = $row['lastname'];
+                $_SESSION['parent_points'] = $row['Points'];
+                $_SESSION['parent_street'] = $row['streetName'];
+                $_SESSION['parent_street_num'] = $row['streetNumber'];
+                $_SESSION['parent_town'] = $row['town'];
+                $_SESSION['parent_zipcode'] = $row['PostalCode']; 
+                header("location: parentSignedInHomePage.php");
+              }
+            }else {
+              $error = "Your Login Name or Password is invalid";
+      		    echo   $error;
+            }
+          }
+        ?>
+      </h4>
+    </div>	
+  	
+  	
+  	
 
     <div class="container">
 
-      <form class="form-signin" action="./parent-signin.php" method="post">
-        <h2 class="form-signin-heading">Εισάγετε τα στοιχεία σας</h2>
-        <label for="inputEmail" class="sr-only">Email address</label>
-        <input type="email" id="inputEmail" name="ParEmail" class="form-control" placeholder="Email address" required autofocus>
-        <label for="inputPassword" class="sr-only">Password</label>
-        <input type="password" id="inputPassword"  name="pwd" class="form-control" placeholder="Password" required>
-		<input type="submit" class="btn btn-sm btn-info" value="Σύνδεση" ></input>
-      </form>
+    <form class="form-signin" action="./parent-signin.php" method="post">
+      <h2 class="form-signin-heading">Εισάγετε τα στοιχεία σας</h2>
+      <label for="inputEmail" class="sr-only">Email address</label>
+      <input type="email" id="inputEmail" name="ParEmail" class="form-control" placeholder="Email address" required autofocus>
+      <label for="inputPassword" class="sr-only">Password</label>
+      <input type="password" id="inputPassword"  name="pwd" class="form-control" placeholder="Password" required>
+  		<input type="submit" class="btn btn-sm btn-info" value="Σύνδεση" ></input>
+    </form>
 
     </div>
-	<!-- /container -->
+  	<!-- /container -->
 
     <!-- Bootstrap core JavaScript -->
     <script src="../assets/jquery/jquery.min.js"></script>
     <script src="../assets/bootstrap/js/bootstrap.bundle.min.js"></script>
-    
+      
   </body>
 </html>

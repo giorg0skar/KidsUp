@@ -31,16 +31,16 @@
       header("location:parent-signin.php");
    }
 	$user_check = $_SESSION['login_user'];
-	$firstname = $_SESSION['firstname'];
-	$lastname = $_SESSION['lastname'];
-	$Points = $_SESSION['Points'];
+	$firstname = $_SESSION['parent_firstname'];
+	$lastname = $_SESSION['parent_lastname'];
+	$Points = $_SESSION['parent_points'];
   
   ?>
   
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
       <div class="container">
-        <a class="navbar-brand" href="index.php">KidsUp</a>
+        <a class="navbar-brand" href="parentSignedInHomePage.php">KidsUp</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -64,7 +64,7 @@
               <a class="nav-link" href="logout.php">Έξοδος</a>
             </li>
 			<li class="nav-item">
-				<a class="nav-link" href="parentProfile.php"><?php echo $firstname . ' ' . $lastname; ?><br>Πόντοι:<?php echo $Points; ?></a>
+				<a class="nav-link" href="parent_profile.php"><?php echo $firstname . ' ' . $lastname; ?><br>Πόντοι:<?php echo $Points; ?></a>
             </li>
           </ul>
         </div>

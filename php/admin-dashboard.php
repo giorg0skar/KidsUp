@@ -22,7 +22,7 @@
         <div class="sidebar" data-image="../assets/img/sidebar-5.jpg" data-color="black">
             <div class="sidebar-wrapper">
                 <div class="logo">
-                    <a href="./index.php" class="simple-text">
+                    <a href="./logout.php" class="simple-text">
                         KidsUp
                     </a>
                 </div>
@@ -39,12 +39,6 @@
                             <p>Λογαριασμοι</p>
                         </a>
                     </li>
-                    <!-- <li>
-                        <a class="nav-link" href="#activities">
-                            <i class="ti-view-list-alt"></i>
-                            <p>Δραστηριότητες</p>
-                        </a>
-                    </li> -->
                     <li>
                         <a class="nav-link" href="./admin-statistics.php">
                             <i class="ti-panel"></i>
@@ -67,7 +61,7 @@
                     <div class="collapse navbar-collapse justify-content-end" id="navigation">
                         <ul class="navbar-nav ml-auto">
                             <li class="nav-item">
-                                <a class="nav-link" href="./index.php">
+                                <a class="nav-link" href="./logout.php">
                                     <span class="no-icon">Αρχική</span>
                                 </a>
                             </li>
@@ -77,7 +71,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#do_something">
+                                <a class="nav-link" href="./logout-admin.php">
                                     <span class="no-icon">Αποσύνδεση</span>
                                 </a>
                             </li>
@@ -89,6 +83,10 @@
             <div class="content">
                 <div class="container-fluid">
                 <?php
+					session_start();
+					if(!isset($_SESSION['login_user'])){
+						header("location:adminlogin.php");
+					}
                     if (isset($_POST['activate'])) {
                         mb_internal_encoding('UTF-8');
                         mb_http_input("utf-8");
@@ -129,8 +127,8 @@
                     $query = "SELECT ParEmail,firstname,lastname FROM Parent WHERE activated=0";
                     $response = @mysqli_query($dbc, $query);
                     if ($response) {
-                        $count = 0;
-                        echo '<table class="table table-striped"><caption>Γονείς για ενεργοποίηση</caption>
+                        $count = 1;
+                        echo '<caption>Γονείς για ενεργοποίηση</caption><table class="table table-striped">
                         <thead><tr>
                             <th scope="col">#</th>
                             <th scope="col">Email</th>
@@ -167,8 +165,8 @@
                     $query = "SELECT ProvEmail,companyName FROM Provider WHERE activated=0";
                     $response = @mysqli_query($dbc, $query);
                     if ($response) {
-                        $count = 0;
-                        echo '<table class="table table-striped"><caption>Πάροχοι για ενεργοποίηση</caption>
+                        $count = 1;
+                        echo '<caption>Πάροχοι για ενεργοποίηση</caption><table class="table table-striped">
                         <thead><tr>
                             <th scope="col">#</th>
                             <th scope="col">Email</th>
@@ -201,53 +199,6 @@
                     //close connection to database
                     mysqli_close($dbc);
                     ?>
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Email</th>
-                            <th scope="col">Όνομα</th>
-                            <th scope="col">Επώνυμο</th>
-                            <th scope="col">Ενεργοποίηση</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                            <th scope="row">1</th>
-                            <td>t1@mail.com</td>
-                            <td>Mark</td>
-                            <td>Otto</td>
-                            <td>
-                                   <form action="admin-dashboard.php" method="post">
-                                   <input class="btn btn-primary" type="submit" name="activate" value="Activate" />
-                                   </form>
-                            </td>
-                            </tr>
-                            <tr>
-                            <th scope="row">2</th>
-                                <td>something2@mail.com</td>
-                                <td>Jacob</td>
-                                <td>Thornton</td>
-                                <!-- <td><a href="#do_stuff">Activate</td> -->
-                                <td>
-                                   <form action="admin-dashboard.php" method="post">
-                                   <input class="btn btn-primary" type="submit" name="activate" value="Activate" />
-                                   </form>
-                                </td>
-                            </tr>
-                            <tr>
-                            <th scope="row">3</th>
-                            <td>t3@mail.com</td>
-                            <td>Larry</td>
-                            <td>the Bird</td>
-                            <td>
-                                   <form action="admin-dashboard.php" method="post">
-                                   <input class="btn btn-primary" type="submit" name="activate" value="Activate" />
-                                   </form>
-                            </td>
-                            </tr>
-                        </tbody>
-                    </table>
                 </div>
             </div>
             <!-- footer -->
@@ -256,7 +207,7 @@
                     <nav>
                         <ul class="footer-menu">
                             <li>
-                                <a href="#">
+                                <a href="./logout.php">
                                     Αρχική
                                 </a>
                             </li>

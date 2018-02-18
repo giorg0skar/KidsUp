@@ -12,20 +12,64 @@ function do_search($search)
 {
     $client = ClientBuilder::create()->build();
 
-    //$search = trim($_POST["search"]);
-    // submit query to ES with PHP API
+    $search_phrase = $search['search'];
+    $area = $search['area'];
+    $distance = $search['distance'];
+    $act_kind = $search['act_kind'];
+    $age = $search['age'];
+    if($age != NULL){
+        $age_val = explode(',',$age);
+        $minage = intval($age_val[0]);
+        $maxage = intval($age_val[1]);
+    }else{
+        $minage = NULL;
+        $maxage = NULL;        
+    }
+    $interval = $search['interval'];
+
     $params = [
         'index' => 'kidsup_new',
         'type' => 'activity',
         'body' => [
             'query' => [
-                'multi_match' => [
-                    'query' => $search,
-                    'fields' => ["actname", "acttype", "actdescription"]
+                'bool' => [
+                    'must' => [
+                        'multi_match' => [
+                            'query' => $search_phrase,
+                            'fields' => ["actname", "acttype", "actdescription"]
+                        ]
+                    ]
                 ]
             ]
         ]
     ];
+
+    $index = 0;
+    if($area != NULL){
+        $location_coord = get_coordinates($area);
+        if($distance != NULL){
+            $params['body']['query']['bool']['filter']['bool']['must'][$index]['geo_distance']['distance'] = $distance.'km';
+        }else{
+            $params['body']['query']['bool']['filter']['bool']['must'][$index]['geo_distance']['distance'] = '10km';            
+        }
+        $params['body']['query']['bool']['filter']['bool']['must'][$index]['geo_distance']['location']['lat'] = $location_coord[0];
+        $params['body']['query']['bool']['filter']['bool']['must'][$index]['geo_distance']['location']['lon'] = $location_coord[1];
+        $index++;
+    }
+    if($act_kind != NULL){
+        $params['body']['query']['bool']['filter']['bool']['must'][$index]['match']['acttype'] = $act_kind;
+        $index++;
+    }
+    if($interval != NULL){
+        $params['body']['query']['bool']['filter']['bool']['must'][$index]['range']['actdate']['gte'] = 'now';
+        $params['body']['query']['bool']['filter']['bool']['must'][$index+1]['range']['actdate']['lte'] = 'now+'.$interval.'/d';
+        $index+=2;
+    }
+    if($minage != NULL && $maxage != NULL){
+        $params['body']['query']['bool']['filter']['bool']['must'][$index]['range']['minage']['lte'] = $minage;
+        $params['body']['query']['bool']['filter']['bool']['must'][$index+1]['range']['maxage']['gte'] = $maxage;
+        $index+=2;
+    }
 
     $results = $client->search($params);
     // take results (collect actids in an array)  
@@ -65,7 +109,7 @@ function insert_activity($activity){
     $client = ClientBuilder::create()->build();
     $actid = $activity['ActID'];
     $actname = $activity['actName'];
-    $acttype = $activity['actType'];
+    $act_kind = $activity['actType'];
     $actdate = $activity['actDate'];
     $minage = $activity['MinAge'];
     $maxage = $activity['MaxAge'];
@@ -83,7 +127,7 @@ function insert_activity($activity){
         'type' => 'activity',
         'id' => $actid,
         'body' => [ 'actname' => $actname,
-                    'acttype' => $acttype,
+                    'acttype' => $act_kind,
                     'actdate' => $actdate,
                     'minage' => $minage,
                     'maxage' => $maxage,
@@ -112,11 +156,6 @@ function create_index(){
     }
     //if it does not exist then create the index
 
-    /*--actdate should be type => date to support
-    * date filters (there is a bug in compatibility
-    * betwwen DATETIME in mySQL and date in ES) 
-    * -> bug must be fixed later
-    */
     $params = [
         'index' => 'kidsup_new',
         'body' => [
@@ -132,13 +171,14 @@ function create_index(){
                             'analyzer' => 'greek'
                         ],
                         'actdate' => [
-                            'type' => 'text'
+                            'type' => 'date',
+                            'format' => 'yyyy-MM-dd HH:mm:ss'
                         ],
                         'minage' => [
-                            'type' => 'long'
+                            'type' => 'integer'
                         ],
                         'maxage' => [
-                            'type' => 'long'
+                            'type' => 'integer'
                         ],
                         'availabletickets' => [
                             'type' => 'boolean'
@@ -179,6 +219,15 @@ function insert_activities(){
         $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
         insert_activity($row);
     }
+}
+
+function get_coordinates($area){
+    $url='https://maps.google.com/maps/api/geocode/json?address='.urlencode($area).'&key=AIzaSyBsLUCKMjlmcDrvL6IXYlaHez6AUb01O8U&sensor=false';
+    $geocode = file_get_contents($url);
+    $output= json_decode($geocode , true);
+    $latitude = $output['results'][0]['geometry']['location']['lat'];
+    $longitude = $output['results'][0]['geometry']['location']['lng'];
+    return array($latitude, $longitude);
 }
 
 ?>

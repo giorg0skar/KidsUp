@@ -30,7 +30,7 @@
       $myusername = mysqli_real_escape_string($dbc,$_POST['email']);
       $mypassword = mysqli_real_escape_string($dbc,$_POST['pwd']);
 
-      $sql = "SELECT * FROM admin WHERE email = '$myusername' and pwd = '$mypassword'";
+      $sql = "SELECT * FROM Admin WHERE email = '$myusername' and pwd = '$mypassword'";
       $result = mysqli_query($dbc,$sql);
       $row = mysqli_fetch_array($result);
 
