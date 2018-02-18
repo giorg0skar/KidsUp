@@ -49,7 +49,7 @@
       $_SESSION['PostalCode'] = $row['PostalCode'];
       $_SESSION['PhoneNumber'] = $row['PhoneNumber'];
 
-      header("location: admin-profile.php");
+      header("location: admin-dashboard.php");
     }
     else {
       $error = "Your Login Name or Password is invalid";
