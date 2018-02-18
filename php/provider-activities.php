@@ -15,6 +15,9 @@
     <link href="../assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
     <link href="../assets/css/light-bootstrap-dashboard.css?v=2.0.1" rel="stylesheet" />
 
+    <!-- External CSS Files -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.css" rel="stylesheet" />
+    <link href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
 
 </head>
 
@@ -121,7 +124,7 @@
                                     <h4 class="card-title">Ενεργές Δραστηριότητες</h4>
                                 </div>
                                 <div class="card-body table-full-width table-responsive">
-                                    <table class="table table-hover table-striped">
+                                    <table id="active-table" class="table table-hover table-striped">
                                         <thead>
                                             <th>Φωτογραφία</th>
                                             <th>Δραστηριότητα</th>
@@ -160,7 +163,7 @@
                                     <h4 class="card-title">Ανενεργές Δραστηριότητες</h4>
                                 </div>
                                 <div class="card-body table-full-width table-responsive">
-                                    <table class="table table-hover table-striped">
+                                    <table id="inactive-table" class="table table-hover">
                                         <thead>
                                             <th>Φωτογραφία</th>
                                             <th>Δραστηριότητα</th>
@@ -240,9 +243,19 @@
 <script src="../assets/js/core/jquery.3.2.1.min.js" type="text/javascript"></script>
 <script src="../assets/js/core/bootstrap.min.js" type="text/javascript"></script>
 
-
 <!-- Control Center for Light Bootstrap Dashboard: scripts for the example pages etc -->
 <script src="../assets/js/light-bootstrap-dashboard.js?v=2.0.1" type="text/javascript"></script>
 
+<!--   External JS Files   -->
+<script src="https://code.jquery.com/jquery-1.12.4.js" type="text/javascript"></script>
+<script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js" type="text/javascript"></script>
+<script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js" type="text/javascript"></script>
+
+<script>
+    $(document).ready(function() {
+        $('#active-table').DataTable();
+        $('#inactive-table').DataTable();
+    } );
+</script>
 
 </html>
