@@ -15,6 +15,7 @@
     <link href="../assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
     <link href="../assets/css/light-bootstrap-dashboard.css?v=2.0.1" rel="stylesheet" />
 
+
 </head>
 
 <body>
@@ -28,10 +29,15 @@
 			}
 			$provider_user = $_SESSION['login_user'];
     		$companyName = $_SESSION['companyName'];
-            $sql = "SELECT * FROM Activity WHERE ProvEmail = '$provider_user'";
-            $result = mysqli_query($dbc,$sql);
+            $sql = "SELECT * FROM Activity WHERE ((ProvEmail = '$provider_user') AND actDate >= NOW()) ORDER BY ActID DESC"; # we want only the active activities
+            $result_active = mysqli_query($dbc,$sql);
+
+            $sql = "SELECT * FROM Activity WHERE ((ProvEmail = '$provider_user') AND actDate < NOW()) ORDER BY ActID DESC"; # we want only the expired activities
+            $result_inactive = mysqli_query($dbc,$sql);
 
     ?>
+
+
     <div class="wrapper">
         <div class="sidebar" data-image="../assets/img/sidebar-5.jpg" data-color="black">
             <div class="sidebar-wrapper">
@@ -126,8 +132,8 @@
                                         </thead>
                                         <tbody>
                                             <?php
-                                                if($result){
-                                                    while($row = mysqli_fetch_array($result,MYSQLI_ASSOC)){
+                                                if($result_active){
+                                                    while($row = mysqli_fetch_array($result_active,MYSQLI_ASSOC)){
                                                         echo '<tr>';
                                                                 $image_name = $row['pictureURL'];
                                                                 echo '<td>'. '<img src="'.$image_name.'" alt="HTML5 Icon" style="width:128px;height:128px">'.'</td>';
@@ -154,25 +160,34 @@
                                     <h4 class="card-title">Ανενεργές Δραστηριότητες</h4>
                                 </div>
                                 <div class="card-body table-full-width table-responsive">
-                                    <table class="table table-hover">
+                                    <table class="table table-hover table-striped">
                                         <thead>
                                             <th>Φωτογραφία</th>
                                             <th>Δραστηριότητα</th>
-                                            <th>Ημερομηνία Δημιουργίας</th>
+                                            <th>Ημερομηνία Δραστηριότητας</th>
                                             <th>Προβολές</th>
                                             <th>Αγορασμένα Εισιτήρια</th>
                                             <th>Κέρδη</th>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                            </tr>
+                                            <?php
+                                                if($result_inactive){
+                                                    while($row = mysqli_fetch_array($result_inactive,MYSQLI_ASSOC)){
+                                                        echo '<tr>';
+                                                                $image_name = $row['pictureURL'];
+                                                                echo '<td>'. '<img src="'.$image_name.'" alt="HTML5 Icon" style="width:128px;height:128px">'.'</td>';
+                                                                echo '<td>'. $row['actName'].'</td>';
+                                                                echo '<td>'. $row['actDate'].'</td>';
+                                                                echo '<td>'. $row['visits'].'</td>';
+                                                                $bought_tickets = $row['maxTickets'] - $row['availableTickets'];
+                                                                echo '<td>'. $bought_tickets .' / '.$row['maxTickets'] .'</td>'; # bought_tickets ανά maxTickets
+                                                                $earnings = $bought_tickets * $row['price'] / 10; # convert earnings in Euros
+                                                                echo '<td>'.$earnings.' €</td>';
+                                                        echo '</tr>';
 
+                                                    }
+                                                }
+                                             ?>
                                         </tbody>
                                     </table>
                                 </div>
