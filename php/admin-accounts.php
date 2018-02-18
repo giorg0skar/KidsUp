@@ -22,7 +22,7 @@
         <div class="sidebar" data-image="../assets/img/sidebar-5.jpg" data-color="black">
             <div class="sidebar-wrapper">
                 <div class="logo">
-                    <a href="./index.php" class="simple-text">
+                    <a href="./logout-admin.php" class="simple-text">
                         KidsUp
                     </a>
                 </div>
@@ -39,12 +39,6 @@
                             <p>Λογαριασμοι</p>
                         </a>
                     </li>
-                    <!-- <li>
-                        <a class="nav-link" href="#activities">
-                            <i class="ti-view-list-alt"></i>
-                            <p>Δραστηριότητες</p>
-                        </a>
-                    </li> -->
                     <li>
                         <a class="nav-link" href="./admin-statistics.php">
                             <i class="ti-panel"></i>
@@ -67,7 +61,7 @@
                     <div class="collapse navbar-collapse justify-content-end" id="navigation">
                         <ul class="navbar-nav ml-auto">
                             <li class="nav-item">
-                                <a class="nav-link" href="./index.php">
+                                <a class="nav-link" href="./logout-admin.php">
                                     <span class="no-icon">Αρχική</span>
                                 </a>
                             </li>
@@ -77,7 +71,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#do_something">
+                                <a class="nav-link" href="logout-admin.php">
                                     <span class="no-icon">Αποσύνδεση</span>
                                 </a>
                             </li>
@@ -89,6 +83,10 @@
             <div class="content">
                 <div class="container-fluid">
                 <?php
+					session_start();
+					if(!isset($_SESSION['login_user'])){
+						header("location:adminlogin.php");
+					}
                     mb_internal_encoding('UTF-8');
                     mb_http_input("utf-8");
                     //lock a user's account
@@ -151,7 +149,7 @@
                     $query = "SELECT ParEmail FROM Parent WHERE activated=1";
                     $response = @mysqli_query($dbc, $query);
                     if ($response) {
-                        echo '<table class="table"><thead>
+                        echo '<caption>Γονείς</caption><table class="table"><thead>
                         <tr>
                             <th scope="col">Λογαριασμος</th>
                             <th scope="col">Νεος κωδικος</th>
@@ -201,7 +199,7 @@
                     $query = "SELECT ProvEmail FROM Provider WHERE activated=1";
                     $response = @mysqli_query($dbc, $query);
                     if ($response) {
-                        echo '<table class="table"><thead>
+                        echo '<caption>Πάροχοι</caption><table class="table"><thead>
                         <tr>
                             <th scope="col">Λογαριασμος</th>
                             <th scope="col">Νεος κωδικος</th>
