@@ -32,8 +32,19 @@
             }
             $provider_user = $_SESSION['login_user'];
             $companyName = $_SESSION['companyName'];
+
+            ### Active Activities order by Apixisi ###
             $sql = "SELECT * FROM Activity WHERE ((ProvEmail = '$provider_user') AND actDate >= NOW()) ORDER BY ((maxTickets-availableTickets)/visits) DESC"; # Order by Apixisi = bought_tickets / visits
             $result_active = mysqli_query($dbc,$sql);
+
+            ### Info of active activities ###
+            $sql_info =  "SELECT COUNT(ActID) as number_of_activities,
+                                SUM((maxTickets - availableTickets) * price) AS earnings_sum,
+                                SUM(maxTickets - availableTickets) AS bought_tickets,
+                                SUM(visits) AS visits
+            FROM Activity WHERE ((ProvEmail = '$provider_user') AND actDate >= NOW())";
+            $result_info = mysqli_query($dbc,$sql_info);
+            if($result_info) $total_info = mysqli_fetch_array($result_info,MYSQLI_ASSOC);
         ?>
 
 
@@ -119,7 +130,7 @@
                                         <i class="fa fa-list fa-3x"></i>
                                     </div>
                                     <h6 class="text-uppercase">Ενεργές Δραστηριότητες</h6>
-                                    <h1 class="display-4">134</h1>
+                                    <h1 class="display-4"><?php echo $total_info['number_of_activities']; ?> </h1>
                                 </div>
                             </div>
                         </div>
@@ -130,7 +141,7 @@
                                         <i class="fa fa-star fa-3x"></i>
                                     </div>
                                     <h6 class="text-uppercase">Κέρδη Ενεργών Δραστ.</h6>
-                                    <h1 class="display-4">1897 €</h1>
+                                    <h1 class="display-4"><?php echo $total_info['earnings_sum'] / 10 ;?> €</h1>
                                 </div>
                             </div>
                         </div>
@@ -141,7 +152,9 @@
                                         <i class="fa fa-user fa-3x"></i>
                                     </div>
                                     <h6 class="text-uppercase">Επισκέπτες</h6>
-                                    <h1 class="display-4">125</h1>
+                                    <h1 class="display-4"><?php if($total_info['visits']) echo $total_info['visits'];
+                                                                else echo 0; ?>
+                                    </h1>
                                 </div>
                             </div>
                         </div>
@@ -152,7 +165,9 @@
                                         <i class="fa fa-ticket fa-3x"></i>
                                     </div>
                                     <h6 class="text-uppercase">Πωληθέντα Εισιτήρια</h6>
-                                    <h1 class="display-4">+36</h1>
+                                    <h1 class="display-4"><?php if($total_info['bought_tickets']) echo '+' , $total_info['bought_tickets'];
+                                                                else echo 0;?>
+                                    </h1>
                                 </div>
                             </div>
                         </div>
@@ -161,7 +176,8 @@
             <!-- End of initial statistics -->
                     <div class="card">
                         <div class="card-body">
-                            <a class="btn btn-info btn-fill btn-wd" href="./activity_form.php" role="button">Νέα Δραστηριότητα</a>                            </div>
+                            <a class="btn btn-info btn-fill btn-wd" href="./activity_form.php" role="button">Νέα Δραστηριότητα</a>
+                        </div>
                     </div>
                     <div class="row">
                         <div class="col-md-12">
@@ -195,7 +211,7 @@
                                                                 echo '<td>'. $bought_tickets .' / '.$row['maxTickets'] .'</td>'; # bought_tickets ανά maxTickets
                                                                 $earnings = $bought_tickets * $row['price'] / 10; # convert earnings in Euros
                                                                 echo '<td>'.$earnings.' €</td>';
-                                                                $apixisi = 100 * $row['visits'] / $bought_tickets;
+                                                                $apixisi = 100 * $row['visits'] / $bought_tickets; # create percentage of visits / bought_tickets
                                                                 echo '<td>'.round($apixisi).'% </td>';
                                                         echo '</tr>';
 
