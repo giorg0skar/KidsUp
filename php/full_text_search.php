@@ -45,6 +45,8 @@ function do_search($search)
     ];
 
     $index = 0;
+    $params['body']['query']['bool']['filter']['bool']['must'][$index]['match']['availabletickets'] = 'true';
+    $index++;
     if($area != NULL){
         $location_coord = get_coordinates($area);
         if($distance != NULL){
@@ -64,6 +66,9 @@ function do_search($search)
         $params['body']['query']['bool']['filter']['bool']['must'][$index]['range']['actdate']['gte'] = 'now';
         $params['body']['query']['bool']['filter']['bool']['must'][$index+1]['range']['actdate']['lte'] = 'now+'.$interval.'/d';
         $index+=2;
+    }else{
+        $params['body']['query']['bool']['filter']['bool']['must'][$index]['range']['actdate']['gte'] = 'now';
+        $index++;
     }
     if($minage != NULL && $maxage != NULL){
         $params['body']['query']['bool']['filter']['bool']['must'][$index]['range']['minage']['lte'] = $minage;
@@ -110,7 +115,7 @@ function insert_activity($activity){
     $actid = $activity['ActID'];
     $actname = $activity['actName'];
     $act_kind = $activity['actType'];
-    $actdate = $activity['actDate'];
+    $actdate = $activity['actDate']; 
     $minage = $activity['MinAge'];
     $maxage = $activity['MaxAge'];
     $availabletickets = $activity['availableTickets'];

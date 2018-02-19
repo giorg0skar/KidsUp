@@ -87,7 +87,7 @@
 					$actDescription = trim($_POST['actDescription']);
 					$pictureURL = trim($_POST['pictureURL']);
           $visits = 0;
-          $actDateTime = $actDate." ".$actTime;
+          $actDateTime = $actDate." ".$actTime.":00";
 					
 					$address = $streetName . ' ' .$streetNumber .' , ' .$PostalCode .' , ' .$town;
 					$url='https://maps.google.com/maps/api/geocode/json?address='.urlencode($address).'&key=AIzaSyBsLUCKMjlmcDrvL6IXYlaHez6AUb01O8U&sensor=false';
@@ -109,7 +109,30 @@
                 echo '<h1>Επιτυχής δημιουργία δραστηριότητας  !</h1>';
                 
                 //get the auto-increment key from the last-insert (PROBLEM IN CONCURRENT SUBMITS) 
-                $id = mysqli_insert_id($dbc);
+                //$id = mysqli_insert_id($dbc);
+
+                $sql = "SELECT ActID 
+                        FROM Activity 
+                        WHERE ProvEmail = '$ProvEmail' AND
+                              actName = '$actName' AND
+                              actType = '$actType' AND
+                              actDate = '$actDateTime' AND
+                              price = '$price' AND
+                              MinAge = '$MinAge' AND
+                              MaxAge = '$MaxAge' AND
+                              maxTickets = '$maxTickets' AND
+                              town = '$town' AND
+                              streetName = '$streetName' AND
+                              streetNumber = '$streetNumber' AND
+                              PostalCode = '$PostalCode' AND
+                              PhoneNumber = '$PhoneNumber' AND
+                              actDescription = '$actDescription' AND
+                              pictureURL = '$pictureURL'
+                        ";
+                $result = mysqli_query($dbc,$sql);
+                $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
+                $id = $row['ActID'];
+
                 $new_activity = [
                   'ActID' => $id,
                   'actName' => $actName,
