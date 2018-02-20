@@ -48,7 +48,7 @@ function send_ticket_with_email($to,$subject,$pdf)
     $mail = new PHPMailer(true);
     try{
         //Server Settings
-        $mail->SMTPDebug = 2;
+        // $mail->SMTPDebug = 2;
         $mail->IsSMTP();
         $mail->Host = "smtp.gmail.com";
         $mail->SMTPAuth = true;
