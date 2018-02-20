@@ -125,7 +125,7 @@
               <a class="nav-link" href="logout.php">Έξοδος</a>
             </li>
 			<li class="nav-item">
-				<a class="nav-link" href="parent_profile.php"><?php echo $firstname . ' ' . $lastname; ?><br>Πόντοι:<?php echo $Points; ?></a>
+				<a class="nav-link" href="parent-profile.php"><?php echo $firstname . ' ' . $lastname; ?><br>Πόντοι:<?php echo $Points; ?></a>
             </li>
           </ul>
         </div>
