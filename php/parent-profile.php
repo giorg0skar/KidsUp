@@ -38,77 +38,94 @@
                     $comparable="UPDATE Parent SET ";
                     $query="UPDATE Parent SET ";
                     $tempEmail = $parent_email;
+                    $updategeoloc=0;
                     if($_POST["parent-email"] && $_POST["parent-email"] != $parent_email) {
-                        $_SESSION['parent_email'] = $_POST["parent-email"];
-                        $parent_email = $_POST["parent-email"];
+                        $_SESSION['parent_email'] = trim($_POST["parent-email"]);
+                        $parent_email = trim($_POST["parent-email"]);
                         if($query != $comparable){
                             $query=$query." , ";
                         }
                         $query=$query."ParEmail = '".$parent_email."' ";
                     }
                     if($_POST["parent-pwd"]) {                        
-                        $_SESSION['parent_pwd'] = $_POST["parent-pwd"];
-                        $parent_pwd = $_POST["parent-pwd"];
+                        $_SESSION['parent_pwd'] = trim($_POST["parent-pwd"]);
+                        $parent_pwd = trim($_POST["parent-pwd"]);
                         if($query != $comparable){
                             $query=$query." , ";
                         }
                         $query=$query."pwd = '".$parent_pwd."' ";
                     }
                     if($_POST["parent-firstname"] && $_POST["parent-firstname"] != $parent_firstname) {
-                        $_SESSION['parent_firstname'] = $_POST["parent-firstname"];
-                        $parent_firstname = $_POST["parent-firstname"];
+                        $_SESSION['parent_firstname'] = trim($_POST["parent-firstname"]);
+                        $parent_firstname = trim($_POST["parent-firstname"]);
                         if($query != $comparable){
                             $query=$query." , ";
                         }
                         $query=$query."firstname = '".$parent_firstname."' ";
                     }
                     if($_POST["parent-lastname"] && $_POST["parent-lastname"] != $parent_lastname) {
-                        $_SESSION['parent_lasttname'] = $_POST["parent-lastname"];
-                        $parent_lastname = $_POST["parent-lastname"];
+                        $_SESSION['parent_lasttname'] = trim($_POST["parent-lastname"]);
+                        $parent_lastname = trim($_POST["parent-lastname"]);
                         if($query != $comparable){
                             $query=$query." , ";
                         }
                         $query=$query."lastname = '".$parent_lastname."' ";
                     }
                     if($_POST["parent-town"] && $_POST["parent-town"] != $parent_town) {
-                        $_SESSION['parent_town'] = $_POST["parent-town"];
-                        $parent_town = $_POST["parent-town"];
+                        $_SESSION['parent_town'] = trim($_POST["parent-town"]);
+                        $parent_town = trim($_POST["parent-town"]);
+                        $updategeoloc=1;
                         if($query != $comparable){
                             $query=$query." , ";
                         }
                         $query=$query."town = '".$parent_town."' ";
                     }
                     if($_POST["parent-street"] && $_POST["parent-street"] != $parent_street) {
-                        $_SESSION['parent_street'] = $_POST["parent-street"];
-                        $parent_street = $_POST["parent-street"];
+                        $_SESSION['parent_street'] = trim($_POST["parent-street"]);
+                        $parent_street = trim($_POST["parent-street"]);
+                        $updategeoloc=1;
                         if($query != $comparable){
                             $query=$query." , ";
                         }
                         $query=$query."streetName = '".$parent_street."' ";
                     }
                     if($_POST["parent-street_num"] && $_POST["parent-street_num"] != $parent_street_num) {
-                        $_SESSION['parent_street_num'] = $_POST["parent-street_num"];
-                        $parent_street_num  = $_POST["parent-street_num"];
+                        $_SESSION['parent_street_num'] = trim($_POST["parent-street_num"]);
+                        $parent_street_num  = trim($_POST["parent-street_num"]);
+                        $updategeoloc=1;
                         if($query != $comparable){
                             $query=$query." , ";
                         }
                         $query=$query."streetNumber = '".$parent_street_num."' ";
                     }
                     if($_POST["parent-zipcode"] && $_POST["parent-zipcode"] != $parent_zipcode) {
-                        $_SESSION['parent_zipcode'] = $_POST["parent-zipcode"];
-                        $parent_zipcode = $_POST["parent-zipcode"];
+                        $_SESSION['parent_zipcode'] = trim($_POST["parent-zipcode"]);
+                        $parent_zipcode = trim($_POST["parent-zipcode"]);
+                        $updategeoloc=1;
                         if($query != $comparable){
                             $query=$query." , ";
                         }
                         $query=$query."PostalCode = '".$parent_zipcode."' ";
                     }  
                     if($_POST["parent-PhoneNumber"] && $_POST["parent-PhoneNumber"] != $parent_PhoneNumber) {
-                        $_SESSION['parent_PhoneNumber'] = $_POST["parent-PhoneNumber"];
-                        $parent_PhoneNumber = $_POST["parent-PhoneNumber"];
+                        $_SESSION['parent_PhoneNumber'] = trim($_POST["parent-PhoneNumber"]);
+                        $parent_PhoneNumber = trim($_POST["parent-PhoneNumber"]);
                         if($query != $comparable){
                             $query=$query." , ";
                         }
                         $query=$query."PhoneNumber = '".$parent_PhoneNumber."' ";
+                    }
+                    if($updategeoloc==1){
+                        $address = $parent_street . ' ' .$parent_street_num .' , ' .$parent_zipcode .' , ' .$parent_town;
+                        $url='https://maps.google.com/maps/api/geocode/json?address='.urlencode($address).'&key=AIzaSyBsLUCKMjlmcDrvL6IXYlaHez6AUb01O8U&sensor=false';
+                        $geocode = file_get_contents($url);
+                        $output= json_decode($geocode , true);
+                        $latitude = $output['results'][0]['geometry']['location']['lat'];
+                        $longitude = $output['results'][0]['geometry']['location']['lng'];
+                        if($query != $comparable){
+                            $query=$query." , ";
+                        }
+                        $query=$query."latitude = '".$latitude."' , longitude = '".$longitude."' ";
                     }                                        
                     if($query != $comparable){
                         $query=$query." WHERE ParEmail= '".$tempEmail."'";
@@ -163,8 +180,8 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#contact">
-                                    <span class="no-icon">Επικοινωνία</span>
+                                <a class="nav-link" href="./aboutus.php">
+                                    <span class="no-icon">Σχετικά με εμάς</span>
                                 </a>
                             </li>
                             <li class="nav-item">
@@ -257,9 +274,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <!--Επιβεβαίωση για την αλλαγή κωδικού, ισως με popup. Η αντικατάσταση αυτού του div με κουμπί που να πάει σε άλλη σελίδα για αλλαγή κωδικού-->
                                         <div class="text-center">
-                                        <!-- <button type="submit" class="btn btn-info btn-fill btn-wd">Ενημέρωση Προφίλ</button> -->
                                         <input type="submit" class="btn btn-info btn-fill btn-wd" value="Ενημέρωση Προφίλ" ></input>
                                         </div>
                                     <div class="clearfix"></div>
@@ -274,24 +289,19 @@
                     <nav>
                         <ul class="footer-menu">
                             <li>
-                                <a href="#">
+                                <a href="./parentSignedInHomePage.php">
                                     Αρχική
                                 </a>
                             </li>
                             <li>
-                                <a href="#">
-                                    Επικοινωνία
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
+                                <a href="./aboutus.php">
                                     Σχετικά με εμάς
                                 </a>
                             </li>
 
                         </ul>
                         <p class="copyright text-center">
-                            Copyright &copy; <script>document.write(new Date().getFullYear())</script>, made with <i class="fa fa-heart heart"></i> by <a href="./index.php">Team42</a>
+                            Copyright &copy; <script>document.write(new Date().getFullYear())</script>, made with <i class="fa fa-heart heart"></i> by <a href="./parentSignedInHomePage.php">Team42</a>
                         </p>
                     </nav>
                 </div>
