@@ -104,73 +104,46 @@
   //include("mysqli_connect.php");
   mb_internal_encoding('UTF-8');
   mb_http_input("utf-8");
-  if($_SERVER["REQUEST_METHOD"] == "POST") {
-   $search = trim($_POST['search']);
-   $area = trim($_POST['area']);
-   $results = do_search($search);
-   $activities = $results[0];
-   $hits = $results[1];
-   for($i=0; $i<$hits; $i++){
-      ?>
-            <div class="col-lg-4 col-md-6 mb-4">
-              <div class="card h-100">
-                <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
-                <div class="card-body">
-                  <h4 class="card-title">
-                    <a href="#"><?php echo $activities[$i]['actName']?></a>
-                  </h4>
-                  <h5>Τιμή εισιτηρίου:$24.99</h5>
-                  <p class="card-text">Οργανωτής:<?php echo $activities[$i]['ProvEmail']?></p>
-				          <p class="card-text">Πόλη: <?php echo $activities[$i]['town']?></p>
-				          <p class="card-text">Διεύθυνση: <?php echo $activities[$i]['streetName']?> <?php echo $activities[$i]['streetNumber']?></p>
-				          <p class="card-text">ΤΚ: <?php echo $activities[$i]['PostalCode']?></p>
-
-                  <p class="card-text"><?php echo $activities[$i]['actDescription']?></p>
-                </div>
-                <div class="card-footer">
-                  <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
-                </div>
+  include("mysqli_connect.php");
+  mb_internal_encoding('UTF-8');
+  mb_http_input("utf-8");
+    
+  $sql = "SELECT * FROM Activity WHERE actDate >= CURDATE() AND availableTickets > 0";
+  $result = mysqli_query($dbc,$sql);
+  for($i=0; $i< mysqli_num_rows($result); $i++){
+      $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
+      $datetime = explode(" ", $row['actDate']);
+?>
+          <div class="col-lg-4 col-md-6 mb-4">
+            <div class="card h-100">
+              <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
+              <div class="card-body">
+                <h4 class="card-title">
+                  <a href="#"><?php echo $row['actName']?></a>
+                </h4>
+                <h5>Τιμή εισιτηρίου: <?php echo $row['price']?> πόντοι</h5>
+  		          <p class="card-text">Ημερομηνία: <?php echo $datetime[0]?></p>
+	  	          <p class="card-text">Ώρα: <?php echo $datetime[1]?></p>
+                <p class="card-text">Οργανωτής: <?php echo $row['ProvEmail']?></p>
+		            <p class="card-text">Πόλη: <?php echo $row['town']?></p>
+			          <p class="card-text">Διεύθυνση: <?php echo $row['streetName']?> <?php echo $row['streetNumber']?></p>
+			          <p class="card-text">ΤΚ: <?php echo $row['PostalCode']?></p>
+                <p class="card-text">
+                  <?php
+                    $descr = $row['actDescription']; 
+                    $str = mb_substr($descr, 0, 100);
+                    if(mb_strlen($descr, 'utf8') > 100)
+                      $str = $str."...";
+                    echo $str;                  
+                  ?>
+                </p>
+              </div>
+              <div class="card-footer">
+                <small class="text-muted"><?php echo $row['visits']?> times visited</small>
               </div>
             </div>
+          </div>
 <?php
-    }
-  }else{
-    include("mysqli_connect.php");
-    mb_internal_encoding('UTF-8');
-    mb_http_input("utf-8");
-      
-    $sql = "SELECT * FROM Activity";
-    $result = mysqli_query($dbc,$sql);
-    for($i=0; $i< mysqli_num_rows($result); $i++){
-        $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
-        $datetime = explode(" ", $row['actDate']);
-        ?>
-            <div class="col-lg-4 col-md-6 mb-4">
-              <div class="card h-100">
-                <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
-                <div class="card-body">
-                  <h4 class="card-title">
-                    <a href="#"><?php echo $row['actName']?></a>
-                  </h4>
-                  <h5>Τιμή εισιτηρίου: <?php echo $row['price']?> πόντοι</h5>
-				          <p class="card-text">Ημερομηνία: <?php echo $datetime[0]?></p>
-				          <p class="card-text">Ώρα: <?php echo $datetime[1]?></p>
-                  <p class="card-text">Οργανωτής: <?php echo $row['ProvEmail']?></p>
-				          <p class="card-text">Πόλη: <?php echo $row['town']?></p>
-				          <p class="card-text">Διεύθυνση: <?php echo $row['streetName']?> <?php echo $row['streetNumber']?></p>
-				          <p class="card-text">ΤΚ: <?php echo $row['PostalCode']?></p>
-
-                  <p class="card-text"><?php echo $row['actDescription']?></p>
-                </div>
-                <div class="card-footer">
-                  <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
-                </div>
-              </div>
-            </div>
-        
-        <?php
-    }
-
   }
 ?>              
       </div>

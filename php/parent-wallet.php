@@ -71,7 +71,7 @@
                             printf($query);
                             die('Could not update points: ' . mysqli_error($dbc));
                         }
-                        mysqli_close($dbc);
+                        //mysqli_close($dbc);
                     }  
                 }
                                                            
@@ -104,7 +104,7 @@
             <!-- Navbar -->
             <nav class="navbar navbar-expand-lg " color-on-scroll="500">
                 <div class=" container-fluid  ">
-                    <a class="navbar-brand" href="#do_something"> Πορτοφόλι </a>
+                    <a class="navbar-brand" href="./parent-wallet.php"> Πορτοφόλι </a>
                     <button href="" class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-bar burger-lines"></span>
                         <span class="navbar-toggler-bar burger-lines"></span>
@@ -183,16 +183,30 @@
 
                             <h5 class="left_margin">Ιστορικό Συναλλαγών</h5>
                             <hr>
-                            <div class="card activity margin5">
-                                <div class="row">
-                                    <p class="col-md-3">Δραστηριότητα</p>
-                                    <p class="col-md-8">Timestamp <br> 
-                                        Αριθμός Εισητηρίων: x.Ατομικά, y.Οικογενειακά Πακέτα <br>
-                                        Συνολικό Κόστος
-                                    </p>
-
+                            <?php 
+                            include_once('mysqli_connect.php');
+                            $sellquery="SELECT * FROM Sell WHERE ParEmail = '$parent_email'";
+                            $sellresult = mysqli_query($dbc,$sellquery);
+                            $sellcount = mysqli_num_rows($sellresult);
+                            while($sellrow = mysqli_fetch_array($sellresult,MYSQLI_ASSOC)){
+                                $ActID=$sellrow['ActID'];
+                                $actquery="SELECT * FROM Activity WHERE ActID = '$ActID'";
+                                $actresult = mysqli_query($dbc,$actquery);
+                                $actrow = mysqli_fetch_array($actresult,MYSQLI_ASSOC) 
+                            ?>
+                                <div class="card activity margin5">
+                                    <div class="row">
+                                        <p class="col-md-3 left_margin"><?php echo $actrow['actName']?></p>
+                                        <p class="col-md-8">
+                                            <?php echo $actrow['actDate']?> <br> 
+                                            Αριθμός Εισητηρίων: <?php echo $sellrow['numberofTickets']?> <br>
+                                            Συνολικό Κόστος: <?php echo $sellrow['totalCost'] ?>
+                                        </p>
+                                    </div>
                                 </div>
-                            </div>
+                            <?php } 
+                            mysqli_close($dbc);
+                            ?>
                         </div>
                     </div>
 

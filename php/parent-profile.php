@@ -25,7 +25,6 @@
 					header("location:./parent-signin.php");
 				}
                 require('mysqli_connect.php');                
-                mysqli_query($dbc,"SET NAMES UTF8");    //to display greek characters correctly
 				$parent_email = $_SESSION['login_user'];
                 $parent_pwd = $_SESSION['parent_pwd'];  
                 $parent_firstname = $_SESSION['parent_firstname'];
@@ -33,7 +32,8 @@
                 $parent_street = $_SESSION['parent_street'];
                 $parent_street_num = $_SESSION['parent_street_num'];
                 $parent_town = $_SESSION['parent_town'];
-                $parent_zipcode = $_SESSION['parent_zipcode'];     
+                $parent_zipcode = $_SESSION['parent_zipcode'];  
+                $parent_PhoneNumber = $_SESSION['parent_PhoneNumber'];     
                 if($_SERVER["REQUEST_METHOD"] == "POST"){
                     $comparable="UPDATE Parent SET ";
                     $query="UPDATE Parent SET ";
@@ -46,19 +46,13 @@
                         }
                         $query=$query."ParEmail = '".$parent_email."' ";
                     }
-                    if($_POST["parent-pwd"]) {
-                        $hidden_pwd = "";
-                        for ($i=0; $i <strlen($parent_pwd) ; $i++) { 
-                            $hidden_pwd = $hidden_pwd."*";
-                        } 
-                        if($hidden_pwd != $_POST["parent-pwd"]) {
-                            $_SESSION['parent_pwd'] = $_POST["parent-pwd"];
-                            $parent_pwd = $_POST["parent-pwd"];
-                            if($query != $comparable){
-                                $query=$query." , ";
-                            }
-                            $query=$query."pwd = '".$parent_pwd."' ";
+                    if($_POST["parent-pwd"]) {                        
+                        $_SESSION['parent_pwd'] = $_POST["parent-pwd"];
+                        $parent_pwd = $_POST["parent-pwd"];
+                        if($query != $comparable){
+                            $query=$query." , ";
                         }
+                        $query=$query."pwd = '".$parent_pwd."' ";
                     }
                     if($_POST["parent-firstname"] && $_POST["parent-firstname"] != $parent_firstname) {
                         $_SESSION['parent_firstname'] = $_POST["parent-firstname"];
@@ -107,6 +101,14 @@
                             $query=$query." , ";
                         }
                         $query=$query."PostalCode = '".$parent_zipcode."' ";
+                    }  
+                    if($_POST["parent-PhoneNumber"] && $_POST["parent-PhoneNumber"] != $parent_PhoneNumber) {
+                        $_SESSION['parent_PhoneNumber'] = $_POST["parent-PhoneNumber"];
+                        $parent_PhoneNumber = $_POST["parent-PhoneNumber"];
+                        if($query != $comparable){
+                            $query=$query." , ";
+                        }
+                        $query=$query."PhoneNumber = '".$parent_PhoneNumber."' ";
                     }                                        
                     if($query != $comparable){
                         $query=$query." WHERE ParEmail= '".$tempEmail."'";
@@ -117,12 +119,7 @@
                        }
                     }
                     mysqli_close($dbc);
-                }
-                /*Turn the password from string to bullets for privacy reasons*/                       
-				$displaying_pwd = "";
-                for ($i=0; $i <strlen($parent_pwd) ; $i++) { 
-                    $displaying_pwd = $displaying_pwd."*";
-                }              
+                }             
 ?>
     <div class="wrapper">
         <div class="sidebar" data-image="../assets/img/sidebar-5.jpg" data-color="black">
@@ -152,7 +149,7 @@
             <!-- Navbar -->
             <nav class="navbar navbar-expand-lg " color-on-scroll="500">
                 <div class=" container-fluid  ">
-                    <a class="navbar-brand" href="#do_something"> Προφίλ </a>
+                    <a class="navbar-brand" href="./parent-profile.php"> Προφίλ </a>
                     <button href="" class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-bar burger-lines"></span>
                         <span class="navbar-toggler-bar burger-lines"></span>
@@ -231,10 +228,16 @@
                                                     <input type="text" class="form-control border-input" id="parent-town" name="parent-town" placeholder="Πόλη" value="<?php echo      $parent_town; ?>">
                                                 </div>
                                             </div>
-                                            <div class="col-md-4">
+                                            <div class="col-md-2">
                                                 <div class="form-group">
                                                     <label for="parent-zipcode">Ταχυδρομικός κώδικας</label>
                                                     <input type="text" class="form-control border-input" id="parent-zipcode" name="parent-zipcode" placeholder="Ταχυδρομικός κώδικας" value="<?php echo $parent_zipcode;?>">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <div class="form-group">
+                                                    <label for="parent-zipcode">Αριθμός τηλεφώνου</label>
+                                                    <input type="text" class="form-control border-input" id="parent-PhoneNumber" name="parent-PhoneNumber" placeholder="Αριθμός τηλεφώνου" value="<?php echo $parent_PhoneNumber;?>">
                                                 </div>
                                             </div>
                                         </div>
@@ -242,7 +245,7 @@
                                             <div class="col-md-9">
                                                 <div class="form-group">
                                                     <label for="parent-email">Email</label>
-                                                    <input type="text" class="form-control border-input" id="parent-email" name="parent-email" placeholder="Email" value="<?php echo $parent_email; ?>">
+                                                    <input type="text" readonly="readonly" class="form-control border-input" id="parent-email" name="parent-email" placeholder="Email" value="<?php echo $parent_email; ?>">
                                                 </div>
                                             </div>
                                         </div>
@@ -250,7 +253,7 @@
                                             <div class="col-md-9">
                                                 <div class="form-group">
                                                     <label for="parent-pwd">Password</label>
-                                                    <input type="text" class="form-control border-input" id="parent-pwd" name="parent-pwd" placeholder="Password" value="<?php echo $displaying_pwd; ?>">
+                                                    <input type="text" class="form-control border-input" id="parent-pwd" name="parent-pwd" placeholder="Password" value="<?php echo $parent_pwd; ?>">
                                                 </div>
                                             </div>
                                         </div>

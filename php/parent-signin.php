@@ -97,6 +97,7 @@
                 $_SESSION['parent_street_num'] = $row['streetNumber'];
                 $_SESSION['parent_town'] = $row['town'];
                 $_SESSION['parent_zipcode'] = $row['PostalCode']; 
+                $_SESSION['parent_PhoneNumber'] = $row['PhoneNumber'];
                 header("location: parentSignedInHomePage.php");
               }
             }else {

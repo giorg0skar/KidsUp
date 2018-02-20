@@ -382,11 +382,19 @@
 				          <p class="card-text">Πόλη: <?php echo $activities[$i]['town']?></p>
 				          <p class="card-text">Διεύθυνση: <?php echo $activities[$i]['streetName']?> <?php echo $activities[$i]['streetNumber']?></p>
 				          <p class="card-text">ΤΚ: <?php echo $activities[$i]['PostalCode']?></p>
-                  <p class="card-text"><?php echo $activities[$i]['actDescription']?></p>
+                  <p class="card-text">
+										<?php
+                      $descr = $activities[$i]['actDescription']; 
+                      $str = mb_substr($descr, 0, 100);
+                      if(mb_strlen($descr, 'utf8') > 100)
+                        $str = $str."...";
+                      echo $str;                  
+                    ?>
+									</p>
 									<p class="card-text" hidden><?php echo $activities[$i]['latitude'].','.$activities[$i]['longitude']?></p>
 								</div>
                 <div class="card-footer">
-                  <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
+                  <small class="text-muted"><?php echo $activities[$i]['visits']?> times visited</small>
                 </div>
               </div>
             </div>
