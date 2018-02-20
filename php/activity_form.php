@@ -38,13 +38,7 @@
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#about">Σχετικά με εμάς</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#services">Υπηρεσίες</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#contact">Επικοινωνία</a>
+        <a class="nav-link" href="aboutus-provider.php">Σχετικά με εμάς</a>
       </li>
       <li class="nav-item">
         <a class="nav-link"  href="index.php">Έξοδος</a>
