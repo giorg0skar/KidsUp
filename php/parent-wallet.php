@@ -62,16 +62,13 @@
                     if($tempvar!=0){
                         $parent_points=$parent_points + $tempvar;
                         require('mysqli_connect.php'); 
-                        mysqli_query($dbc,"SET NAMES UTF8");    //to display greek characters correctly
                         $_SESSION["parent_points"]=$parent_points;
-                        // UPDATE Parent SET Points= '100' WHERE ParEmail='stokos@hotmail.com'
                         $query="UPDATE Parent SET Points='".$parent_points."' WHERE ParEmail='".$parent_email."'";
                         $retval= mysqli_query($dbc,$query);
                         if(! $retval ) {
                             printf($query);
                             die('Could not update points: ' . mysqli_error($dbc));
                         }
-                        //mysqli_close($dbc);
                     }  
                 }
                                                            
@@ -80,7 +77,7 @@
         <div class="sidebar" data-image="../assets/img/sidebar-5.jpg" data-color="black">
             <div class="sidebar-wrapper">
                 <div class="logo">
-                    <a href="./parentSignedInHomePage.php" class="simple-text">
+                    <a href="./index.php" class="simple-text">
                         KidsUp
                     </a>
                 </div>
@@ -113,7 +110,7 @@
                     <div class="collapse navbar-collapse justify-content-end" id="navigation">
                         <ul class="navbar-nav ml-auto">
                             <li class="nav-item">
-                                <a class="nav-link" href="parentSignedInHomePage.php">
+                                <a class="nav-link" href="./index.php">
                                     <span class="no-icon">Αρχική</span>
                                 </a>
                             </li>
@@ -217,7 +214,7 @@
                     <nav>
                         <ul class="footer-menu">
                             <li>
-                                <a href="./parentSignedInHomePage.php">
+                                <a href="./index.php">
                                     Αρχική
                                 </a>
                             </li>
@@ -229,7 +226,7 @@
 
                         </ul>
                         <p class="copyright text-center">
-                            Copyright &copy; <script>document.write(new Date().getFullYear())</script>, made with <i class="fa fa-heart heart"></i> by <a href="./parentSignedInHomePage.php">Team42</a>
+                            Copyright &copy; <script>document.write(new Date().getFullYear())</script>, made with <i class="fa fa-heart heart"></i> by <a href="./index.php">Team42</a>
                         </p>
                     </nav>
                 </div>
