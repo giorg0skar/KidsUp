@@ -104,7 +104,7 @@
                 $_SESSION['parent_street_num'] = $row['streetNumber'];
                 $_SESSION['parent_town'] = $row['town'];
                 $_SESSION['parent_zipcode'] = $row['PostalCode'];
-                header("location: parentSignedInHomePage.php");
+                header("location: index.php");
               }
             }else {
               $error = "Your Login Name or Password is invalid";

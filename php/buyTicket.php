@@ -54,8 +54,8 @@
                 // $_SESSION['parent_firstname'] = "George";
                 // $_SESSION['parent_lastname'] = "Petrou";
 
-
-              if(session_status() != PHP_SESSION_NONE){
+              session_start();
+              if(isset($_SESSION['login_user'])){
 
                   echo"
                     <li class=\"nav-item\">
@@ -104,10 +104,10 @@
                     mb_http_input("utf-8");
 
 
-                    if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['ActId']) ){
+                    if($_SERVER["REQUEST_METHOD"] == "POST"){
                         $flag=0;
 
-                        if(session_status() != PHP_SESSION_NONE){
+                        if(isset($_SESSION['login_user'])){
                             $ParEmail = $_SESSION['login_user'];
                             $Points   = $_SESSION['parent_points'];
                         }
@@ -199,7 +199,7 @@
                                               
                                               
                                               //header("location: parentSignedInHomePage.php");
-                                              echo "<script> window.alert(\"Η αγορά ολοκληρώθηκε !!! \\n Σας έχει αποσταλεί email\"); window.location.href='parentSignedInHomePage.php';</script>";
+                                              echo "<script> window.alert(\"Η αγορά ολοκληρώθηκε !!! \\n Σας έχει αποσταλεί email\"); window.location.href='index.php';</script>";
                                           }
 
                                      }else {
@@ -283,14 +283,14 @@
                                 <input type="number" name='number' onchange="calculateTotal()"  onkeyup="calculateTotal()" id="count"  min = "0" placeholder="Πόσα Εισητήρια Θέλετε?" class="form-control" required>
                               </div>
 
-                              <?php  if (session_status() != PHP_SESSION_NONE)  echo " <div id=\"totalPrice\">Total Price: 0</div><br> "; ?>
+                              <?php  if (isset($_SESSION['login_user']))  echo " <div id=\"totalPrice\">Total Price: 0</div><br> "; ?>
 
                               <input id="ActId" name='ActId' type = "hidden" value = <?php echo $id; ?> > </input>
-                              <input type="submit" id="submit" class="btn btn-sm btn-info" value="Αγορά Εισητηρίων" ></input>
+                              <input type="submit" id="submit" class="btn btn-sm btn-info" value="Αγορά Εισιτηρίων" ></input>
                                                               
                           </form>
                           <?php 
-                                if (session_status() == PHP_SESSION_NONE ) {
+                                if (!isset($_SESSION['login_user'])) {
                                   echo "<script> document.getElementById('submit').style.display = 'none'; </script> "; 
                                   echo "<script> document.getElementById('count').type = 'hidden'; </script> ";  
                                 }
