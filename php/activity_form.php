@@ -169,6 +169,10 @@
                  <option selected=“”>Ποδόσφαιρο</option>
                  <option>Μπάσκετ</option>
                  <option>Κολύμβηση</option>
+                 <option>Μουσική</option>
+                 <option>Θέατρο</option>
+                 <option>Παιδικό Πάρτυ</option>
+                 <option>Χορός</option>
                  <option>Άλλο</option>
                  </select>
               </div>
