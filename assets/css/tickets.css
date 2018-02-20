@@ -3,10 +3,16 @@
  * Copyright 2013-2017 Start Bootstrap
  * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-shop-homepage/blob/master/LICENSE)
  */
-
+html{
+  overflow-x: scroll;
+  overflow-y: scroll;
+}
 body {
-  padding-top: 80px;
+  overflow-y: scroll;
+  overflow-x: scroll;
+  padding-top: 56px;
   font-family: 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  margin-bottom: 150px;
   background-color: rgba(227, 241, 146, 0.938);
 }
   
@@ -22,13 +28,14 @@ body {
 
 #map {
   width: 100%;
-  height: 400px;
+  height: 500px;
+  /*padding-top: : 200px;*/
   background-color: grey;
 }
 
 @media (min-width: 992px) {
   body {
-    padding-top: 90px;
+    padding-top: 70px;
   }
 }
 
@@ -40,7 +47,7 @@ header.masthead {
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
-  padding-top: 3rem;
+  padding-top: 8rem;
   padding-bottom: 8rem; 
   height: auto;
 }
@@ -61,11 +68,42 @@ header.masthead {
       header.masthead h1 {
         font-size: 3rem; } }
 
+.container.my-container {
+    margin-top: 40px;
+  }
+  .container.footer {
+    color: #00EFB7;
+  }
+  .py-5.custom{
+    /*position: fixed;*/
+    /*position: absolute;*/
+    /*position: relative;*/
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    clear: both;
+    }
+    .pt-5,.py-5{
+    padding-top:1rem!important
+    }
+    .pr-5,.px-5{
+    padding-right:0rem!important
+    }
+    .pb-5,.py-5{
+    padding-bottom:1rem!important
+    }
+    .pl-5,.px-5{
+    padding-left:0rem!important
+    }
 footer.footer {
-	position: absolute;
-	bottom:0px;
-  padding-top: 0px;
-  padding-bottom: 0px;
-	
+  padding-top: 4rem;
+  padding-bottom: 4rem;
 }
-        
+body div#totalPrice 
+{
+    padding:10px;
+    font-weight:bold;
+    background-color:#ff0;
+}

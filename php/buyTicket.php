@@ -13,94 +13,300 @@
 
     <!-- Bootstrap core CSS -->
     <link href="../assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="../assets/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-
-
-    <!-- Custom styles for this template -->
-    <!-- <style>
-      body {
-        padding-top: 80px;
-        font-family: 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-      }
-    </style> -->
-    <link href="../assets/css/TicketCSS.css" rel="stylesheet">
+    <link href="../assets/css/font-awesome.min.css" rel="stylesheet" type="text/css">   
+    <link href="../assets/css/tickets.css" rel="stylesheet">
 
   </head>
 
   <body>
 
-    <!-- Navigation -->
-    <!-- <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-      <div class="container">
-        <a class="navbar-brand" href="index.php">KidsUp</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item active">
-              <a class="nav-link" href="index.php">Αρχική
-                <span class="sr-only">(current)</span>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#about">Σχετικά με εμάς</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#services">Υπηρεσίες</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#contact">Επικοινωνία</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="index.php">Έξοδος</a>
-            </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownSignUp" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Εγγραφή ως
-              </a>
-              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownSignUp">
-                  <a class="dropdown-item" href="parent-signup.php">Γονέας</a>
-                  <a class="dropdown-item" href="provider-signup.php">Πάροχος</a>
-              </div>
-            </li>
-			<li class="nav-item">
-				<a class="nav-link" href="parentProfile.php">Όνομα Επώνυμο<br>Πόντοι:</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav> -->
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+    <a class="navbar-brand" href="parentSignedInHomePage.php">KidsUp</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav ml-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="index.php">Αρχική
+        <span class="sr-only">(current)</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#about">Σχετικά με εμάς</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#services">Υπηρεσίες</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#contact">Επικοινωνία</a>
+      </li>
 
-    <!-- Page Content -->
+        
+          <?php 
+
+                //Just for testing
+                //session_start();
+                // $_SESSION['parent_points'] = 40;
+                // $_SESSION['login_user'] = "c@gmail.com";
+                // $_SESSION['parent_firstname'] = "George";
+                // $_SESSION['parent_lastname'] = "Petrou";
+
+
+              if(isset($_SESSION['login_user'])){
+
+                  echo"
+                    <li class=\"nav-item\">
+                      <a class=\"nav-link\" href=\"logout.php\">Έξοδος</a>
+                    </li>
+                    <li class=\"nav-item\">
+                       <a class=\"nav-link\" href=\"parent-profile.php\">" . ' '. $_SESSION['parent_firstname'] . ' ' .  $_SESSION['parent_lastname'] . ' ' . "<br>Πόντοι:" . ' ' . $_SESSION['parent_points'] . ' ' . "</a>
+                    </li> ";
+
+                }
+                  else echo " 
+                    <li class=\"nav-item dropdown\"> 
+                        <a class=\"nav-link dropdown-toggle\" href=\"#\" id=\"navbarDropdownSignUp\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\">Σύνδεση ως</a> 
+                        <div class=\"dropdown-menu dropdown-menu-right\" aria-labelledby=\"navbarDropdownSignUp\"> 
+                              <a class=\"dropdown-item\" href=\"parent-signin.php\">Γονέας</a> 
+                              <a class=\"dropdown-item\" href=\"provider-signin.php\">Πάροχος</a> 
+                        </div> 
+                    </li> 
+                    <li class=\"nav-item dropdown\"> 
+                        <a class=\"nav-link dropdown-toggle\" href=\"#\" id=\"navbarDropdownSignUp\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\"> 
+                            Εγγραφή ως 
+                        </a> 
+                        <div class=\"dropdown-menu dropdown-menu-right\" aria-labelledby=\"navbarDropdownSignUp\"> 
+                              <a class=\"dropdown-item\" href=\"parent-signup.php\">Γονέας</a> 
+                              <a class=\"dropdown-item\" href=\"provider-signup.php\">Πάροχος</a> 
+                        </div> 
+                    </li> ";
+
+           ?>
+
+      </ul>
+    </div>
+    </div>
+  </nav>
 
 
 
 	<div class="col-lg-4 col-md-6 mb-4" style="float:left;" id="ticket">
               <div class="card h-100">
+
+
+                 <?php
+
+                    header('Content-type: text/html; charset=UTF-8');
+                    mb_internal_encoding('UTF-8');
+                    mb_http_input("utf-8");
+
+
+                    if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['ActId']) || true){
+                        $flag=0;
+
+                        $ParEmail = $_SESSION['login_user'];
+                        $Points   = $_SESSION['parent_points'];
+
+                        $id = 3;//trim($_POST['ActId']); 
+                        require('./mysqli_connect.php'); 
+
+                        $q = "SELECT * FROM Activity WHERE (ActID='$id') ";
+                        $r = mysqli_query($dbc, $q);
+  
+                        if (mysqli_num_rows($r)==1){
+
+                            $row = mysqli_fetch_array($r, MYSQLI_ASSOC);
+
+                            $actName = $row['actName'];
+                            $actType = $row['actType'];
+                            $actDate = $row['actDate'];
+                            $price   = $row['price'];
+                            $MinAge  = $row['MinAge'];
+                            $MaxAge  = $row['MaxAge'];
+                            $maxTickets = $row['maxTickets'];
+                            $availableTickets = $row['availableTickets'];
+                            $town = $row['town'];
+                            $streetName = $row['streetName'];
+                            $streetNumber = $row['streetNumber'];
+                            $PostalCode = $row['PostalCode'];
+                            $PhoneNumber = $row['PhoneNumber'];
+                            $actDescription = $row['actDescription'];
+                            $pictureURL = $row['pictureURL'];
+                            $visits = $row['visits'];
+                            $latitude = $row['latitude'];
+                            $longitude = $row['longitude'];
+
+                            mysqli_free_result($r);
+                            $q = "UPDATE Activity SET visits=visits+1 WHERE ActID='$id' ";
+                            $r = mysqli_query($dbc, $q);
+
+                            if (mysqli_affected_rows($dbc)!=1){
+                              echo '<h1>Αποτυχία ενημέρωσης των visits  !</h1>';
+                            }
+    
+
+                        }else {
+                          echo '<h1>Αποτυχία εύρεσης δραστηριότητας  !</h1>';
+                        }
+
+
+                        if(isset($_POST['number'])){
+
+                            $ticket_count = trim($_POST['number']);
+
+                            mysqli_query($dbc, "START TRANSACTION");
+
+                              mysqli_query($dbc, "SET TRANSACTION ISOLATION LEVEL SERIALIZABLE");
+                              mysqli_query($dbc, "SET autocommit=0");
+                              $q = "UPDATE Activity SET  availableTickets=availableTickets - '$ticket_count' WHERE ActID='$id' ";
+                              $r = mysqli_query($dbc, $q);
+
+                              if (mysqli_affected_rows($dbc)!=1){
+                                echo '<h1>Αποτυχία ενημέρωσης των availableTickets  !</h1>';
+                                mysqli_query($dbc, "ROLLBACK");
+                              }else {
+
+                                  $q = "SELECT availableTickets FROM Activity WHERE (ActID='$id') ";
+                                  $r = mysqli_query($dbc, $q);
+
+                                  if (mysqli_num_rows($r)==1){
+                                     $row = mysqli_fetch_array($r, MYSQLI_ASSOC);
+                                     
+
+                                     if($row['availableTickets'] >= 0 ){
+
+                                          mysqli_free_result($r);
+                                          $newPoints = $_SESSION['parent_points'] - ($ticket_count * $price); 
+
+                                          $q = "UPDATE Parent SET Points='$newPoints' WHERE (ParEmail='$ParEmail') ";
+                                          $r = mysqli_query($dbc, $q);
+
+                                          if (mysqli_affected_rows($dbc)!=1){
+                                            echo '<h1>Αποτυχία ενημέρωσης των πόντων  !!</h1>';
+                                            mysqli_query($dbc, "ROLLBACK");
+                                          }else {
+                                            //SUCCESS !!!!!!
+
+                                              $_SESSION['parent_points'] = $newPoints;
+
+                                              mysqli_query($dbc, "COMMIT");
+                                              mysqli_close($dbc); 
+                                              
+                                              
+                                              //header("location: parentSignedInHomePage.php");
+                                              echo "<script> window.alert(\"Η αγορά ολοκληρώθηκε !!! \\n Σας έχει αποσταλεί email\"); window.location.href='parentSignedInHomePage.php';</script>";
+                                          }
+
+                                     }else {
+                                      echo '<h1>Κάποιος πρόλαβε τα τελευταία εισητήρια !!</h1>';
+                                      mysqli_query($dbc, "ROLLBACK");
+                                     }
+
+                                  }else{
+                                      echo '<h1>Αποτυχία διαβάσματος των availableTickets  !</h1>';
+                                      mysqli_query($dbc, "ROLLBACK");
+                                  }
+
+                              }
+
+                          //mysqli_close($dbc);
+                        }
+  
+                    }
+                    
+
+              ?>
+
+
+
                 <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
                 <div class="card-body">
                   <h4 class="card-title">
-                    <a href="eventClicked.php">Item One</a>
+                    <p class="card-text"><b><u>Δραστηριότητα: </u></b><?php echo $actName; ?> </p>
                   </h4>
-                  <h5>Τιμή εισιτηρίου:$24.99</h5>
-                  <p class="card-text">Οργανωτής:Το πράσινο αερόστατο</p>
-                  <p class="card-text">Πόλη: Αθήνα, Δήμος: Περιστέρι</p>
-                  <p class="card-text">Διεύθυνση: Ανθέων 14</p>
-                  <p class="card-text">Σύντομη περιγραφή:Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!</p>
-                  <p class="card-text"><b>Αριθμός εισιτηρίων: 4</b></p>
-                  <p class="card-text"><b>Συνολική τιμή: 119.96 $ </b></p>
-                  <p class="card-text"><b>Ημερομηνία διεξαγωγής: 25/1/18</b></p>
+                  <p class="card-text"><b><u>Τιμή εισιτηρίου:</u></b> <?php echo $price; ?> </h5></p>
+                  <p class="card-text"><b><u>Τύπος:</u></b> <?php echo $actType; ?> </p>
+                  <p class="card-text"><b><u>Ημερομηνία-Ώρα:</u></b> <?php echo $actDate; ?> </p>
+                  <p class="card-text"><b><u>Ελάχιστη Ηλικία:</u></b> <?php echo $MinAge; ?> </p>
+                  <p class="card-text"><b><u>Μέγιστη  Ηλικία:</u></b> <?php echo $MaxAge; ?> </p>
+                  <p class="card-text"><b><u>Διαθέσιμα Ειστήρια:</u></b> <?php echo $availableTickets; ?> </p>
+                  <p class="card-text"><b><u>Πόλη:</u></b> <?php echo $town; ?> </p>
+                  <p class="card-text"><b><u>Οδός:</u></b> <?php echo $streetName; ?> </p>
+                  <p class="card-text"><b><u>Αριθμός:</u></b> <?php echo $streetNumber; ?> </p>
+                  <p class="card-text"><b><u>Τηλέφωνο:</u></b> <?php echo $PhoneNumber; ?> </p>
+                  <p class="card-text"><b><u>Ταχυδρομικός Κώδικας:</u></b> <?php echo $PostalCode; ?> </p>
+                  <p class="card-text"><b><u>Επισκέφτηκε:</u></b> <?php echo $visits; ?> Φορές </p>
+                  <p class="card-text"><b><u>Σύντομη Περιγραφή:</u></b> <?php echo $actDescription; ?> </p>
+                </div>
+                <div class="card-body">
+
+                          <script>
+
+                            function calculateTotal()
+                            {
+
+                                var divobj = document.getElementById('totalPrice');
+                                var count = document.getElementById('count').value;
+                                var available = (<?php echo $availableTickets; ?>) ;
+                                divobj.style.display='block';
+                                divobj.innerHTML = "Total Price: "+ (<?php echo $price; ?> * count )+" Points";
+                                if( count > available){
+                                  $(":submit").prop('disabled', true);
+                                  window.alert("There aren't so many available tickets !!!");
+                                }
+                                else $(":submit").prop('disabled', false);
+
+                            }
+
+                            function check_points() {
+                                //document.write("Help >>>");
+                                var count = document.getElementById('count').value;
+                                var points = <?php echo $Points; ?>;
+                                var total =  count * <?php echo $price; ?>;
+
+                                if( points < total){
+                                  window.alert("Not enough points !!!");
+                                  return false; // return false to cancel form action
+                                }
+                                return true; 
+                            };
+
+                          </script>
+
+                          <form action="buyTicket.php" id = "myform" method="post" onsubmit="return check_points()">
+                              <div class="col-sm-8 form-group">
+                                <input type="number" name='number' onchange="calculateTotal()"  onkeyup="calculateTotal()" id="count"  min = "0" placeholder="Πόσα Εισητήρια Θέλετε?" class="form-control" required>
+                              </div>
+
+                              <?php  if (session_status() != PHP_SESSION_NONE)  echo " <div id=\"totalPrice\">Total Price: 0</div><br> "; ?>
+
+                              <input id="ActId" name='ActId' type = "hidden" value = <?php echo $id; ?> > </input>
+                              <input type="submit" id="submit" class="btn btn-sm btn-info" value="Αγορά Εισητηρίων" ></input>
+                                                              
+                          </form>
+                          <?php 
+                                if (session_status() == PHP_SESSION_NONE ) {
+                                  echo "<script> document.getElementById('submit').style.display = 'none'; </script> "; 
+                                  echo "<script> document.getElementById('count').type = 'hidden'; </script> ";  
+                                }
+                          ?> 
+
                 </div>
 
-              </div>
+            </div>
   </div>
+
+
+
 
   <!-- <h3>Εισιτήριο</h3> -->
   <div class="col-lg-4 col-md-6 col-xs-12" style="float:left;" id="map"></div>
   <script>
       function initMap() {
-        var uluru = {lat: 37.98722, lng: 23.72750};
+        var uluru = {lat: <?php echo $latitude; ?>, lng: <?php echo $longitude; ?>};
         var map = new google.maps.Map(document.getElementById('map'), {
           zoom: 12,
           center: uluru
@@ -111,16 +317,27 @@
         });
       }
     </script>
+
     <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBsLUCKMjlmcDrvL6IXYlaHez6AUb01O8U&callback=initMap">
     </script>
-
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.min.js"></script>
     <!-- Bootstrap core JavaScript -->
     <script src="../assets/jquery/jquery.min.js"></script>
     <script src="../assets/bootstrap/js/bootstrap.bundle.min.js"></script>
 
+
+
   </body>
+
+      <!-- Footer -->
+  <footer class="custom py-5 fixed-bottom bg-dark">
+    <div class="footer container">
+        <b>Team 42</b> -
+        SoftEng Project 2017 -
+        NTUA
+    <p class="m-0 text-center text-white">Copyright &copy; KidsUp 2017</p>
+    </div>
+  </footer>
 
 </html>
