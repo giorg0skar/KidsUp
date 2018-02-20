@@ -229,7 +229,7 @@
 
                         </ul>
                         <p class="copyright text-center">
-                            Copyright &copy; <script>document.write(new Date().getFullYear())</script>, made with <i class="fa fa-heart heart"></i> by <a href="./index.php">Team42</a>
+                            Copyright &copy; <script>document.write(new Date().getFullYear())</script>, made with <i class="fa fa-heart heart"></i> by <a href="./parentSignedInHomePage.php">Team42</a>
                         </p>
                     </nav>
                 </div>
