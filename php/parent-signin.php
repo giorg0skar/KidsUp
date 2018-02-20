@@ -33,13 +33,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#about">Σχετικά με εμάς</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#services">Υπηρεσίες</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#contact">Επικοινωνία</a>
+              <a class="nav-link" href="./aboutus.php">Σχετικά με εμάς</a>
             </li>
             <li class="nav-item dropdown">
   		  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownSignUp" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Σύνδεση ως</a>
@@ -72,7 +66,6 @@
           // $to = "mike95gr@hotmail.com";
           // send_ticket_with_email($to,$subject,$pdf);
           #################################################
-          mysqli_query($dbc,"SET NAMES UTF8");    //to display greek characters correctly
           session_start();
           mb_internal_encoding('UTF-8');
           mb_http_input("utf-8");
@@ -104,6 +97,7 @@
                 $_SESSION['parent_street_num'] = $row['streetNumber'];
                 $_SESSION['parent_town'] = $row['town'];
                 $_SESSION['parent_zipcode'] = $row['PostalCode'];
+                $_SESSION['parent_PhoneNumber'] = $row['PhoneNumber'];
                 header("location: index.php");
               }
             }else {
