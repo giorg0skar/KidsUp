@@ -38,13 +38,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#about">Σχετικά με εμάς</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#services">Υπηρεσίες</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#contact">Επικοινωνία</a>
+              <a class="nav-link" href="aboutus.php">Σχετικά με εμάς</a>
             </li>
 <?php
   include("mysqli_connect.php");
@@ -83,7 +77,7 @@
               <a class="nav-link" href="logout.php">Έξοδος</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="parent_profile.php"><?php echo $firstname . ' ' . $lastname; ?><br>Πόντοι: <?php echo $Points; ?></a>
+              <a class="nav-link" href="parent-profile.php"><?php echo $firstname . ' ' . $lastname; ?><br>Πόντοι: <?php echo $Points; ?></a>
             </li>
 <?php
   } 
