@@ -118,8 +118,8 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#contact">
-                                    <span class="no-icon">Επικοινωνία</span>
+                                <a class="nav-link" href="./aboutus.php">
+                                    <span class="no-icon">Σχετικά με εμάς</span>
                                 </a>
                             </li>
                             <li class="nav-item">
@@ -217,17 +217,12 @@
                     <nav>
                         <ul class="footer-menu">
                             <li>
-                                <a href="#">
+                                <a href="./parentSignedInHomePage.php">
                                     Αρχική
                                 </a>
                             </li>
                             <li>
-                                <a href="#">
-                                    Επικοινωνία
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
+                                <a href="./aboutus.php">
                                     Σχετικά με εμάς
                                 </a>
                             </li>

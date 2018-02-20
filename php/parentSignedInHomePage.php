@@ -47,24 +47,18 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav ml-auto">
             <li class="nav-item active">
-              <a class="nav-link" href="index.php">Αρχική
+              <a class="nav-link" href="./parentSignedInHomePage.php">Αρχική
                 <span class="sr-only">(current)</span>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#about">Σχετικά με εμάς</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#services">Υπηρεσίες</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#contact">Επικοινωνία</a>
+              <a class="nav-link" href="./aboutus.php">Σχετικά με εμάς</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="logout.php">Έξοδος</a>
             </li>
 			<li class="nav-item">
-				<a class="nav-link" href="parent_profile.php"><?php echo $firstname . ' ' . $lastname; ?><br>Πόντοι:<?php echo $Points; ?></a>
+				<a class="nav-link" href="parent-profile.php"><?php echo $firstname . ' ' . $lastname; ?><br>Πόντοι:<?php echo $Points; ?></a>
             </li>
           </ul>
         </div>

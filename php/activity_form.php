@@ -38,13 +38,7 @@
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#about">Σχετικά με εμάς</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#services">Υπηρεσίες</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#contact">Επικοινωνία</a>
+        <a class="nav-link" href="aboutus-provider.php">Σχετικά με εμάς</a>
       </li>
       <li class="nav-item">
         <a class="nav-link"  href="index.php">Έξοδος</a>
@@ -87,7 +81,7 @@
 					$actDescription = trim($_POST['actDescription']);
 					$pictureURL = trim($_POST['pictureURL']);
           $visits = 0;
-          $actDateTime = $actDate." ".$actTime.":00";
+          $actDateTime = $actDate." ".$actTime;
 					
 					$address = $streetName . ' ' .$streetNumber .' , ' .$PostalCode .' , ' .$town;
 					$url='https://maps.google.com/maps/api/geocode/json?address='.urlencode($address).'&key=AIzaSyBsLUCKMjlmcDrvL6IXYlaHez6AUb01O8U&sensor=false';
@@ -109,30 +103,7 @@
                 echo '<h1>Επιτυχής δημιουργία δραστηριότητας  !</h1>';
                 
                 //get the auto-increment key from the last-insert (PROBLEM IN CONCURRENT SUBMITS) 
-                //$id = mysqli_insert_id($dbc);
-
-                $sql = "SELECT ActID 
-                        FROM Activity 
-                        WHERE ProvEmail = '$ProvEmail' AND
-                              actName = '$actName' AND
-                              actType = '$actType' AND
-                              actDate = '$actDateTime' AND
-                              price = '$price' AND
-                              MinAge = '$MinAge' AND
-                              MaxAge = '$MaxAge' AND
-                              maxTickets = '$maxTickets' AND
-                              town = '$town' AND
-                              streetName = '$streetName' AND
-                              streetNumber = '$streetNumber' AND
-                              PostalCode = '$PostalCode' AND
-                              PhoneNumber = '$PhoneNumber' AND
-                              actDescription = '$actDescription' AND
-                              pictureURL = '$pictureURL'
-                        ";
-                $result = mysqli_query($dbc,$sql);
-                $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
-                $id = $row['ActID'];
-
+                $id = mysqli_insert_id($dbc);
                 $new_activity = [
                   'ActID' => $id,
                   'actName' => $actName,
@@ -187,8 +158,17 @@
               <div class="form-group">
                   <input type="text" name="actName" placeholder="Τίτλος Δραστηριότητας" class="form-control" required>
               </div>
-              <div class="form-group">
-					<input type="text" name="actType" placeholder="Τύπος Δραστηριότητας" class="form-control" required>
+              <div class="form-group">                 
+                 <select name="actType" placeholder="Τύπος Δραστηριότητας" class="form-control" required ">
+                 <option selected=“”>Ποδόσφαιρο</option>
+                 <option>Μπάσκετ</option>
+                 <option>Κολύμβηση</option>
+                 <option>Μουσική</option>
+                 <option>Θέατρο</option>
+                 <option>Παιδικό Πάρτυ</option>
+                 <option>Χορός</option>
+                 <option>Άλλο</option>
+                 </select>
               </div>
               <div class="row">
                 <div class="col-sm-6 form-group">

@@ -55,7 +55,7 @@
                 // $_SESSION['parent_lastname'] = "Petrou";
 
 
-              if(isset($_SESSION['login_user'])){
+              if(session_status() != PHP_SESSION_NONE){
 
                   echo"
                     <li class=\"nav-item\">
@@ -104,13 +104,15 @@
                     mb_http_input("utf-8");
 
 
-                    if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['ActId']) || true){
+                    if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['ActId']) ){
                         $flag=0;
 
-                        $ParEmail = $_SESSION['login_user'];
-                        $Points   = $_SESSION['parent_points'];
+                        if(session_status() != PHP_SESSION_NONE){
+                            $ParEmail = $_SESSION['login_user'];
+                            $Points   = $_SESSION['parent_points'];
+                        }
 
-                        $id = 3;//trim($_POST['ActId']); 
+                        $id = trim($_POST['ActId']); 
                         require('./mysqli_connect.php'); 
 
                         $q = "SELECT * FROM Activity WHERE (ActID='$id') ";

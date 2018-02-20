@@ -95,8 +95,8 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#do_something">
-                                    <span class="no-icon">Επικοινωνία</span>
+                                <a class="nav-link" href="aboutus-provider.php">
+                                    <span class="no-icon">Σχετικά με εμάς</span>
                                 </a>
                             </li>
                             <li class="nav-item">
@@ -217,12 +217,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="#">
-                                    Επικοινωνία
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
+                                <a href="aboutus-provider.php">
                                     Σχετικά με εμάς
                                 </a>
                             </li>
