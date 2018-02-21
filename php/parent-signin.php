@@ -67,7 +67,7 @@
             // username and password sent from form 
               
             $myusername = mysqli_real_escape_string($dbc,$_POST['ParEmail']);
-            $mypassword = mysqli_real_escape_string($dbc,$_POST['pwd']) ;
+            $mypassword = password_hash(mysqli_real_escape_string($dbc,$_POST['pwd'])) ;
             $sql = "SELECT * FROM Parent WHERE ParEmail = '$myusername'";
             $result = mysqli_query($dbc,$sql);
             $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
