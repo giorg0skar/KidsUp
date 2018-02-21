@@ -68,13 +68,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#about">Σχετικά με εμάς</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#services">Υπηρεσίες</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#contact">Επικοινωνία</a>
+              <a class="nav-link" href="aboutus.php">Σχετικά με εμάς</a>
             </li>
             <li class="nav-item dropdown">
 			  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownSignUp" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Σύνδεση ως</a>
@@ -109,7 +103,7 @@
 					$flag=0;
 					
 					$ProvEmail = trim($_POST['ProvEmail']);
-					$pwd = trim($_POST['pwd']);
+					$pwd = password_hash( mysqli_real_escape_string($dbc,$_POST['pwd']) ,PASSWORD_DEFAULT);
 					$companyName = trim($_POST['companyName']);
 					$town= trim($_POST['town']);
 					$streetName = trim($_POST['streetName']);
@@ -119,7 +113,7 @@
 					$VAT = trim($_POST['VAT']);
 					$IBAN = trim($_POST['IBAN']);
 					$online = 1;
-					$activated =1;
+					$activated =0;
 					if( $streetNumber<=0 || $PostalCode<=9999 || $PostalCode>=100000 || $PhoneNumber<=0 || $PhoneNumber>=10000000000)
 						$flag=1;
 						if ( $flag==0){
@@ -202,7 +196,7 @@
                         <div class="form-group">
                             <input type="password" name="pwd" placeholder="Password" class="form-control" required>
                         </div>
-							<input type="submit" class="btn btn-sm btn-info" value="Υποβολή Δήλωσης" ></input>
+							<input type="submit" class="btn btn-sm btn-info" value="Υποβολή Δήλωσης" style="width:100%;height:200%;"></input>
                         </div>
                     </form>
                 </div>
