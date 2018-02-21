@@ -18,39 +18,39 @@
 
 <body>
 <?php
-				mb_internal_encoding('UTF-8');
-				mb_http_input("utf-8");
-				session_start();
-				if(!isset($_SESSION['login_user'])){
-					header("location:./parent-signin.php");
-				}                
-                if($_SERVER["REQUEST_METHOD"] == "POST"){
-                    if($_POST["parent-pwd"] && $_POST["parent-Confirmpwd"]) { 
-                        require('mysqli_connect.php');  
-                        $pwd=mysqli_real_escape_string($dbc,$_POST['parent-pwd']);
-                        $Confirmpwd=password_hash(mysqli_real_escape_string($dbc,$_POST['parent-Confirmpwd']), PASSWORD_DEFAULT);
-                        if(password_verify($pwd,$Confirmpwd)) {                            
-                            $parent_email = $_SESSION['login_user'];
-                            $query="UPDATE Parent SET pwd = '".$Confirmpwd."' WHERE ParEmail= '".$parent_email."'";                                                                         
-                            $retval= mysqli_query($dbc,$query);
-                            if(! $retval ) {
-                                printf($query);
-                                die('Could not update data: ' . mysqli_error($dbc));
-                            }
-                            $_SESSION['parent_pwd'] = $Confirmpwd; //only after a successful store in database the session is updated.
-                        }
-                        else {
-                            echo "The passwords you typed in are not identical. Please try again.";
-                        }
-                        mysqli_close($dbc);
-                    } 
-                    if ($_POST["parent-pwd"] && !$_POST["parent-Confirmpwd"]) {
-                        echo "You need to confirm the password. Please fill both forms with the identical new password.";
-                    } 
-                    if (!$_POST["parent-pwd"] && $_POST["parent-Confirmpwd"]) {
-                        echo "You need to type in the password. Please fill both forms with the identical new password.";
-                    }                        
-                }             
+	mb_internal_encoding('UTF-8');
+	mb_http_input("utf-8");
+	session_start();
+	if(!isset($_SESSION['login_user'])){
+		header("location:./parent-signin.php");
+	}                
+    if($_SERVER["REQUEST_METHOD"] == "POST"){
+        if($_POST["parent-pwd"] && $_POST["parent-Confirmpwd"]) { 
+            require('mysqli_connect.php');  
+            $pwd=mysqli_real_escape_string($dbc,$_POST['parent-pwd']);
+            $Confirmpwd=password_hash(mysqli_real_escape_string($dbc,$_POST['parent-Confirmpwd']), PASSWORD_DEFAULT);
+            if(password_verify($pwd,$Confirmpwd)) {                            
+                $parent_email = $_SESSION['login_user'];
+                $query="UPDATE Parent SET pwd = '".$Confirmpwd."' WHERE ParEmail= '".$parent_email."'";                                                                         
+                $retval= mysqli_query($dbc,$query);
+                if(! $retval ) {
+                    printf($query);
+                    die('Could not update data: ' . mysqli_error($dbc));
+                }
+                $_SESSION['parent_pwd'] = $Confirmpwd; //only after a successful store in database the session is updated.
+            }
+            else {
+                echo "The passwords you typed in are not identical. Please try again.";
+            }
+            mysqli_close($dbc);
+        } 
+        if ($_POST["parent-pwd"] && !$_POST["parent-Confirmpwd"]) {
+            echo "You need to confirm the password. Please fill both forms with the identical new password.";
+        } 
+        if (!$_POST["parent-pwd"] && $_POST["parent-Confirmpwd"]) {
+            echo "You need to type in the password. Please fill both forms with the identical new password.";
+        }                        
+    }             
 ?>
     <div class="wrapper">
         <div class="sidebar" data-image="../assets/img/sidebar-5.jpg" data-color="black">
@@ -116,11 +116,8 @@
             <!-- End Navbar -->
 			
 
-			
-			
             <div class="content">
                 <div class="container-fluid">
-
                             <div class="card">
                                 <div class="card-header">
                                     <h4 class="card-title">Πληκτρολογήστε τον νέο κωδικό και επαληθεύστε τον</h4>
@@ -150,7 +147,6 @@
                                     </form>
                                 </div>
                             </div>
-
                 </div>
             </div>
             <footer class="footer">
@@ -167,7 +163,6 @@
                                     Σχετικά με εμάς
                                 </a>
                             </li>
-
                         </ul>
                         <p class="copyright text-center">
                             Copyright &copy; <script>document.write(new Date().getFullYear())</script>, made with <i class="fa fa-heart heart"></i> by <a href="./index.php">Team42</a>
