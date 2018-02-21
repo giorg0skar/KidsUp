@@ -90,7 +90,7 @@
                     if (isset($_POST['activate'])) {
                         mb_internal_encoding('UTF-8');
                         mb_http_input("utf-8");
-                        require('./mysqli_connect.php');
+                        require_once('./mysqli_connect.php');
                         $flag=0;
                         // $dbc = @mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME)
                         // OR die('Could not connect to MySQL: ' .
@@ -114,7 +114,6 @@
                             }
                             else echo "Error activating user:" . $dbc->error;
                         }
-                        mysqli_close($dbc);
                     }
                 ?>
                 <h3>Λογαριασμοί προς ενεργοποίηση:</h3>
@@ -122,7 +121,7 @@
                     //error_reporting(0);     //to disable error or warning messages
                     mb_internal_encoding('UTF-8');
                     mb_http_input("utf-8");
-                    require('./mysqli_connect.php');
+                    require_once('./mysqli_connect.php');
                     mysqli_query($dbc,"SET NAMES UTF8");    //to display greek characters correctly
                     $query = "SELECT ParEmail,firstname,lastname FROM Parent WHERE activated=0";
                     $response = @mysqli_query($dbc, $query);
