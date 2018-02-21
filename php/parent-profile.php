@@ -26,7 +26,6 @@
 				}
                 require('mysqli_connect.php');                
 				$parent_email = $_SESSION['login_user'];
-                $parent_pwd = $_SESSION['parent_pwd'];  
                 $parent_firstname = $_SESSION['parent_firstname'];
                 $parent_lastname = $_SESSION['parent_lastname'];
                 $parent_street = $_SESSION['parent_street'];
@@ -46,14 +45,6 @@
                             $query=$query." , ";
                         }
                         $query=$query."ParEmail = '".$parent_email."' ";
-                    }
-                    if($_POST["parent-pwd"]) {                        
-                        $_SESSION['parent_pwd'] = trim($_POST["parent-pwd"]);
-                        $parent_pwd = trim($_POST["parent-pwd"]);
-                        if($query != $comparable){
-                            $query=$query." , ";
-                        }
-                        $query=$query."pwd = '".$parent_pwd."' ";
                     }
                     if($_POST["parent-firstname"] && $_POST["parent-firstname"] != $parent_firstname) {
                         $_SESSION['parent_firstname'] = trim($_POST["parent-firstname"]);
@@ -158,7 +149,13 @@
                             <i class="ti-wallet"></i>
                             <p>Πορτοφόλι</p>
                         </a>
-                    </li>                    
+                    </li>        
+                    <li class="nav-item">
+                        <a class="nav-link" href="./parent-changePassword.php">
+                            <i class="ti-lock"></i>
+                            <p>Αλλαγή Κωδικού</p>
+                        </a>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -263,14 +260,6 @@
                                                 <div class="form-group">
                                                     <label for="parent-email">Email</label>
                                                     <input type="text" readonly="readonly" class="form-control border-input" id="parent-email" name="parent-email" placeholder="Email" value="<?php echo $parent_email; ?>">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-9">
-                                                <div class="form-group">
-                                                    <label for="parent-pwd">Password</label>
-                                                    <input type="text" class="form-control border-input" id="parent-pwd" name="parent-pwd" placeholder="Password" value="<?php echo $parent_pwd; ?>">
                                                 </div>
                                             </div>
                                         </div>
