@@ -93,7 +93,13 @@
                             <i class="ti-wallet"></i>
                             <p>Πορτοφόλι</p>
                         </a>
-                    </li>                    
+                    </li>   
+                    <li class="nav-item">
+                        <a class="nav-link" href="./parent-changePassword.php">
+                            <i class="ti-lock"></i>
+                            <p>Αλλαγή Κωδικού</p>
+                        </a>
+                    </li>
                 </ul>
             </div>
         </div>
