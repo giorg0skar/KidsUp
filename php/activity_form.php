@@ -87,9 +87,12 @@
 					$url='https://maps.google.com/maps/api/geocode/json?address='.urlencode($address).'&key=AIzaSyBsLUCKMjlmcDrvL6IXYlaHez6AUb01O8U&sensor=false';
 					$geocode = file_get_contents($url);
 					$output= json_decode($geocode , true);
-					$latitude = $output['results'][0]['geometry']['location']['lat'];
-					$longitude = $output['results'][0]['geometry']['location']['lng'];
-					
+					if( isset($output['results'][0]) ) {
+						$latitude = $output['results'][0]['geometry']['location']['lat'];
+						$longitude = $output['results'][0]['geometry']['location']['lng'];
+					}else{
+						$flag = 1;
+					}
 					if( $streetNumber<=0 || $PostalCode<=9999 || $PostalCode>=100000 || $PhoneNumber<=0 || $PhoneNumber>=10000000000 || $MinAge>$MaxAge) // kialloi elegxoi
 						$flag=1;
 						if ( $flag==0){
@@ -133,7 +136,7 @@
 							echo '<h3>Remember:</h3> Ο ταχυδρομικός κώδικας είναι ένας 5ψήφιος αριθμός<br/>
 											Ο αριθμός τηλεφώνου είναι ένας 10ψήφιος αριθμός<br/>
 											Η ελάχιστη ηλικία παιδιών στην οποία απευθύνεται η δραστηριότητα πρέπει να είναι μικρότερη από την μέγιστη ηλικία <br/>
-											
+											Συμπληρώστε την σωστή διεύθυνση<br/>
 											';
 						}
 					 
