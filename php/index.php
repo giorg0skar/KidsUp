@@ -38,14 +38,15 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#about">Σχετικά με εμάς</a>
+              <a class="nav-link" href="aboutus.php">Σχετικά με εμάς</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#services">Υπηρεσίες</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#contact">Επικοινωνία</a>
-            </li>
+<?php
+  include("mysqli_connect.php");
+  mb_internal_encoding('UTF-8');
+  mb_http_input("utf-8");
+  session_start();
+  if(!isset($_SESSION['login_user'])){
+?>
             <li class="nav-item dropdown">
 			  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownSignUp" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Σύνδεση ως</a>
 			  <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownSignUp">
@@ -62,6 +63,25 @@
                   <a class="dropdown-item" href="provider-signup.php">Πάροχος</a>
               </div>
             </li>
+<?php 
+  }else{
+    $user_check = $_SESSION['login_user'];
+    $firstname = $_SESSION['parent_firstname'];
+    $lastname = $_SESSION['parent_lastname'];
+    $Points = $_SESSION['parent_points'];
+    $town = $_SESSION['parent_town'];
+    $streetName = $_SESSION['parent_street'];
+    $streetNumber = $_SESSION['parent_street_num'];
+?>
+            <li class="nav-item">
+              <a class="nav-link" href="logout.php">Έξοδος</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="parent-profile.php"><?php echo $firstname . ' ' . $lastname; ?><br>Πόντοι: <?php echo $Points; ?></a>
+            </li>
+<?php
+  } 
+?>
           </ul>
         </div>
       </div>
@@ -82,7 +102,12 @@
                 <div class="form-row">
                   <div class="col-12 col-md-9 mb-2 mb-md-0" style="display: flex;flex-direction:row">
                     <input  type="search" name="search" class="form-control form-control-md" placeholder="Γράψτε τον όρο αναζήτησης...">
-					          <input  type="search" name="area" class="form-control form-control-md" placeholder="Περιοχή">
+					          <input  type="search" name="area" class="form-control form-control-md" placeholder="Περιοχή"
+                    <?php 
+                      if(isset($_SESSION['login_user']))
+											  echo "value="."\"".$streetName." ".$streetNumber." ".$town."\"";
+									  ?>
+                    >
                   </div>
                   <div class="col-12 col-md-3">
                     <button type="submit" class="btn btn-block btn-md btn-primary">Αναζήτηση</button>
@@ -99,14 +124,6 @@
           <div class="row">
 
 <?php
-
-  include("full_text_search.php");
-  //include("mysqli_connect.php");
-  mb_internal_encoding('UTF-8');
-  mb_http_input("utf-8");
-  include("mysqli_connect.php");
-  mb_internal_encoding('UTF-8');
-  mb_http_input("utf-8");
     
   $sql = "SELECT * FROM Activity WHERE actDate >= CURDATE() AND availableTickets > 0";
   $result = mysqli_query($dbc,$sql);
@@ -119,7 +136,9 @@
               <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
               <div class="card-body">
                 <h4 class="card-title">
-                  <a href="#"><?php echo $row['actName']?></a>
+                  <a href="#" onclick="post_actid(<?php echo $row['ActID'] ?>);return false;">
+										<?php echo $row['actName']?>
+									</a>
                 </h4>
                 <h5>Τιμή εισιτηρίου: <?php echo $row['price']?> πόντοι</h5>
   		          <p class="card-text">Ημερομηνία: <?php echo $datetime[0]?></p>
@@ -165,7 +184,24 @@
     <!-- Bootstrap core JavaScript -->
     <script src="../assets/jquery/jquery.min.js"></script>
     <script src="../assets/bootstrap/js/bootstrap.bundle.min.js"></script>
-
+		<script>
+			function post_actid(id){
+        var form = document.createElement("form");
+        
+        var elem = document.createElement("input"); 
+        
+        form.method = "POST";
+        form.action = "buyTicket.php";   
+    
+        elem.value=id;
+        elem.name="ActId";
+    
+        form.appendChild(elem);  
+        document.body.appendChild(form);
+    
+        form.submit();            
+			}
+		</script>
   </body>
 
 </html>

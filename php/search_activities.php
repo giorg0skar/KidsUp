@@ -60,6 +60,13 @@
             <li class="nav-item">
               <a class="nav-link" href="#contact">Επικοινωνία</a>
             </li>
+<?php
+	include("full_text_search.php");
+	mb_internal_encoding('UTF-8');
+	mb_http_input("utf-8");	
+	session_start();
+  if(!isset($_SESSION['login_user'])){
+?>
             <li class="nav-item dropdown">
 			  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownSignUp" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Σύνδεση ως</a>
 			  <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownSignUp">
@@ -76,6 +83,22 @@
                   <a class="dropdown-item" href="provider-signup.php">Πάροχος</a>
               </div>
             </li>
+<?php 
+  }else{
+    $firstname = $_SESSION['parent_firstname'];
+    $lastname = $_SESSION['parent_lastname'];
+    $Points = $_SESSION['parent_points'];
+?>
+            <li class="nav-item">
+              <a class="nav-link" href="logout.php">Έξοδος</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="parent_profile.php"><?php echo $firstname . ' ' . $lastname; ?><br>Πόντοι: <?php echo $Points; ?></a>
+            </li>
+<?php
+  } 
+?>
+
           </ul>
         </div>
       </div>
@@ -85,9 +108,6 @@
 
 <?php
 
-  include("full_text_search.php");
-  mb_internal_encoding('UTF-8');
-  mb_http_input("utf-8");
   if($_SERVER["REQUEST_METHOD"] == "POST") {
     //first check if the index is created in ES and create it if necessary
     create_index();
@@ -120,7 +140,7 @@
 
     <!-- Masthead -->
     <header>
-    <div class="container">
+<div class="container" <?php if(isset($_SESSION['login_user'])){?> style="margin-top:2rem" <?php } ?>>
           <p>
             <div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
               <div class="form-row">
@@ -297,6 +317,38 @@
 							<li class="list-group-item">
 								<div class="radio"  >
 									<label>
+										<input type="radio" name="act_kind_radio" value="Μουσική">
+										Μουσική
+									</label>
+								</div>
+							</li>
+							<li class="list-group-item">
+								<div class="radio"  >
+									<label>
+										<input type="radio" name="act_kind_radio" value="Χορός">
+										Χορός
+									</label>
+								</div>
+							</li>
+							<li class="list-group-item">
+								<div class="radio"  >
+									<label>
+										<input type="radio" name="act_kind_radio" value="Θέατρο">
+										Θέατρο
+									</label>
+								</div>
+							</li>
+							<li class="list-group-item">
+								<div class="radio"  >
+									<label>
+										<input type="radio" name="act_kind_radio" value="Παιδικό Πάρτυ">
+										Παιδικό Πάρτυ
+									</label>
+								</div>
+							</li>
+							<li class="list-group-item">
+								<div class="radio"  >
+									<label>
 										<input type="radio" name="act_kind_radio" value="Γενικού Τύπου">
 										Άλλο
 									</label>
@@ -373,8 +425,10 @@
                 <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
                 <div class="card-body">
                   <h4 class="card-title">
-                    <a href="#"><?php echo $activities[$i]['actName']?></a>
-                  </h4>
+										<a href="#" onclick="post_actid(<?php echo $activities[$i]['ActID'] ?>);return false;">
+											<?php echo $activities[$i]['actName']?>
+										</a>
+									</h4>
                   <h5>Τιμή εισιτηρίου: <?php echo $activities[$i]['price']?> πόντοι</h5>
 				          <p class="card-text">Ημερομηνία: <?php echo $datetime[0]?></p>
 				          <p class="card-text">Ώρα: <?php echo $datetime[1]?></p>
@@ -450,6 +504,24 @@
 			document.getElementById("act_kind").addEventListener("change", submit_form); 
 			document.getElementById("interval").addEventListener("change", submit_form); 
 	  </script>
+		<script>
+			function post_actid(id){
+        var form = document.createElement("form");
+        
+        var elem = document.createElement("input"); 
+        
+        form.method = "POST";
+        form.action = "buyTicket.php";   
+    
+        elem.value=id;
+        elem.name="ActId";
+    
+        form.appendChild(elem);  
+        document.body.appendChild(form);
+    
+        form.submit();            
+			}
+		</script>
   </body>
 
 </html>

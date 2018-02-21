@@ -33,13 +33,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#about">Σχετικά με εμάς</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#services">Υπηρεσίες</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#contact">Επικοινωνία</a>
+              <a class="nav-link" href="aboutus.php">Σχετικά με εμάς</a>
             </li>
             <li class="nav-item dropdown">
   		  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownSignUp" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Σύνδεση ως</a>
@@ -73,9 +67,8 @@
             // username and password sent from form 
               
             $myusername = mysqli_real_escape_string($dbc,$_POST['ParEmail']);
-            $mypassword = mysqli_real_escape_string($dbc,$_POST['pwd']); 
-            
-            $sql = "SELECT * FROM Parent WHERE ParEmail = '$myusername' and pwd = '$mypassword'";
+            $mypassword = mysqli_real_escape_string($dbc,$_POST['pwd']) ;
+            $sql = "SELECT * FROM Parent WHERE ParEmail = '$myusername'";
             $result = mysqli_query($dbc,$sql);
             $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
 
@@ -84,24 +77,29 @@
             // If result matched $myusername and $mypassword, table row must be 1 row
       		
             if($count == 1) {
-        		  if($row['activated']==0){
-        			  session_destroy();
-        			  header("location: waiting_activation.php");
-        		  }else{
-                $_SESSION['login_user'] = $myusername;
-                $_SESSION['parent_pwd'] = $mypassword;  
-                $_SESSION['parent_firstname'] = $row['firstname'];
-                $_SESSION['parent_lastname'] = $row['lastname'];
-                $_SESSION['parent_points'] = $row['Points'];
-                $_SESSION['parent_street'] = $row['streetName'];
-                $_SESSION['parent_street_num'] = $row['streetNumber'];
-                $_SESSION['parent_town'] = $row['town'];
-                $_SESSION['parent_zipcode'] = $row['PostalCode']; 
-                $_SESSION['parent_PhoneNumber'] = $row['PhoneNumber'];
-                header("location: parentSignedInHomePage.php");
-              }
+				if( !password_verify($mypassword, $row['pwd'])){
+					$error = "Your Login Name or Password is invalid";
+					echo   $error;
+				}else{
+					if($row['activated']==0){
+						session_destroy();
+						header("location: waiting_activation.php");
+					}else{
+						$_SESSION['login_user'] = $myusername;
+						$_SESSION['parent_pwd'] = $mypassword;  
+						$_SESSION['parent_firstname'] = $row['firstname'];
+						$_SESSION['parent_lastname'] = $row['lastname'];
+						$_SESSION['parent_points'] = $row['Points'];
+						$_SESSION['parent_street'] = $row['streetName'];
+						$_SESSION['parent_street_num'] = $row['streetNumber'];
+						$_SESSION['parent_town'] = $row['town'];
+						$_SESSION['parent_zipcode'] = $row['PostalCode']; 
+						$_SESSION['parent_PhoneNumber'] = $row['PhoneNumber'];
+						header("location: index.php");
+					}
+				}
             }else {
-              $error = "Your Login Name or Password is invalid";
+				$error = "Your Login Name or Password is invalid";
       		    echo   $error;
             }
           }
@@ -120,7 +118,8 @@
       <input type="email" id="inputEmail" name="ParEmail" class="form-control" placeholder="Email address" required autofocus>
       <label for="inputPassword" class="sr-only">Password</label>
       <input type="password" id="inputPassword"  name="pwd" class="form-control" placeholder="Password" required>
-  		<input type="submit" class="btn btn-sm btn-info" value="Σύνδεση" ></input>
+		<a  href="./reset-pass.php">Reset password</a>
+  	  <input type="submit" class="btn btn-sm btn-info" value="Σύνδεση" style="width:100%;height:200%;" ></input>
     </form>
 
     </div>

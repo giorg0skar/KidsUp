@@ -33,13 +33,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#about">Σχετικά με εμάς</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#services">Υπηρεσίες</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#contact">Επικοινωνία</a>
+              <a class="nav-link" href="aboutus.php">Σχετικά με εμάς</a>
             </li>
             <li class="nav-item dropdown">
 			  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownSignUp" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Σύνδεση ως</a>
@@ -75,7 +69,7 @@
       $myusername = mysqli_real_escape_string($dbc,$_POST['ProvEmail']);
       $mypassword = mysqli_real_escape_string($dbc,$_POST['pwd']);
 
-      $sql = "SELECT * FROM Provider WHERE ProvEmail = '$myusername' and pwd = '$mypassword'";
+      $sql = "SELECT * FROM Provider WHERE ProvEmail = '$myusername'";
       $result = mysqli_query($dbc,$sql);
       $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
 
@@ -84,28 +78,32 @@
       // If result matched $myusername and $mypassword, table row must be 1 row
 
       if($count == 1) {
-        if($row['activated']=='0'){
-          session_destroy();
-          header("location: waiting_activation.php");
-        }else{
-          $_SESSION['login_user'] = $myusername;
-          $_SESSION['pwd'] = $mypassword;
-          $_SESSION['companyName'] = $row['companyName'];
-          $_SESSION['town'] = $row['town'];
-          $_SESSION['streetName'] = $row['streetName'];
-          $_SESSION['streetNumber'] = $row['streetNumber'];
-          $_SESSION['PostalCode'] = $row['PostalCode'];
-          $_SESSION['PhoneNumber'] = $row['PhoneNumber'];
-          $_SESSION['VAT'] = $row['VAT'];
-          $_SESSION['IBAN'] = $row['IBAN'];
-
-          header("location: provider-profile.php");
-        }
-      }else {
-         $error = "Your Login Name or Password is invalid";
-		     echo $error;
-      }
-   }
+			if( !password_verify($mypassword, $row['pwd'])){
+					$error = "Your Login Name or Password is invalid";
+					echo   $error;
+			}else{
+				if($row['activated']=='0'){
+					session_destroy();
+					header("location: waiting_activation.php");
+				}else{
+					$_SESSION['login_user'] = $myusername;
+					$_SESSION['pwd'] = $mypassword;
+					$_SESSION['companyName'] = $row['companyName'];
+					$_SESSION['town'] = $row['town'];
+					$_SESSION['streetName'] = $row['streetName'];
+					$_SESSION['streetNumber'] = $row['streetNumber'];
+					$_SESSION['PostalCode'] = $row['PostalCode'];
+					$_SESSION['PhoneNumber'] = $row['PhoneNumber'];
+					$_SESSION['VAT'] = $row['VAT'];
+					$_SESSION['IBAN'] = $row['IBAN'];
+					header("location: provider-profile.php");
+				}
+			}
+		}else {
+			$error = "Your Login Name or Password is invalid";
+			echo $error;
+		}
+	}
 ?>
 </h4>
 </div>
@@ -120,7 +118,7 @@
         <input type="email"  name="ProvEmail" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
         <label for="inputPassword" class="sr-only">Password</label>
         <input type="password" name="pwd" id="inputPassword" class="form-control" placeholder="Password" required>
-        <input type="submit" class="btn btn-sm btn-info" value="Σύνδεση" ></input>
+        <input type="submit" class="btn btn-sm btn-info" value="Σύνδεση" style="width:100%;height:200%;"></input>
       </form>
 
     </div> <!-- /container -->

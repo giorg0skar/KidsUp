@@ -111,14 +111,13 @@
                             }
                             else echo "Error deleting record:" . $dbc->error;
                         }
-                        mysqli_close($dbc);
                     }
                     //change a user's password
                     if (isset($_POST['submit'])) {
                         $flag2=0;
-                        require('./mysqli_connect.php');
+                        require_once('./mysqli_connect.php');
                         $mail = $_POST['mail'];
-                        $pwd = $_POST['password'];
+                        $pwd = password_hash( $_POST['password'] , PASSWORD_DEFAULT);
                         $sql = "UPDATE Parent SET pwd='".$pwd."' WHERE ParEmail='".$mail."' ";
                         if ($dbc->query($sql) === TRUE) {
                             if ($dbc->affected_rows == 1) {
@@ -136,14 +135,13 @@
                             }
                             else echo "Error deleting record:" . $dbc->error;
                         }
-                        mysqli_close($dbc);
                     }
                 ?>
                     <h3>Λογαριασμοι:</h3>
                     <?php
                     mb_internal_encoding('UTF-8');
                     mb_http_input("utf-8");
-                    require('./mysqli_connect.php');
+                    require_once('./mysqli_connect.php');
 
                     //list of parents
                     $query = "SELECT ParEmail FROM Parent WHERE activated=1";
