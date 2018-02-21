@@ -68,7 +68,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="./aboutus.php">Σχετικά με εμάς</a>
+              <a class="nav-link" href="aboutus.php">Σχετικά με εμάς</a>
             </li>
             <li class="nav-item dropdown">
 			  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownSignUp" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Σύνδεση ως</a>
@@ -102,7 +102,7 @@
 					$flag=0;
 					
 					$ParEmail = trim($_POST['ParEmail']);
-					$pwd = trim($_POST['pwd']);
+					$pwd = password_hash( mysqli_real_escape_string($dbc,$_POST['pwd']) ,PASSWORD_DEFAULT);
 					$firstname = trim($_POST['firstname']);
 					$lastname = trim($_POST['lastname']);
 					$town = trim($_POST['town']);
@@ -115,11 +115,15 @@
 					$url='https://maps.google.com/maps/api/geocode/json?address='.urlencode($address).'&key=AIzaSyBsLUCKMjlmcDrvL6IXYlaHez6AUb01O8U&sensor=false';
 					$geocode = file_get_contents($url);
 					$output= json_decode($geocode , true);
-					$latitude = $output['results'][0]['geometry']['location']['lat'];
-					$longitude = $output['results'][0]['geometry']['location']['lng'];
+					if( isset($output['results'][0]) ) {
+						$latitude = $output['results'][0]['geometry']['location']['lat'];
+						$longitude = $output['results'][0]['geometry']['location']['lng'];
+					}else{
+						$flag = 1;
+					}
 					$Points = 0;
 					$online = 1;
-					$activated =1;
+					$activated =0;
 					if( $streetNumber<=0 || $PostalCode<=9999 || $PostalCode>=100000 || $PhoneNumber<=0 || $PhoneNumber>=10000000000)
 						$flag=1;
 						if ( $flag==0){
@@ -141,8 +145,9 @@
 							}
 						}
 						else {
-							echo 'Remember: Ο ταχυδρομικός κώδικας είναι ένας 5ψήφιος αριθμός<br/>
+							echo 'Υπενθύμιση: Ο ταχυδρομικός κώδικας είναι ένας 5ψήφιος αριθμός<br/>
 											Ο αριθμός τηλεφώνου είναι ένας 10ψήφιος αριθμός<br/>
+											Συμπληρώστε την σωστή διεύθυνση κατοικίας σας<br/>
 											';
 						}
 					 
@@ -196,7 +201,7 @@
                         <div class="form-group">
                             <input type="password" name="pwd" placeholder="Password" class="form-control" required >
                         </div>
-							<input type="submit" class="btn btn-sm btn-info" value="Υποβολή Δήλωσης" ></input>
+							<input type="submit" class="btn btn-sm btn-info" value="Υποβολή Δήλωσης" style="width:100%;height:200%;"></input>
                         </div>
                     </form>
                 </div>
