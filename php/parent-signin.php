@@ -33,7 +33,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="./aboutus.php">Σχετικά με εμάς</a>
+              <a class="nav-link" href="aboutus.php">Σχετικά με εμάς</a>
             </li>
             <li class="nav-item dropdown">
   		  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownSignUp" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Σύνδεση ως</a>
@@ -59,58 +59,56 @@
       <h4 class="form-signin" style="text-align:center;">
       	<?php
           require("mysqli_connect.php");
-          ################Testing##########################
-          // require("utilities.php");
-          // $pdf = create_pdf_from_ticket("Karamousadakis Michail", "Dampo the elephant" , [13,14,15,16]);
-          // $subject = "Αγορά εισιτηρίου";
-          // $to = "mike95gr@hotmail.com";
-          // send_ticket_with_email($to,$subject,$pdf);
-          #################################################
+          mysqli_query($dbc,"SET NAMES UTF8");    //to display greek characters correctly
           session_start();
           mb_internal_encoding('UTF-8');
           mb_http_input("utf-8");
           if($_SERVER["REQUEST_METHOD"] == "POST") {
-            // username and password sent from form
-
+            // username and password sent from form 
+              
             $myusername = mysqli_real_escape_string($dbc,$_POST['ParEmail']);
-            $mypassword = mysqli_real_escape_string($dbc,$_POST['pwd']);
-
-            $sql = "SELECT * FROM Parent WHERE ParEmail = '$myusername' and pwd = '$mypassword'";
+            $mypassword = mysqli_real_escape_string($dbc,$_POST['pwd']) ;
+            $sql = "SELECT * FROM Parent WHERE ParEmail = '$myusername'";
             $result = mysqli_query($dbc,$sql);
             $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
 
             $count = mysqli_num_rows($result);
-
+            
             // If result matched $myusername and $mypassword, table row must be 1 row
-
+      		
             if($count == 1) {
-        		  if($row['activated']==0){
-        			  session_destroy();
-        			  header("location: waiting_activation.php");
-        		  }else{
-                $_SESSION['login_user'] = $myusername;
-                $_SESSION['parent_pwd'] = $mypassword;
-                $_SESSION['parent_firstname'] = $row['firstname'];
-                $_SESSION['parent_lastname'] = $row['lastname'];
-                $_SESSION['parent_points'] = $row['Points'];
-                $_SESSION['parent_street'] = $row['streetName'];
-                $_SESSION['parent_street_num'] = $row['streetNumber'];
-                $_SESSION['parent_town'] = $row['town'];
-                $_SESSION['parent_zipcode'] = $row['PostalCode'];
-                $_SESSION['parent_PhoneNumber'] = $row['PhoneNumber'];
-                header("location: index.php");
-              }
+				if( !password_verify($mypassword, $row['pwd'])){
+					$error = "Your Login Name or Password is invalid";
+					echo   $error;
+				}else{
+					if($row['activated']==0){
+						session_destroy();
+						header("location: waiting_activation.php");
+					}else{
+						$_SESSION['login_user'] = $myusername;
+						$_SESSION['parent_pwd'] = $mypassword;  
+						$_SESSION['parent_firstname'] = $row['firstname'];
+						$_SESSION['parent_lastname'] = $row['lastname'];
+						$_SESSION['parent_points'] = $row['Points'];
+						$_SESSION['parent_street'] = $row['streetName'];
+						$_SESSION['parent_street_num'] = $row['streetNumber'];
+						$_SESSION['parent_town'] = $row['town'];
+						$_SESSION['parent_zipcode'] = $row['PostalCode']; 
+						$_SESSION['parent_PhoneNumber'] = $row['PhoneNumber'];
+						header("location: index.php");
+					}
+				}
             }else {
-              $error = "Your Login Name or Password is invalid";
+				$error = "Your Login Name or Password is invalid";
       		    echo   $error;
             }
           }
         ?>
       </h4>
-    </div>
-
-
-
+    </div>	
+  	
+  	
+  	
 
     <div class="container">
 
@@ -120,7 +118,8 @@
       <input type="email" id="inputEmail" name="ParEmail" class="form-control" placeholder="Email address" required autofocus>
       <label for="inputPassword" class="sr-only">Password</label>
       <input type="password" id="inputPassword"  name="pwd" class="form-control" placeholder="Password" required>
-  		<input type="submit" class="btn btn-sm btn-info" value="Σύνδεση" ></input>
+		<a  href="./reset-pass.php">Reset password</a>
+  	  <input type="submit" class="btn btn-sm btn-info" value="Σύνδεση" style="width:100%;height:200%;" ></input>
     </form>
 
     </div>
@@ -129,6 +128,6 @@
     <!-- Bootstrap core JavaScript -->
     <script src="../assets/jquery/jquery.min.js"></script>
     <script src="../assets/bootstrap/js/bootstrap.bundle.min.js"></script>
-
+      
   </body>
 </html>
