@@ -1,3 +1,9 @@
+<?php
+    session_start();
+    if(!isset($_SESSION['login_user'])){
+        header("location:adminlogin.php");
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -83,28 +89,29 @@
             <div class="content">
                 <div class="container-fluid">
                 <?php
-					session_start();
-					if(!isset($_SESSION['login_user'])){
-						header("location:adminlogin.php");
-					}
+					// session_start();
+					// if(!isset($_SESSION['login_user'])){
+					// 	header("location:adminlogin.php");
+					// }
                     mb_internal_encoding('UTF-8');
                     mb_http_input("utf-8");
                     //lock a user's account
                     if (isset($_POST['lock'])) {
-                        $flag1=0;
+                        //$flag1=0;
                         require('./mysqli_connect.php');
                         $mail = $_POST['mail'];
-                        $sql = "UPDATE Parent SET activated=0 WHERE ParEmail='$mail' ";
-                        if ($dbc->query($sql) === TRUE) {
-                            if ($dbc->affected_rows == 1) {
-                                $flag1=1;
-                                echo "Parent deactivated successfully";
+                        $location = $_POST['location'];
+                        if ($location == "Parent") {
+                            $sql = "UPDATE Parent SET activated=0 WHERE ParEmail='$mail' ";
+                            if ($dbc->query($sql) === TRUE) {
+                                if ($dbc->affected_rows == 1) {
+                                    //$flag1=1;
+                                    echo "Parent deactivated successfully";
+                                }
                             }
+                            else echo "Error updating record: " . $dbc->error;
                         }
-                        else {
-                            echo "Error updating record: " . $dbc->error;
-                        }
-                        if ($flag1 == 0) {
+                        if ($location == "Provider") {
                             $sql1 = "UPDATE Provider SET activated=0 WHERE ProvEmail='".$mail."' ";
                             if ($dbc->query($sql1) === TRUE) {
                                 if ($dbc->affected_rows == 1) echo "Provider deactivated successfully";
@@ -114,21 +121,24 @@
                     }
                     //change a user's password
                     if (isset($_POST['submit'])) {
-                        $flag2=0;
+                        //$flag2=0;
                         require_once('./mysqli_connect.php');
                         $mail = $_POST['mail'];
+                        $location = $_POST['location'];
                         $pwd = password_hash( $_POST['password'] , PASSWORD_DEFAULT);
-                        $sql = "UPDATE Parent SET pwd='".$pwd."' WHERE ParEmail='".$mail."' ";
-                        if ($dbc->query($sql) === TRUE) {
-                            if ($dbc->affected_rows == 1) {
-                                $flag2=1;
-                                echo "Parent's password changed";
+                        if ($location == "Parent") {
+                            $sql = "UPDATE Parent SET pwd='".$pwd."' WHERE ParEmail='".$mail."' ";
+                            if ($dbc->query($sql) === TRUE) {
+                                if ($dbc->affected_rows == 1) {
+                                    //$flag2=1;
+                                    echo "Parent's password changed";
+                                }
+                            }
+                            else {
+                                echo "Error deleting record: " . $dbc->error;
                             }
                         }
-                        else {
-                            echo "Error deleting record: " . $dbc->error;
-                        }
-                        if ($flag2 == 0) {
+                        if ($location == "Provider") {
                             $sql1 = "UPDATE Provider SET pwd='".$pwd."' WHERE ProvEmail='".$mail."' ";
                             if ($dbc->query($sql1) === TRUE) {
                                 if ($dbc->affected_rows == 1) echo "Provider's password changed";
@@ -143,7 +153,7 @@
                     mb_http_input("utf-8");
                     require_once('./mysqli_connect.php');
 
-                    //list of parents
+                    //List of parents
                     $query = "SELECT ParEmail FROM Parent WHERE activated=1";
                     $response = @mysqli_query($dbc, $query);
                     if ($response) {
@@ -169,6 +179,7 @@
                                 <!-- <div class="form-group mb-2"> -->
                                 <input class="btn btn-fill btn-primary" type="submit" name="submit" value="Submit" >
                                 <input type="text" value= "<?php echo $row['ParEmail']; ?>" name="mail" hidden />
+                                <input type="text" value= "Parent" name="location" hidden />
                                 <!-- </div> -->
                             </form>
                             
@@ -180,8 +191,9 @@
                             echo '</td><td>';
                         ?>
                             <form action="admin-accounts.php" method="post">
-                            <input class="btn btn-fill btn-danger" type="submit" name="lock" value="Lock" >
-                            <input type="text" value= "<?php echo $row['ParEmail']; ?>" name="mail" hidden />
+                                <input class="btn btn-fill btn-danger" type="submit" name="lock" value="Lock" >
+                                <input type="text" value= "<?php echo $row['ParEmail']; ?>" name="mail" hidden />
+                                <input type="text" value= "Parent" name="location" hidden />
                             </form>
                         <?php
                             echo '</td></tr>';
@@ -193,7 +205,7 @@
                         echo mysqli_error($dbc);
                     }
 
-                    //list of providers
+                    //List of providers
                     $query = "SELECT ProvEmail FROM Provider WHERE activated=1";
                     $response = @mysqli_query($dbc, $query);
                     if ($response) {
@@ -212,9 +224,10 @@
                             $row['ProvEmail'] . '</td><td>' ;
                         ?>
                             <form class="form-inline" action="admin-accounts.php" method="post">
-                            <input type="text" class="form-control border-input" id="pwd" name="password" placeholder="Νέος Κωδικός">
-                            <input class="btn btn-fill btn-primary" type="submit" name="submit" value="Submit" >
-                            <input type="text" value= "<?php echo $row['ProvEmail']; ?>" name="mail" hidden />
+                                <input type="text" class="form-control border-input" id="pwd" name="password" placeholder="Νέος Κωδικός">
+                                <input class="btn btn-fill btn-primary" type="submit" name="submit" value="Submit" >
+                                <input type="text" value= "<?php echo $row['ProvEmail']; ?>" name="mail" hidden />
+                                <input type="text" value= "Provider" name="location" hidden />
                             </form>
                         <?php
                             echo '</td><td>';
@@ -225,8 +238,9 @@
                             echo '</td><td>';
                         ?>
                             <form action="admin-accounts.php" method="post">
-                            <input class="btn btn-fill btn-danger" type="submit" name="lock" value="Lock" >
-                            <input type="text" value= "<?php echo $row['ProvEmail']; ?>" name="mail" hidden />
+                                <input class="btn btn-fill btn-danger" type="submit" name="lock" value="Lock" >
+                                <input type="text" value= "<?php echo $row['ProvEmail']; ?>" name="mail" hidden />
+                                <input type="text" value= "Provider" name="location" hidden />
                             </form>
                         <?php
                             echo '</td></tr>';

@@ -1,3 +1,9 @@
+<?php
+    session_start();
+    if(!isset($_SESSION['login_user'])){
+        header("location:adminlogin.php");
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -83,10 +89,10 @@
             <div class="content">
                 <div class="container-fluid">
                 <?php
-					session_start();
-					if(!isset($_SESSION['login_user'])){
-						header("location:adminlogin.php");
-					}
+					//session_start();
+					// if(!isset($_SESSION['login_user'])){
+					// 	header("location:adminlogin.php");
+					// }
                     if (isset($_POST['activate'])) {
                         mb_internal_encoding('UTF-8');
                         mb_http_input("utf-8");
@@ -98,16 +104,19 @@
                         // mysqli_set_charset($dbc, "utf8");
 
                         $mail = $_POST['act_mail'];
-                        $sql = "UPDATE Parent SET activated=1 WHERE ParEmail ='$mail' ";
-                        if ($dbc->query($sql) === TRUE) {
-                            if ($dbc->affected_rows == 1) {
-                                echo "Parent activated successfully";
-                                $flag=1;
+                        $location = $_POST['location'];
+                        if ($location == "Parent") {
+                            $sql = "UPDATE Parent SET activated=1 WHERE ParEmail ='$mail' ";
+                            if ($dbc->query($sql) === TRUE) {
+                                if ($dbc->affected_rows == 1) {
+                                    echo "Parent activated successfully";
+                                    $flag=1;
+                                }
                             }
+                            else echo "Error activating user: " . $dbc->error;
                         }
-                        else echo "Error activating user: " . $dbc->error;
                         
-                        if ($flag==0) {
+                        if ($location == "Provider") {
                             $sql1 = "UPDATE Provider SET activated=1 WHERE ProvEmail ='$mail' ";
                             if ($dbc->query($sql1) === TRUE) {
                                 echo "Provider activated successfully";
@@ -149,6 +158,7 @@
                         <input type="text" value= "<?php echo $row['ParEmail']; ?>" name="act_mail" hidden />
                         <input type="text" value= "<?php echo $row['firstname']; ?>" name="firstname" hidden />
                         <input type="text" value= "<?php echo $row['lastname']; ?>" name="lastname" hidden />
+                        <input type="text" value= "Parent" name="location" hidden />
                         </form>
                         <?php
                             echo '</tr>';
@@ -184,6 +194,7 @@
                         <input class="btn btn-fill btn-primary" type="submit" name="activate" value="Activate" />
                         <input type="text" value= "<?php echo $row['ProvEmail']; ?>" name="act_mail" hidden />
                         <input type="text" value= "<?php echo $row['companyName']; ?>" name="firstname" hidden />
+                        <input type="text" value= "Provider" name="location" hidden />
                         </form>
                         <?php
                             echo '</tr>';
