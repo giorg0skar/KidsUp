@@ -20,6 +20,7 @@
 
   <body>
 
+
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
@@ -48,13 +49,12 @@
           <?php 
 
                 //Just for testing
-                //session_start();
-                // $_SESSION['parent_points'] = 40;
-                // $_SESSION['login_user'] = "c@gmail.com";
-                // $_SESSION['parent_firstname'] = "George";
-                // $_SESSION['parent_lastname'] = "Petrou";
+                session_start();
+                $_SESSION['parent_points'] = 40;
+                $_SESSION['login_user'] = "tedroark7@gmail.com";
+                $_SESSION['parent_firstname'] = "George";
+                $_SESSION['parent_lastname'] = "Petrou";
 
-              session_start();
               if(isset($_SESSION['login_user'])){
 
                   echo"
@@ -104,7 +104,7 @@
                     mb_http_input("utf-8");
 
 
-                    if($_SERVER["REQUEST_METHOD"] == "POST"){
+                    if($_SERVER["REQUEST_METHOD"] == "POST" ||True){
                         $flag=0;
 
                         if(isset($_SESSION['login_user'])){
@@ -112,8 +112,9 @@
                             $Points   = $_SESSION['parent_points'];
                         }
 
-                        $id = trim($_POST['ActId']); 
+                        $id = 3;//trim($_POST['ActId']); 
                         require('./mysqli_connect.php'); 
+
 
                         $q = "SELECT * FROM Activity WHERE (ActID='$id') ";
                         $r = mysqli_query($dbc, $q);
@@ -177,8 +178,8 @@
                                   if (mysqli_num_rows($r)==1){
                                      $row = mysqli_fetch_array($r, MYSQLI_ASSOC);
                                      
-
-                                     if($row['availableTickets'] >= 0 ){
+                                    $NewAvailable = $row['availableTickets'];
+                                     if($NewAvailable >= 0 ){
 
                                           mysqli_free_result($r);
                                           $newPoints = $_SESSION['parent_points'] - ($ticket_count * $price); 
@@ -199,6 +200,22 @@
                                               
                                               
                                               //header("location: parentSignedInHomePage.php");
+                                              require('./utilities.php');
+
+                                              $ticket_ids = array();
+                                              for($x = 0; $x < $ticket_count; $x++) {
+                                                  $ticket_ids[$x] = $maxTickets - $NewAvailable - $x;
+                                                  echo $ticket_ids[$x];
+                                                  echo "<br>";
+                                              }
+
+                                             $pdf = create_pdf_from_ticket( $_SESSION['parent_lastname'] . ' ' .  $_SESSION['parent_firstname'], $actName , $ticket_ids);
+                                             $subject= "KidsUp";
+                                             $to = $_SESSION['login_user'];
+                                             send_ticket_with_email($to,$subject,$pdf);
+
+
+
                                               echo "<script> window.alert(\"Η αγορά ολοκληρώθηκε !!! \\n Σας έχει αποσταλεί email\"); window.location.href='index.php';</script>";
                                           }
 
@@ -280,7 +297,7 @@
 
                           <form action="buyTicket.php" id = "myform" method="post" onsubmit="return check_points()">
                               <div class="col-sm-8 form-group">
-                                <input type="number" name='number' onchange="calculateTotal()"  onkeyup="calculateTotal()" id="count"  min = "0" placeholder="Πόσα Εισητήρια Θέλετε?" class="form-control" required>
+                                <input type="number" name='number' onchange="calculateTotal()"  onkeyup="calculateTotal()" id="count"  min = "1" placeholder="Πόσα Εισητήρια Θέλετε?" class="form-control" required>
                               </div>
 
                               <?php  if (isset($_SESSION['login_user']))  echo " <div id=\"totalPrice\">Total Price: 0</div><br> "; ?>
