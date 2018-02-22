@@ -100,7 +100,7 @@
 				mb_http_input("utf-8");
 				if($_SERVER["REQUEST_METHOD"] == "POST"){
 					$flag=0;
-					
+					require_once('./mysqli_connect.php');
 					$ParEmail = trim($_POST['ParEmail']);
 					$pwd = password_hash( mysqli_real_escape_string($dbc,$_POST['pwd']) ,PASSWORD_DEFAULT);
 					$firstname = trim($_POST['firstname']);
@@ -127,7 +127,7 @@
 					if( $streetNumber<=0 || $PostalCode<=9999 || $PostalCode>=100000 || $PhoneNumber<=0 || $PhoneNumber>=10000000000)
 						$flag=1;
 						if ( $flag==0){
-							require_once('./mysqli_connect.php');
+							//require_once('./mysqli_connect.php');
 							$query = "INSERT INTO Parent(ParEmail, pwd , firstname , lastname , town, streetName , streetNumber , PostalCode , PhoneNumber , latitude , longitude , Points , online, activated) VALUES ( ?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 							$stmt = mysqli_prepare($dbc, $query);
 							mysqli_stmt_bind_param($stmt, "ssssssiiiddiii", $ParEmail, $pwd , $firstname , $lastname , $town, $streetName , $streetNumber , $PostalCode , $PhoneNumber , $latitude , $longitude , $Points , intval($online), intval($activated));
