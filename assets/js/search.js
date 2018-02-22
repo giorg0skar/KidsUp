@@ -200,5 +200,5 @@ function remove_filter(filter_id){
             document.getElementsByName('interval_radio')[prev_interval].checked = false;
     }
     
-    submit_form();
+    submit_form(1);
 }    

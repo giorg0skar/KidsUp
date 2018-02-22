@@ -112,7 +112,7 @@
     //first check if the index is created in ES and create it if necessary
 		create_index();
 		$page = 1; //default value
-		$page_size = 3;
+		$page_size = 5;
 		$search = array();
 		$search['search'] = trim($_POST['search']);
 		$search['area'] = trim($_POST['area']);
@@ -468,7 +468,7 @@
       </div>
 						<!-- row -->
 
-      <div class="row">
+      <div class="row" id="pagination">
         <nav aria-label="Search results pages" style="margin: auto;">
           <ul class="pagination">
             <li class="page-item <?php if($page == 1) {echo "disabled";}?>">
@@ -536,14 +536,31 @@
 			</script>
 	<?php		
 		}
+	?>
+
+	<?php 
+		if($num_pages == 0){
 	?>	
 		<script>
+			document.getElementById('pagination').style.display = 'none';
+		</script>
+	<?php
+		}else{
+	?>
+		<script>
+			document.getElementById('pagination').style.display = 'initial';
+		</script>
+	<?php
+		}
+	?>
+	
+		<script>
 			document.body.addEventListener("load", initiate_filters());
-			document.getElementById("search_button").addEventListener("click", submit_form);
-			document.getElementById("age").addEventListener("change", submit_form);
-			document.getElementById("distance").addEventListener("change", submit_form); 
-			document.getElementById("act_kind").addEventListener("change", submit_form); 
-			document.getElementById("interval").addEventListener("change", submit_form); 
+			document.getElementById("search_button").addEventListener("click", function(){submit_form(1);});
+			document.getElementById("age").addEventListener("change", function(){submit_form(1);});
+			document.getElementById("distance").addEventListener("change", function(){submit_form(1);}); 
+			document.getElementById("act_kind").addEventListener("change", function(){submit_form(1);}); 
+			document.getElementById("interval").addEventListener("change", function(){submit_form(1);}); 
 	  </script>
 		<script>
 			function post_actid(id){
