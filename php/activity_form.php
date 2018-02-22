@@ -63,6 +63,29 @@
 				if($_SERVER["REQUEST_METHOD"] == "POST"){
 					$flag=0;
 					
+          $target_dir =  "../uploads/";
+          $pictureURL = $target_dir . basename($_FILES["image"]["name"]);
+          $uploadOk = 1;
+          require('watermark.php');
+          $imageFileType = strtolower(pathinfo($pictureURL,PATHINFO_EXTENSION));
+
+            // Check if image file is a actual image or fake image
+
+          $check = getimagesize($_FILES["image"]["tmp_name"]);
+          if($check !== false) {
+                //  echo "  File is an image - " . $check["mime"] . ".";
+                $uploadOk = 1;
+          } else {
+                echo "File is not an image.";
+                $uploadOk = 0;
+          }
+          if (file_exists($pictureURL)) {
+                echo "<br><br><br>Sorry, file already exists.";
+                $uploadOk = 0;
+          }
+          //Haven;t saved the image !! We wait till the database queri is OK
+
+
 					$ProvEmail = $_SESSION['login_user'];
 					$actName = trim($_POST['actName']);
 					$actType = trim($_POST['actType']);
@@ -79,7 +102,7 @@
 					$PostalCode = trim($_POST['PostalCode']);
 					$PhoneNumber = trim($_POST['PhoneNumber']);
 					$actDescription = trim($_POST['actDescription']);
-					$pictureURL = trim($_POST['pictureURL']);
+					
           $visits = 0;
           $actDateTime = $actDate." ".$actTime;
 					
@@ -87,24 +110,27 @@
 					$url='https://maps.google.com/maps/api/geocode/json?address='.urlencode($address).'&key=AIzaSyBsLUCKMjlmcDrvL6IXYlaHez6AUb01O8U&sensor=false';
 					$geocode = file_get_contents($url);
 					$output= json_decode($geocode , true);
-					if( isset($output['results'][0]) ) {
-						$latitude = $output['results'][0]['geometry']['location']['lat'];
-						$longitude = $output['results'][0]['geometry']['location']['lng'];
-					}else{
-						$flag = 1;
-					}
-					if( $streetNumber<=0 || $PostalCode<=9999 || $PostalCode>=100000 || $PhoneNumber<=0 || $PhoneNumber>=10000000000 || $MinAge>$MaxAge) // kialloi elegxoi
+					$latitude = $output['results'][0]['geometry']['location']['lat'];
+					$longitude = $output['results'][0]['geometry']['location']['lng'];
+					
+					if( $streetNumber<=0 || $PostalCode<=9999 || $PostalCode>=100000 || $PhoneNumber<=0 || $PhoneNumber>=10000000000 || $MinAge>$MaxAge || $uploadOk==0) // kialloi elegxoi
 						$flag=1;
 						if ( $flag==0){
 							require_once('./mysqli_connect.php');
-							$query = "INSERT INTO Activity(ProvEmail,actName,actType,actDate,price,MinAge,MaxAge,maxTickets,availableTickets,town,streetName,streetNumber,PostalCode,PhoneNumber,latitude,longitude,actDescription,pictureURL,visits) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+							$query = "INSERT INTO Activity(ActID,ProvEmail,actName,actType,actDate,price,MinAge,MaxAge,maxTickets,availableTickets,town,streetName,streetNumber,PostalCode,PhoneNumber,latitude,longitude,actDescription,pictureURL,visits) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 							$stmt = mysqli_prepare($dbc, $query);
-              mysqli_stmt_bind_param($stmt, "ssssiiiiissiiiddssi", $ProvEmail, $actName, $actType, $actDateTime, $price, $MinAge, $MaxAge, $maxTickets, $availableTickets, $town, $streetName, $streetNumber, $PostalCode, $PhoneNumber, $latitude, $longitude, $actDescription, $pictureURL, $visits);
+              $ActID='NULL';
+              mysqli_stmt_bind_param($stmt, "issssiiiiissiiiddssi",$ActID , $ProvEmail, $actName, $actType, $actDateTime, $price, $MinAge, $MaxAge, $maxTickets, $availableTickets, $town, $streetName, $streetNumber, $PostalCode, $PhoneNumber, $latitude, $longitude, $actDescription, $pictureURL, $visits);
               mysqli_stmt_execute($stmt);
 							$affected_rows = mysqli_stmt_affected_rows($stmt);
+       
 							if($affected_rows == 1){
                 echo '<h1>Επιτυχής δημιουργία δραστηριότητας  !</h1>';
                 
+                //Now save the image!!
+                $photo = add_watermark($_FILES["image"]["tmp_name"], basename($_FILES["image"]["name"]));
+                imagepng($photo, $pictureURL );
+
                 //get the auto-increment key from the last-insert (PROBLEM IN CONCURRENT SUBMITS) 
                 $id = mysqli_insert_id($dbc);
                 $new_activity = [
@@ -128,6 +154,7 @@
 								header("location: provider-activities.php");	
 							} else {
 								echo 'Το email αυτό ήδη χρησιμοποιείται! Παρακαλώ διαλέξτε ένα άλλο<br/>';
+
 								mysqli_stmt_close($stmt);
 								mysqli_close($dbc);
 							}
@@ -136,7 +163,7 @@
 							echo '<h3>Remember:</h3> Ο ταχυδρομικός κώδικας είναι ένας 5ψήφιος αριθμός<br/>
 											Ο αριθμός τηλεφώνου είναι ένας 10ψήφιος αριθμός<br/>
 											Η ελάχιστη ηλικία παιδιών στην οποία απευθύνεται η δραστηριότητα πρέπει να είναι μικρότερη από την μέγιστη ηλικία <br/>
-											Συμπληρώστε την σωστή διεύθυνση<br/>
+											
 											';
 						}
 					 
@@ -156,7 +183,7 @@
     <div class="row">
     <div class="col-lg-12 well">
           <div class="row">
-          <form action="activity_form.php" method="post">
+          <form action="activity_form.php" method="post" enctype="multipart/form-data">
             <div class="col-sm-12">
               <div class="form-group">
                   <input type="text" name="actName" placeholder="Τίτλος Δραστηριότητας" class="form-control" required>
@@ -236,7 +263,7 @@
 
             <div class="form-group">
 				<label for="exampleFormControlFile1">Φωτογραφία Δραστηριότητας:</label>
-				<input type="file" name="pictureURL" class="form-control-file" id="exampleFormControlFile1" required>
+				<input type="file" name="image" class="form-control-file" id="image" required>
             </div>
             <div class="form-group">
                <label for="exampleFormControlTextarea1">Περιγραφή</label>

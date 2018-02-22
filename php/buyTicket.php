@@ -48,12 +48,8 @@
         
           <?php 
 
-                //Just for testing
+              
                 session_start();
-                $_SESSION['parent_points'] = 40;
-                $_SESSION['login_user'] = "tedroark7@gmail.com";
-                $_SESSION['parent_firstname'] = "George";
-                $_SESSION['parent_lastname'] = "Petrou";
 
               if(isset($_SESSION['login_user'])){
 
@@ -104,7 +100,7 @@
                     mb_http_input("utf-8");
 
 
-                    if($_SERVER["REQUEST_METHOD"] == "POST" ||True){
+                    if($_SERVER["REQUEST_METHOD"] == "POST" ){
                         $flag=0;
 
                         if(isset($_SESSION['login_user'])){
@@ -112,7 +108,7 @@
                             $Points   = $_SESSION['parent_points'];
                         }
 
-                        $id = 3;//trim($_POST['ActId']); 
+                        $id = trim($_POST['ActId']); 
                         require('./mysqli_connect.php'); 
 
 
@@ -181,9 +177,6 @@
                                     $NewAvailable = $row['availableTickets'];
                                      if($NewAvailable >= 0 ){
 
-                                          if($NewAvailable == 0) //update ES doc 
-                                            update_avail_tickets_to_false($id);
-                                
                                           mysqli_free_result($r);
                                           $newPoints = $_SESSION['parent_points'] - ($ticket_count * $price); 
 
@@ -194,32 +187,47 @@
                                             echo '<h1>Αποτυχία ενημέρωσης των πόντων  !!</h1>';
                                             mysqli_query($dbc, "ROLLBACK");
                                           }else {
-                                            //SUCCESS !!!!!!
+                                            
 
-                                              $_SESSION['parent_points'] = $newPoints;
+                                              date_default_timezone_set("Europe/Athens");
+                                              $d=strtotime("now");
+                                              $d = date("Y-m-d h:i:sa", $d) ;
+                                              $totalCost= $ticket_count * $price;
 
-                                              mysqli_query($dbc, "COMMIT");
-                                              mysqli_close($dbc); 
-                                              
-                                              
-                                              //header("location: parentSignedInHomePage.php");
-                                              require('./utilities.php');
+                                              $q = "INSERT INTO Sell values(NULL,'$ParEmail','$id', '$d', '$ticket_count', '$totalCost')";
+                                              $r = mysqli_query($dbc, $q);
 
-                                              $ticket_ids = array();
-                                              for($x = 0; $x < $ticket_count; $x++) {
-                                                  $ticket_ids[$x] = $maxTickets - $NewAvailable - $x;
-                                                  echo $ticket_ids[$x];
-                                                  echo "<br>";
+                                              if (mysqli_affected_rows($dbc)==1){
+                                                //SUCCESS !!!!!!
+                                                    if($NewAvailable == 0) //update ES doc 
+                                                         update_avail_tickets_to_false($id);
+                                
+
+                                                    mysqli_query($dbc, "COMMIT");
+                                                    mysqli_close($dbc); 
+                                                    $_SESSION['parent_points'] = $newPoints;
+                                                    
+                                                    //header("location: parentSignedInHomePage.php");
+                                                    require('./utilities.php');
+
+                                                    $ticket_ids = array();
+                                                    for($x = 0; $x < $ticket_count; $x++) {
+                                                        $ticket_ids[$x] = $maxTickets - $NewAvailable - $x;
+                                                        echo $ticket_ids[$x];
+                                                        echo "<br>";
+                                                    }
+
+                                                   $pdf = create_pdf_from_ticket( $_SESSION['parent_lastname'] . ' ' .  $_SESSION['parent_firstname'], $actName , $ticket_ids);
+                                                   $subject= "KidsUp";
+                                                   $to = $_SESSION['login_user'];
+                                                   send_ticket_with_email($to,$subject,$pdf);
+                                                   echo "<script> window.alert(\"Η αγορά ολοκληρώθηκε !!! \\n Σας έχει αποσταλεί email\"); window.location.href='index.php';</script>";
+
+                                              }else{
+                                                echo '<h1>Can\'t insert in Sell !!</h1>';
+                                                 mysqli_query($dbc, "ROLLBACK");
                                               }
-
-                                             $pdf = create_pdf_from_ticket( $_SESSION['parent_lastname'] . ' ' .  $_SESSION['parent_firstname'], $actName , $ticket_ids);
-                                             $subject= "KidsUp";
-                                             $to = $_SESSION['login_user'];
-                                             send_ticket_with_email($to,$subject,$pdf);
-
-
-
-                                              echo "<script> window.alert(\"Η αγορά ολοκληρώθηκε !!! \\n Σας έχει αποσταλεί email\"); window.location.href='index.php';</script>";
+ 
                                           }
 
                                      }else {
@@ -244,7 +252,7 @@
 
 
 
-                <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
+                <img class="card-img-top" src= <?php echo $pictureURL; ?> alt="" style="width:450px;height:300px;">
                 <div class="card-body">
                   <h4 class="card-title">
                     <p class="card-text"><b><u>Δραστηριότητα: </u></b><?php echo $actName; ?> </p>
