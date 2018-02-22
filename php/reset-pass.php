@@ -78,7 +78,7 @@
 
 				//Import PHPMailer classes into the global namespace
 				
-				require './vendor/autoload.php';
+				require './composer/vendor/autoload.php';
 				$mail = new PHPMailer;
 				$mail->isSMTP();
 				//$mail->SMTPDebug = 2;
