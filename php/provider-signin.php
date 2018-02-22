@@ -118,6 +118,7 @@
         <input type="email"  name="ProvEmail" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
         <label for="inputPassword" class="sr-only">Password</label>
         <input type="password" name="pwd" id="inputPassword" class="form-control" placeholder="Password" required>
+		<a  href="./reset-pass-prov.php">Reset password</a>
         <input type="submit" class="btn btn-sm btn-info" value="Σύνδεση" style="width:100%;height:200%;"></input>
       </form>
 
