@@ -181,6 +181,9 @@
                                     $NewAvailable = $row['availableTickets'];
                                      if($NewAvailable >= 0 ){
 
+                                          if($NewAvailable == 0) //update ES doc 
+                                            update_avail_tickets_to_false($id);
+                                
                                           mysqli_free_result($r);
                                           $newPoints = $_SESSION['parent_points'] - ($ticket_count * $price); 
 

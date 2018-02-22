@@ -26,11 +26,14 @@ function do_search($search)
         $maxage = NULL;        
     }
     $interval = $search['interval'];
+    $from = $search['from'];
+    $size = $search['size'];
 
     $params = [
         'index' => 'kidsup_new',
         'type' => 'activity',
         'body' => [
+            'from' => $from, 'size' => $size,
             'query' => [
                 'bool' => [
                     'must' => [
@@ -78,7 +81,8 @@ function do_search($search)
 
     $results = $client->search($params);
     // take results (collect actids in an array)  
-    $hits = $results['hits']['total'];
+    $total_hits = $results['hits']['total'];
+    $hits = count($results['hits']['hits']);
     $result_ids = array();
     for ($i=0; $i<$hits; $i++){
         $result_ids[] = $results['hits']['hits'][$i]['_id'];
@@ -106,7 +110,7 @@ function do_search($search)
         $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
         $activities[] = $row;        
     }
-    return array($activities, $hits);
+    return array($activities, $total_hits);
 }    
 
 //this function inserts a given activity to ElasticSearch
@@ -233,6 +237,21 @@ function get_coordinates($area){
     $latitude = $output['results'][0]['geometry']['location']['lat'];
     $longitude = $output['results'][0]['geometry']['location']['lng'];
     return array($latitude, $longitude);
+}
+
+function update_avail_tickets_to_false($actid){
+    $client = ClientBuilder::create()->build();
+    $params = [
+        'index' => 'kidsup_new',
+        'type' => 'activity',
+        'id' => $actid,
+        'body' => [
+            'doc' => [
+                'availabletickets' => 'false'
+            ]
+        ]
+    ];
+    $response = $client->update($params);
 }
 
 ?>

@@ -124,9 +124,24 @@
           <div class="row">
 
 <?php
-    
-  $sql = "SELECT * FROM Activity WHERE actDate >= CURDATE() AND availableTickets > 0";
-  $result = mysqli_query($dbc,$sql);
+  $results_per_page = 5;
+
+  if (isset($_GET["page"]) && isset($_GET["num_pages"])){
+    $page = $_GET["page"];
+    $num_pages = $_GET["num_pages"];
+  }else{
+    $page=1;
+    $sql = "SELECT COUNT(*) AS Pages FROM Activity WHERE actDate >= CURDATE() AND availableTickets > 0";
+    $result = mysqli_query($dbc,$sql);    
+    $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
+    $num_pages = ceil($row['Pages'] / $results_per_page);
+  }
+  $start_from = ($page-1) * $results_per_page;
+  $sql = "SELECT * FROM Activity 
+          WHERE actDate >= CURDATE() AND availableTickets > 0 
+          ORDER BY ActID ASC LIMIT $start_from, ".$results_per_page;
+  $result = mysqli_query($dbc,$sql); 
+
   for($i=0; $i< mysqli_num_rows($result); $i++){
       $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
       $datetime = explode(" ", $row['actDate']);
@@ -167,6 +182,36 @@
 ?>              
       </div>
       <!-- /.row -->
+
+      <div class="row">
+        <nav aria-label="Search results pages" style="margin: auto;">
+          <ul class="pagination">
+            <li class="page-item <?php if($page == 1) {echo "disabled";}?>">
+              <a class="page-link" href="index.php?page=<?php echo ($page - 1); ?>&num_pages=<?php echo $num_pages; ?>">
+                Previous
+              </a>
+            </li>
+<?php
+          for($i=1; $i <= $num_pages; $i++){
+?>          
+            <li class="page-item <?php if($i == $page) {echo "active";}?>">
+              <a class="page-link" href="index.php?page=<?php echo $i; ?>&num_pages=<?php echo $num_pages; ?>">
+                <?php
+                  echo $i;
+                ?>
+              </a>
+            </li>
+<?php
+          }
+?>
+            <li class="page-item <?php if($page == $num_pages) {echo "disabled";}?>">
+              <a class="page-link" href="index.php?page=<?php echo ($page + 1); ?>&num_pages=<?php echo $num_pages; ?>">
+                Next
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
 
     </div>
     <!-- /.container -->

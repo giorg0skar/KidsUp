@@ -25,7 +25,7 @@ function get_selected_value(elem){
 * This function is used as click event listener on each filter and 
 * on search button.
 */
-function submit_form(){
+function submit_form(page = 1){
     var search = document.getElementsByName("search");
     search = search[0].value;
     var area = document.getElementsByName("area");
@@ -52,6 +52,7 @@ function submit_form(){
     var element4 = document.createElement("input");  
     var element5 = document.createElement("input");
     var element6 = document.createElement("input");
+    var element7 = document.createElement("input");
     
     form.method = "POST";
     form.action = "search_activities.php";   
@@ -68,6 +69,8 @@ function submit_form(){
     element5.name="act_kind";
     element6.value=selected_interval.value;
     element6.name="interval";
+    element7.value=page;
+    element7.name="page";
 
     form.appendChild(element1);  
     form.appendChild(element2);  
@@ -75,6 +78,7 @@ function submit_form(){
     form.appendChild(element4);  
     form.appendChild(element5);  
     form.appendChild(element6);  
+    form.appendChild(element7); 
 
     document.body.appendChild(form);
 

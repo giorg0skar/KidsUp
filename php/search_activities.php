@@ -110,7 +110,9 @@
 
   if($_SERVER["REQUEST_METHOD"] == "POST") {
     //first check if the index is created in ES and create it if necessary
-    create_index();
+		create_index();
+		$page = 1; //default value
+		$page_size = 3;
 		$search = array();
 		$search['search'] = trim($_POST['search']);
 		$search['area'] = trim($_POST['area']);
@@ -130,11 +132,19 @@
 			$search['interval'] = trim($_POST['interval']);
 		else
 			$search['interval'] = NULL;
+		if(isset($_POST['page']))
+			$page = trim($_POST['page']);
+		$search['from'] = ( $page - 1 ) * $page_size;
+		$search['size'] = $page_size;
 
     $results = do_search($search);
-    $activities = $results[0];
-    $hits = $results[1];
-  }
+		$activities = $results[0];
+		$total_hits = $results[1];
+		$hits = count($activities);
+		$num_pages = ceil($total_hits / $page_size);
+  }else{
+		header('Location: index.php');
+	}
 
 ?>
 
@@ -457,6 +467,37 @@
 ?>              
       </div>
 						<!-- row -->
+
+      <div class="row">
+        <nav aria-label="Search results pages" style="margin: auto;">
+          <ul class="pagination">
+            <li class="page-item <?php if($page == 1) {echo "disabled";}?>">
+              <a class="page-link" href="#" onclick="submit_form(1); return false;">
+                Previous
+              </a>
+            </li>
+<?php
+          for($i=1; $i <= $num_pages; $i++){
+?>          
+            <li class="page-item <?php if($i == $page) {echo "active";}?>">
+              <a class="page-link" href="#" onclick="submit_form(<?php echo $i;?>); return false;">
+                <?php
+                  echo $i;
+                ?>
+              </a>
+            </li>
+<?php
+          }
+?>
+            <li class="page-item <?php if($page == $num_pages) {echo "disabled";}?>">
+              <a class="page-link" href="#" onclick="submit_form(<?php echo $num_pages;?>); return false;">
+                Next
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+				
 				</div>	
 				<!-- col-->
 			</div>
