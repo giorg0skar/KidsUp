@@ -16,6 +16,7 @@ create table Parent
      Points int,
      online bit(1) not null,
      activated bit(1) not null,
+     token VARCHAR(25),
      primary key(ParEmail),
      check ((PostalCode between 0 and 99999) and PhoneNumber > 1999999999)
 );
@@ -35,6 +36,7 @@ create table Provider
      IBAN bigint unsigned not null,
      online bit(1) not null,
      activated bit(1) not null,
+     token VARCHAR(25),
      primary key(ProvEmail),
      check ((PostalCode between 0 and 99999) and PhoneNumber > 1999999999)
 );
