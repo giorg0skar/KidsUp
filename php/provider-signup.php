@@ -101,7 +101,7 @@
 				mb_http_input("utf-8");
 				if($_SERVER["REQUEST_METHOD"] == "POST"){
 					$flag=0;
-					
+					require_once('./mysqli_connect.php');
 					$ProvEmail = trim($_POST['ProvEmail']);
 					$pwd = password_hash( mysqli_real_escape_string($dbc,$_POST['pwd']) ,PASSWORD_DEFAULT);
 					$companyName = trim($_POST['companyName']);
@@ -117,7 +117,6 @@
 					if( $streetNumber<=0 || $PostalCode<=9999 || $PostalCode>=100000 || $PhoneNumber<=0 || $PhoneNumber>=10000000000)
 						$flag=1;
 						if ( $flag==0){
-							require_once('./mysqli_connect.php');
 							$query = "INSERT INTO Provider(ProvEmail, pwd , companyName , town, streetName , streetNumber , PostalCode , PhoneNumber , VAT ,IBAN, online, activated) VALUES ( ?,?,?,?,?,?,?,?,?,?,?,?)";
 							$stmt = mysqli_prepare($dbc, $query);
 							mysqli_stmt_bind_param($stmt, "sssssiiiiiii", $ProvEmail, $pwd , $companyName , $town, $streetName , $streetNumber , $PostalCode , $PhoneNumber , $VAT , $IBAN , intval($online), intval($activated));
