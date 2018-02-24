@@ -141,6 +141,18 @@
             <div class="col-lg-12 well">
                 <h3 align=left><p>&nbsp;&nbsp;&nbsp;&nbsp; Η διαδικτυακή πλατφόρμα δημιουργήθηκε από την ομάδα Team42 ως εργασία για το μάθημα Τεχνολογίας Λογισμικού στην Σχολή ΗΜΜΥ.</p>
 				<p>&nbsp;&nbsp;&nbsp;&nbsp; Μέλη της ομάδας είναι :</p>
+        <?php 
+
+            echo 'Αδάμης           Δημήτριος      03113114    dimitrisadamis1994@gmail.com' . '<br>' .
+                  'Αθανασόπουλος    Γεώργιος       03113085    athanasopoulosgeorge95@gmail.com' . '<br>' . 
+                  'Δράγαζης         Νικόλαος       03113162    ndragazis@outlook.com.gr' . '<br>' .
+                  'Καράκος          Γεώργιος       03113204    karakosg@hotmail.gr' . '<br>' .
+                  'Καραμουσαδάκης   Μιχάλης        03113030    mike95gr@hotmail.com' . '<br>' .
+                  'Πέτρου           Γεώργιος       03113145    tedroark7@gmail.com' . '<br>' .
+                  'Σκούρας          Κωνσταντίνος   03113096    konst.skouras@gmail.com';
+
+
+        ?>
 				<p>&nbsp;&nbsp;&nbsp;&nbsp;</p></h3>
             </div>
         </div>
