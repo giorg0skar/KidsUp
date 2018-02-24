@@ -1,6 +1,6 @@
 <?php
     session_start();
-    if(!isset($_SESSION['login_user'])){
+    if(!isset($_SESSION['admin_user'])){
         header("location:adminlogin.php");
     }
 ?>
@@ -90,7 +90,7 @@
                 <div class="container-fluid">
                 <?php
 					//session_start();
-					// if(!isset($_SESSION['login_user'])){
+					// if(!isset($_SESSION['admin_user'])){
 					// 	header("location:adminlogin.php");
 					// }
                     if (isset($_POST['activate'])) {
