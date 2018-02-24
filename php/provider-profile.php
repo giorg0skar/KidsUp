@@ -167,6 +167,12 @@
                             <p>Στατιστικά</p>
                         </a>
                     </li>
+                    <li>
+                        <a class="nav-link" href="./provider-changePassword.php">
+                            <i class="ti-lock"></i>
+                            <p>Αλλαγή Κωδικού</p>
+                        </a>
+                    </li>
                 </ul>
             </div>
         </div>
