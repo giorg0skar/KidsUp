@@ -65,7 +65,11 @@
             </li>
 <?php 
   }else{
-    $user_check = $_SESSION['login_user'];
+	if(!isset($_SESSION['parent_points'])){
+		session_destroy();
+		header("Location: index.php");
+	}
+	$user_check = $_SESSION['parent_points'];
     $firstname = $_SESSION['parent_firstname'];
     $lastname = $_SESSION['parent_lastname'];
     $Points = $_SESSION['parent_points'];
@@ -218,7 +222,7 @@
 
     <!-- Footer -->
     <footer class="py-5 bg-dark custom">
-    <div class="footer container">
+    <div class="footer container" >
         <b>Team 42</b> -
         SoftEng Project 2017 -
         NTUA
