@@ -6,6 +6,8 @@
 
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <title>Dashboard</title>
+    <link rel="shortcut icon" type="image" href="../assets/img/favicon.ico"/>
+
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
     <!--     Fonts and icons     -->
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
@@ -94,7 +96,7 @@
             <!-- Navbar -->
             <nav class="navbar navbar-expand-lg " color-on-scroll="500">
                 <div class=" container-fluid  ">
-                    <a class="navbar-brand" href="#pablo"> Διαχείριση </a>
+                    <a class="navbar-brand" href="./provider-dashboard.php"> Διαχείριση </a>
                     <button href="" class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-bar burger-lines"></span>
                         <span class="navbar-toggler-bar burger-lines"></span>
@@ -103,7 +105,7 @@
                     <div class="collapse navbar-collapse justify-content-end" id="navigation">
                         <ul class="navbar-nav ml-auto">
                             <li class="nav-item">
-                                <a class="nav-link" href="#do_something">
+                                <a class="nav-link" href="./index.php">
                                     <span class="no-icon">Αρχική</span>
                                 </a>
                             </li>
@@ -147,7 +149,7 @@
                                         <i class="fa fa-star fa-3x"></i>
                                     </div>
                                     <h6 class="text-uppercase">Κέρδη Ενεργών Δραστ.</h6>
-                                    <h1 class="display-4"><?php echo $total_info['earnings_sum'] / 10 ;?> €</h1>
+                                    <h1 class="display-4"><?php echo 0.95 * $total_info['earnings_sum'] / 10 ;?> €</h1>
                                 </div>
                             </div>
                         </div>
@@ -171,7 +173,7 @@
                                         <i class="fa fa-ticket fa-3x"></i>
                                     </div>
                                     <h6 class="text-uppercase">Πωληθέντα Εισιτήρια</h6>
-                                    <h1 class="display-4"><?php if($total_info['bought_tickets']) echo '+' , $total_info['bought_tickets'];
+                                    <h1 class="display-4"><?php if($total_info['bought_tickets']) echo  $total_info['bought_tickets'];
                                                                 else echo 0;?>
                                     </h1>
                                 </div>
@@ -190,7 +192,7 @@
                             <div class="card strpied-tabled-with-hover">
                                 <div class="card-header ">
                                     <h3 class="card-title">Δραστηριότητες με την μεγαλύτερη απήχηση</h3>
-                                    <h5 class="card-category">*Απήχηση = Προβολές / Αγορασμένα Εισιτήρια</h5>
+                                    <h5 class="card-category">*Απήχηση = Αγορασμένα / Συνολικά Εισιτήρια %</h5>
                                 </div>
                                 <div class="card-body table-full-width table-responsive">
                                     <table id="dash-table" class="table table-hover table-striped">
@@ -215,9 +217,9 @@
                                                                 echo '<td>'. $row['visits'].'</td>';
                                                                 $bought_tickets = $row['maxTickets'] - $row['availableTickets'];
                                                                 echo '<td>'. $bought_tickets .' / '.$row['maxTickets'] .'</td>'; # bought_tickets ανά maxTickets
-                                                                $earnings = $bought_tickets * $row['price'] / 10; # convert earnings in Euros
+                                                                $earnings = 0.95 * $bought_tickets * $row['price'] / 10; # convert earnings in Euros
                                                                 echo '<td>'.$earnings.' €</td>';
-                                                                $apixisi = 100 * $row['visits'] / $bought_tickets; # create percentage of visits / bought_tickets
+                                                                $apixisi = 100 * $bought_tickets / $row['maxTickets']; # create percentage of bought_tickets / max_tickets
                                                                 echo '<td>'.round($apixisi).'% </td>';
                                                         echo '</tr>';
 
@@ -236,7 +238,7 @@
                     <nav>
                         <ul class="footer-menu">
                             <li>
-                                <a href="#">
+                                <a href="./index.php">
                                     Αρχική
                                 </a>
                             </li>

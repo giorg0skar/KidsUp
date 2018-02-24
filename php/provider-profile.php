@@ -5,6 +5,8 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <title>Profile</title>
+    <link rel="shortcut icon" type="image" href="../assets/img/favicon.ico"/>
+
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
     <!--     Fonts and icons     -->
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
@@ -180,7 +182,7 @@
             <!-- Navbar -->
             <nav class="navbar navbar-expand-lg " color-on-scroll="500">
                 <div class=" container-fluid  ">
-                    <a class="navbar-brand" href="#do_something"> Προφίλ </a>
+                    <a class="navbar-brand" href="./provider-profile.php"> Προφίλ </a>
                     <button href="" class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-bar burger-lines"></span>
                         <span class="navbar-toggler-bar burger-lines"></span>
@@ -189,7 +191,7 @@
                     <div class="collapse navbar-collapse justify-content-end" id="navigation">
                         <ul class="navbar-nav ml-auto">
                             <li class="nav-item">
-                                <a class="nav-link" href="#do_something">
+                                <a class="nav-link" href="./index.php">
                                     <span class="no-icon">Αρχική</span>
                                 </a>
                             </li>
@@ -302,7 +304,7 @@
                     <nav>
                         <ul class="footer-menu">
                             <li>
-                                <a href="#">
+                                <a href="./index.php">
                                     Αρχική
                                 </a>
                             </li>

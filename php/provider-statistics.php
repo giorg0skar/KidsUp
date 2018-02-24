@@ -6,6 +6,8 @@
 
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <title>Στατιστικά</title>
+    <link rel="shortcut icon" type="image" href="../assets/img/favicon.ico"/>
+
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
     <!--     Fonts and icons     -->
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
@@ -290,7 +292,8 @@
 							<div class="metric">
 								<span class="icon"><i class="fa fa-star"></i></span>
 								<p>
-									<span class="number"><?php echo $total_info['total_earnings']?> €</span>
+									<span class="number"><?php if($total_info['total_earnings']) echo $total_info['total_earnings'];
+                                                                else echo 0;?> €</span>
 									<span class="title">Συνολικά κέρδη μέχρι τώρα</span>
 								</p>
 							</div>
@@ -299,7 +302,8 @@
 							<div class="metric">
 								<span class="icon"><i class="fa fa-ticket"></i></span>
 								<p>
-									<span class="number"><?php echo $total_info['total_bought_tickets']?></span>
+									<span class="number"><?php if($total_info['total_bought_tickets']) echo $total_info['total_bought_tickets'];
+                                                                else echo 0;?></span>
 									<span class="title">Συνολικά πωληθέντα εισιτήρια</span>
 								</p>
 							</div>

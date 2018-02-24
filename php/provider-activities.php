@@ -6,6 +6,8 @@
 
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <title>Δραστηριότητες</title>
+    <link rel="shortcut icon" type="image" href="../assets/img/favicon.ico"/>
+
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
     <!--     Fonts and icons     -->
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
@@ -87,7 +89,7 @@
             <!-- Navbar -->
             <nav class="navbar navbar-expand-lg " color-on-scroll="500">
                 <div class=" container-fluid  ">
-                    <a class="navbar-brand" href="#pablo"> Διαχείριση </a>
+                    <a class="navbar-brand" href="./provider-activities.php"> Δραστηριότητες </a>
                     <button href="" class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-bar burger-lines"></span>
                         <span class="navbar-toggler-bar burger-lines"></span>
@@ -96,7 +98,7 @@
                     <div class="collapse navbar-collapse justify-content-end" id="navigation">
                         <ul class="navbar-nav ml-auto">
                             <li class="nav-item">
-                                <a class="nav-link" href="#do_something">
+                                <a class="nav-link" href="./index.php">
                                     <span class="no-icon">Αρχική</span>
                                 </a>
                             </li>
@@ -106,7 +108,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#do_something">
+                                <a class="nav-link" href="./logoout.php">
                                     <span class="no-icon">Αποσύνδεση</span>
                                 </a>
                             </li>
@@ -151,7 +153,7 @@
                                                                 echo '<td>'. $row['visits'].'</td>';
                                                                 $bought_tickets = $row['maxTickets'] - $row['availableTickets'];
                                                                 echo '<td>'. $bought_tickets .' / '.$row['maxTickets'] .'</td>'; # bought_tickets ανά maxTickets
-                                                                $earnings = $bought_tickets * $row['price'] / 10; # convert earnings in Euros
+                                                                $earnings = 0.95 * $bought_tickets * $row['price'] / 10; # convert earnings in Euros
                                                                 echo '<td>'.$earnings.' €</td>';
                                                         echo '</tr>';
 
@@ -190,7 +192,7 @@
                                                                 echo '<td>'. $row['visits'].'</td>';
                                                                 $bought_tickets = $row['maxTickets'] - $row['availableTickets'];
                                                                 echo '<td>'. $bought_tickets .' / '.$row['maxTickets'] .'</td>'; # bought_tickets ανά maxTickets
-                                                                $earnings = $bought_tickets * $row['price'] / 10; # convert earnings in Euros
+                                                                $earnings = 0.95 * $bought_tickets * $row['price'] / 10; # convert earnings in Euros
                                                                 echo '<td>'.$earnings.' €</td>';
                                                         echo '</tr>';
 
@@ -218,7 +220,7 @@
                     <nav>
                         <ul class="footer-menu">
                             <li>
-                                <a href="#">
+                                <a href="./index.php">
                                     Αρχική
                                 </a>
                             </li>
