@@ -69,7 +69,7 @@
 				$str = "0123456789qwertyuiopasdfghjklzxcvbnm";
 				$str = str_shuffle($str);
 				$str = substr($str , 0 , 15);
-				$url = "https://kidsup.gr/php/resetPasswordProv.php?token=$str&email=$email";
+				$url = "https://kidsup.gr/KidsUp/php/resetPasswordProv.php?token=$str&email=$email";
 				
 				$sql = "UPDATE Provider SET token='$str' WHERE ProvEmail='$email'";
 				$result = mysqli_query($dbc,$sql);
@@ -101,7 +101,7 @@
 				//Set the subject line
 				$mail->Subject = 'Reset Password';
 				//Replace the plain text body with one created manually
-				$mail->Body = "This the link to to reset your password $url" ;
+				$mail->Body = "KidsUp: Ο σύνδεσμος για την επαναφορά κωδικού $url" ;
 				//send the message, check for errors
 				if (!$mail->send()) {
 					echo "Mailer Error: " . $mail->ErrorInfo;
@@ -124,7 +124,7 @@
     <div class="container">
 		<form  class="form-signin" action="reset-pass-prov.php" method="post">
 			<input class="form-control" type="text" name="email" placeholder="Email"><br>
-			<input class="btn btn-sm btn-info" type="submit" name="resPas" value="Reset Password" style="width:100%;height:200%;" />
+			<input class="btn btn-sm btn-info" type="submit" name="resPas" value="Επαναφορά Κωδικού" style="width:100%;height:200%;" />
 		</form>
 
     </div>
