@@ -96,13 +96,3 @@ create table Sell
     foreign key(ParEmail) references Parent(ParEmail),
     foreign key(ActID) references Activity(ActID)        
 );
-
-create table Review
-(
-    ParEmail VARCHAR(100) not null,
-    ActID bigint unsigned not null,
-    review text not null,
-    primary key(ParEmail,ActID),
-    foreign key(ParEmail) references Parent(ParEmail),
-    foreign key(ActID) references Activity(ActID)
-);
