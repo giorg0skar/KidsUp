@@ -1,6 +1,6 @@
 <?php
 
-require $_SERVER['DOCUMENT_ROOT'] . '/KidsUp/php/vendor/autoload.php';
+require $_SERVER['DOCUMENT_ROOT'] . '/php/composer/vendor/autoload.php';
 
 function create_pdf_from_ticket($name, $activity_name , $ticket_ids)
 {
@@ -47,10 +47,9 @@ function send_ticket_with_email($to,$subject,$pdf)
         $mail->CharSet = 'UTF-8';
         $mail->IsHTML(true);
         $mail->Subject = mb_convert_encoding($subject,mb_detect_encoding($subject, "auto"));
-        $mail->Body = "<h1>Php mailer test 1</h1></p>";
+        $mail->Body = "<h1>KidsUp.gr: Απόδειξη εισητηρίου</h1></p>";
         $mail->AltBody="This is the body in plain text for non-HTML mail clients";
         $mail->send();
-        echo "Message has been sent";
     } catch (Exception $e){
         echo 'Message could not be sent. Mailer Error: ', $mail->ErrorInfo;
     }

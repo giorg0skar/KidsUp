@@ -24,7 +24,7 @@
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
-    <a class="navbar-brand" href="parentSignedInHomePage.php">KidsUp</a>
+    <a class="navbar-brand" href="index.php">KidsUp</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -36,13 +36,7 @@
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#about">Σχετικά με εμάς</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#services">Υπηρεσίες</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#contact">Επικοινωνία</a>
+        <a class="nav-link" href="aboutus.php">Σχετικά με εμάς</a>
       </li>
 
         
@@ -199,13 +193,11 @@
 
                                               if (mysqli_affected_rows($dbc)==1){
                                                 //SUCCESS !!!!!!
-                                                    if($NewAvailable == 0) //update ES doc 
+                                                    if($NewAvailable == 0) //update ES doc
+                                                    { 
+                                                         require_once('full_text_search.php');
                                                          update_avail_tickets_to_false($id);
-                                
-
-                                                    mysqli_query($dbc, "COMMIT");
-                                                    mysqli_close($dbc); 
-                                                    $_SESSION['parent_points'] = $newPoints;
+                                                    }
                                                     
                                                     //header("location: parentSignedInHomePage.php");
                                                     require('./utilities.php');
@@ -213,15 +205,23 @@
                                                     $ticket_ids = array();
                                                     for($x = 0; $x < $ticket_count; $x++) {
                                                         $ticket_ids[$x] = $maxTickets - $NewAvailable - $x;
-                                                        echo $ticket_ids[$x];
-                                                        echo "<br>";
+                                                        // echo $ticket_ids[$x];
+                                                        // echo "<br>";
                                                     }
 
                                                    $pdf = create_pdf_from_ticket( $_SESSION['parent_lastname'] . ' ' .  $_SESSION['parent_firstname'], $actName , $ticket_ids);
                                                    $subject= "KidsUp";
                                                    $to = $_SESSION['login_user'];
                                                    send_ticket_with_email($to,$subject,$pdf);
-                                                   echo "<script> window.alert(\"Η αγορά ολοκληρώθηκε !!! \\n Σας έχει αποσταλεί email\"); window.location.href='index.php';</script>";
+
+                                                   mysqli_query($dbc, "COMMIT");
+                                                    mysqli_close($dbc); 
+
+                                                    $_SESSION['parent_points'] = $newPoints;
+
+                                                   // echo "<script> window.alert(\"Η αγορά ολοκληρώθηκε !!! \\n Σας έχει αποσταλεί email\"); window.location.href='index.php';</script>";
+
+                                                   echo "<script> window.alert(\"Η αγορά ολοκληρώθηκε !!! \\n Σας έχει αποσταλεί email\"); window.close();</script>";
 
                                               }else{
                                                 echo '<h1>Can\'t insert in Sell !!</h1>';

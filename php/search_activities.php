@@ -40,25 +40,19 @@
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
       <div class="container">
-        <a class="navbar-brand" href="index.php">KidsUp</a>
+        <a class="navbar-brand" id="logokidsup" href="index.php">KidsUp</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav ml-auto">
             <li class="nav-item active">
-              <a class="nav-link" href="index.php">Αρχική
+              <a class="nav-link" href="index.php" id="index">Αρχική
                 <span class="sr-only">(current)</span>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#about">Σχετικά με εμάς</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#services">Υπηρεσίες</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#contact">Επικοινωνία</a>
+              <a class="nav-link" href="aboutus.php" id="about">Σχετικά με εμάς</a>
             </li>
 <?php
 	include("full_text_search.php");
@@ -90,10 +84,10 @@
     $Points = $_SESSION['parent_points'];
 ?>
             <li class="nav-item">
-              <a class="nav-link" href="logout.php">Έξοδος</a>
+              <a class="nav-link" href="logout.php" id="logout">Έξοδος</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="parent_profile.php"><?php echo $firstname . ' ' . $lastname; ?><br>Πόντοι: <?php echo $Points; ?></a>
+              <a class="nav-link" href="parent-profile.php" id="profile"><?php echo $firstname . ' ' . $lastname; ?><br>Πόντοι: <?php echo $Points; ?></a>
             </li>
 <?php
   } 
@@ -112,7 +106,7 @@
     //first check if the index is created in ES and create it if necessary
 		create_index();
 		$page = 1; //default value
-		$page_size = 5;
+		$page_size = 6;
 		$search = array();
 		$search['search'] = trim($_POST['search']);
 		$search['area'] = trim($_POST['area']);
@@ -432,7 +426,7 @@
     ?>
             <div class="col-lg-4 col-md-6 mb-4">
               <div class="card h-100">
-                <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
+	            <a href="#"><img class="card-img-top" src= <?php echo $activities[$i]['pictureURL']; ?> alt=""></a>
                 <div class="card-body">
                   <h4 class="card-title">
 										<a href="#" onclick="post_actid(<?php echo $activities[$i]['ActID'] ?>);return false;">
@@ -560,7 +554,13 @@
 			document.getElementById("age").addEventListener("change", function(){submit_form(1);});
 			document.getElementById("distance").addEventListener("change", function(){submit_form(1);}); 
 			document.getElementById("act_kind").addEventListener("change", function(){submit_form(1);}); 
-			document.getElementById("interval").addEventListener("change", function(){submit_form(1);}); 
+			document.getElementById("interval").addEventListener("change", function(){submit_form(1);});
+			document.getElementById("logokidsup").addEventListener("click", function(){remove_cookies(); return true;});
+			document.getElementById("index").addEventListener("click", function(){remove_cookies(); return true;});
+			document.getElementById("about").addEventListener("click", function(){remove_cookies(); return true;});
+			document.getElementById("logout").addEventListener("click", function(){remove_cookies(); return true;});
+			document.getElementById("profile").addEventListener("click", function(){remove_cookies(); return true;});
+
 	  </script>
 		<script>
 			function post_actid(id){
@@ -569,7 +569,9 @@
         var elem = document.createElement("input"); 
         
         form.method = "POST";
-        form.action = "buyTicket.php";   
+        form.action = "buyTicket.php"; 
+        form.style.display='none';  
+        form.setAttribute("target","_blank");
     
         elem.value=id;
         elem.name="ActId";

@@ -124,7 +124,7 @@
           <div class="row">
 
 <?php
-  $results_per_page = 5;
+  $results_per_page = 6;
 
   if (isset($_GET["page"]) && isset($_GET["num_pages"])){
     $page = $_GET["page"];
@@ -148,7 +148,7 @@
 ?>
           <div class="col-lg-4 col-md-6 mb-4">
             <div class="card h-100">
-              <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
+              <a href="#"><img class="card-img-top" src= <?php echo $row['pictureURL']; ?> alt="" ></a>
               <div class="card-body">
                 <h4 class="card-title">
                   <a href="#" onclick="post_actid(<?php echo $row['ActID'] ?>);return false;">
@@ -237,6 +237,8 @@
         
         form.method = "POST";
         form.action = "buyTicket.php";   
+        form.style.display='none';  
+        form.setAttribute("target","_blank");
     
         elem.value=id;
         elem.name="ActId";
