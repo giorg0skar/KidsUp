@@ -34,9 +34,9 @@
 				$PhoneNumber = $_SESSION['PhoneNumber'];
 				$VAT = $_SESSION['VAT'];
 				$IBAN = $_SESSION['IBAN'];
-				
-				
-  
+
+
+
 			?>
     <div class="wrapper">
         <div class="sidebar" data-image="../assets/img/sidebar-5.jpg" data-color="black">
@@ -66,7 +66,7 @@
                         </a>
                     </li>
                     <li>
-                        <a class="nav-link" href="#statistics">
+                        <a class="nav-link" href="./provider-statistics.php">
                             <i class="ti-panel"></i>
                             <p>Στατιστικά</p>
                         </a>
@@ -106,10 +106,10 @@
                 </div>
             </nav>
             <!-- End Navbar -->
-			
 
-			
-			
+
+
+
             <div class="content">
                 <div class="container-fluid">
 

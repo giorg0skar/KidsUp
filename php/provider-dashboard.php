@@ -76,7 +76,7 @@
                         </a>
                     </li>
                     <li>
-                        <a class="nav-link" href="#statistics">
+                        <a class="nav-link" href="./provider-statistics.php">
                             <i class="ti-panel"></i>
                             <p>Στατιστικά</p>
                         </a>
@@ -107,7 +107,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#do_something">
+                                <a class="nav-link" href="./logout.php">
                                     <span class="no-icon">Αποσύνδεση</span>
                                 </a>
                             </li>
@@ -239,7 +239,7 @@
                                     Σχετικά με εμάς
                                 </a>
                             </li>
-                            
+
                         </ul>
                         <p class="copyright text-center">
                             Copyright &copy; <script>document.write(new Date().getFullYear())</script>, made with <i class="fa fa-heart heart"></i> by <a href="./index.php">Team42</a>
