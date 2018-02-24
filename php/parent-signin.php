@@ -118,7 +118,7 @@
       <input type="email" id="inputEmail" name="ParEmail" class="form-control" placeholder="Email address" required autofocus>
       <label for="inputPassword" class="sr-only">Password</label>
       <input type="password" id="inputPassword"  name="pwd" class="form-control" placeholder="Password" required>
-		<a  href="./reset-pass.php">Reset password</a>
+		<a  href="./reset-pass.php">Επαναφορά Κωδικού</a>
   	  <input type="submit" class="btn btn-sm btn-info" value="Σύνδεση" style="width:100%;height:200%;" ></input>
     </form>
 
