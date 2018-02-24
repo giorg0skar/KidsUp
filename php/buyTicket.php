@@ -100,7 +100,7 @@
                         if(isset($_SESSION['login_user'])){
                             $ParEmail = $_SESSION['login_user'];
                             $Points   = $_SESSION['parent_points'];
-                        }
+                        }else $Points = 0;
 
                         $id = trim($_POST['ActId']); 
                         require('./mysqli_connect.php'); 
