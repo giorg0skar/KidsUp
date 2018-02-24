@@ -35,6 +35,102 @@
 				$VAT = $_SESSION['VAT'];
 				$IBAN = $_SESSION['IBAN'];
 
+                if($_SERVER["REQUEST_METHOD"] == "POST"){
+                    $comparable="UPDATE Provider SET ";
+                    $query="UPDATE Provider SET ";
+                    $updategeoloc=0;
+                    require('mysqli_connect.php');
+                    if($_POST["companyName"] && $_POST["companyName"] != $companyName) {
+                        $_SESSION['companyName'] = trim($_POST["companyName"]);
+                        $companyName = trim($_POST["companyName"]);
+                        if($query != $comparable){
+                            $query=$query." , ";
+                        }
+                        $query=$query."companyName = '".$companyName."' ";
+                    }
+                    if($_POST["VAT"] && $_POST["VAT"] != $VAT) {
+                        $_SESSION['VAT'] = trim($_POST["VAT"]);
+                        $VAT = trim($_POST["VAT"]);
+                        if($query != $comparable){
+                            $query=$query." , ";
+                        }
+                        $query=$query."VAT = '".$VAT."' ";
+                    }
+                    if($_POST["IBAN"] && $_POST["IBAN"] != $IBAN) {
+                        $_SESSION['IBAN'] = trim($_POST["IBAN"]);
+                        $IBAN = trim($_POST["IBAN"]);
+                        if($query != $comparable){
+                            $query=$query." , ";
+                        }
+                        $query=$query."IBAN = '".$IBAN."' ";
+                    }
+                    if($_POST["town"] && $_POST["town"] != $town) {
+                        $_SESSION['town'] = trim($_POST["town"]);
+                        $town = trim($_POST["town"]);
+                        $updategeoloc=1;
+                        if($query != $comparable){
+                            $query=$query." , ";
+                        }
+                        $query=$query."town = '".$town."' ";
+                    }
+                    if($_POST["streetName"] && $_POST["streetName"] != $streetName) {
+                        $_SESSION['streetName'] = trim($_POST["streetName"]);
+                        $streetName = trim($_POST["streetName"]);
+                        $updategeoloc=1;
+                        if($query != $comparable){
+                            $query=$query." , ";
+                        }
+                        $query=$query."streetName = '".$streetName."' ";
+                    }
+                    if($_POST["streetNumber"] && $_POST["streetNumber"] != $streetNumber) {
+                        $_SESSION['streetNumber'] = trim($_POST["streetNumber"]);
+                        $streetNumber = trim($_POST["streetNumber"]);
+                        $updategeoloc=1;
+                        if($query != $comparable){
+                            $query=$query." , ";
+                        }
+                        $query=$query."streetNumber = '".$streetNumber."' ";
+                    }
+                    if($_POST["PostalCode"] && $_POST["PostalCode"] != $PostalCode) {
+                        $_SESSION['PostalCode'] = trim($_POST["PostalCode"]);
+                        $PostalCode = trim($_POST["PostalCode"]);
+                        $updategeoloc=1;
+                        if($query != $comparable){
+                            $query=$query." , ";
+                        }
+                        $query=$query."PostalCode = '".$PostalCode."' ";
+                    }
+                    if($_POST["PhoneNumber"] && $_POST["PhoneNumber"] != $PhoneNumber) {
+                        $_SESSION['PhoneNumber'] = trim($_POST["PhoneNumber"]);
+                        $PhoneNumber = trim($_POST["PhoneNumber"]);
+                        if($query != $comparable){
+                            $query=$query." , ";
+                        }
+                        $query=$query."PhoneNumber = '".$PhoneNumber."' ";
+                    }
+/*
+                    if($updategeoloc==1){
+                        $address = $streetName . ' ' .$streetNumber .' , ' .$PostalCode .' , ' .$town;
+                        $url='https://maps.google.com/maps/api/geocode/json?address='.urlencode($address).'&key=AIzaSyBsLUCKMjlmcDrvL6IXYlaHez6AUb01O8U&sensor=false';
+                        $geocode = file_get_contents($url);
+                        $output= json_decode($geocode , true);
+                        $latitude = $output['results'][0]['geometry']['location']['lat'];
+                        $longitude = $output['results'][0]['geometry']['location']['lng'];
+                        if($query != $comparable){
+                            $query=$query." , ";
+                        }
+                        $query=$query."latitude = '".$latitude."' , longitude = '".$longitude."' ";
+                    }*/
+                    if($query != $comparable){
+                        $query=$query." WHERE ProvEmail= '".$provider_user."'";
+                        $retval= mysqli_query($dbc,$query);
+                        if(! $retval ) {
+                            printf($query);
+                          die('Could not update data: ' . mysqli_error($dbc));
+                       }
+                    }
+                    mysqli_close($dbc);
+                }
 
 
 			?>
@@ -118,34 +214,34 @@
                                     <h4 class="card-title">Επεξεργασία προφίλ</h4>
                                 </div>
                                 <div class="card-body">
-                                    <form>
+                                    <form action="provider-profile.php" method = "post">
                                         <div class="row">
                                             <div class="col-md-5">
                                                 <div class="form-group">
-                                                    <label for="company-name">Εταιρία</label>
-                                                    <input type="text" class="form-control border-input" id="company-name" disabled placeholder="Company" value="<?php echo $companyName; ?>">
+                                                    <label for="companyName">Εταιρία</label>
+                                                    <input type="text" class="form-control border-input" id="companyName" name="companyName" placeholder="Εταιρία" value="<?php echo $companyName; ?>">
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="form-group">
-                                                    <label for="afm">ΑΦΜ</label>
-                                                    <input type="text" class="form-control border-input" id="afm" placeholder="Εταιρικό ΑΦΜ" value="<?php echo $VAT;?>">
+                                                    <label for="VAT">ΑΦΜ</label>
+                                                    <input type="text" class="form-control border-input" id="VAT" name="VAT" placeholder="Εταιρικό ΑΦΜ" value="<?php echo $VAT;?>">
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <div class="form-group">
-                                                    <label for="bank-account">Τραπεζικός Λογαριασμός</label>
-                                                    <input type="text" class="form-control border-input" id="bank-account" placeholder="Τραπεζικός Λογαριασμός για λήψη χρημάτων" value="<?php echo $IBAN; ?>">
+                                                    <label for="IBAN">Τραπεζικός Λογαριασμός</label>
+                                                    <input type="text" class="form-control border-input" id="IBAN" name="IBAN" placeholder="Τραπεζικός Λογαριασμός για λήψη χρημάτων" value="<?php echo $IBAN; ?>">
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <div class="form-group">
-                                                    <label for="company-town">Εδρα Εταιρίας</label>
-                                                    <input type="text" class="form-control border-input" id="company-town" placeholder="Πόλη" value="<?php echo $town; ?>">
+                                                    <label for="town">Εδρα Εταιρίας</label>
+                                                    <input type="text" class="form-control border-input" id="town" name="town" placeholder="Πόλη" value="<?php echo $town; ?>">
                                                 </div>
                                             </div>
                                         </div>
@@ -153,41 +249,35 @@
                                         <div class="row">
                                             <div class="col-md-4">
                                                 <div class="form-group">
-                                                    <label for="company-street">Οδός</label>
-                                                    <input type="text" class="form-control border-input" id="company-street" placeholder="Οδός" value="<?php echo $streetName; ?>">
+                                                    <label for="streetName">Οδός</label>
+                                                    <input type="text" class="form-control border-input" id="streetName" name="streetName" placeholder="Οδός" value="<?php echo $streetName; ?>">
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="form-group">
-                                                    <label for="company-street-number">Αριθμός</label>
-                                                    <input type="number" class="form-control border-input" id="company-street-number" placeholder="Αριθμός" value="<?php echo $streetNumber; ?>">
+                                                    <label for="streetNumber">Αριθμός</label>
+                                                    <input type="number" class="form-control border-input" id="streetNumber" name="streetNumber" placeholder="Αριθμός" value="<?php echo $streetNumber; ?>">
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="form-group">
-                                                    <label for="company-tk">ΤΚ</label>
-                                                    <input type="number" class="form-control border-input" id="company-tk" placeholder="Ταχυδρομικός κώδικας" value="<?php  echo $PostalCode;?>">
+                                                    <label for="PostalCode">ΤΚ</label>
+                                                    <input type="number" class="form-control border-input" id="PostalCode" name="PostalCode" placeholder="Ταχυδρομικός κώδικας" value="<?php  echo $PostalCode;?>">
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-md-4">
+                                            <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <label for="company-phone">Τηλέφωνο</label>
-                                                    <input type="text" class="form-control border-input" id="company-phone" placeholder="Τηλέφωνο" value="<?php echo $PhoneNumber?> ">
+                                                    <label for="PhoneNumber">Τηλέφωνο</label>
+                                                    <input type="text" class="form-control border-input" id="PhoneNumber" name="PhoneNumber" placeholder="Τηλέφωνο" value="<?php echo $PhoneNumber?> ">
                                                 </div>
                                             </div>
 
-                                            <div class="col-md-4">
+                                            <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label for="company-email">Email</label>
-                                                    <input type="email" class="form-control border-input" id="company-email" placeholder="Email" value="<?php echo $provider_user; ?>">
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <div class="form-group">
-                                                    <label for="provider-password">Κωδικός</label>
-                                                    <input type="text" class="form-control border-input" id="provider-password" placeholder="Κωδικός Πρόσβασης" value="<?php echo $pwd;?>">
+                                                    <input type="email" class="form-control border-input" id="company-email" name="company-email" readonly placeholder="Email" value="<?php echo $provider_user; ?>">
                                                 </div>
                                             </div>
                                         </div> <!--Επιβεβαίωση για την αλλαγή κωδικού, ισως με popup. Η αντικατάσταση αυτού του div με κουμπί που να πάει σε άλλη σελίδα για αλλαγή κωδικού-->
