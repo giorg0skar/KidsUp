@@ -113,8 +113,9 @@
                         while($row = mysqli_fetch_array($response)) {
                             $profits += $row['totalCost'];
                         }
+                        $profits = $profits*0.05;
                     }
-                    mysqli_close($dbc);
+                    
                     ?>
                     <div class="col-lg-4 col-sm-6">
                         <div class="card h-100">
@@ -140,6 +141,62 @@
                             </div>
                         </div>
                     </div>
+                    <?php
+                        //popular providers
+                        $query = "SELECT Provider.ProvEmail, Provider.companyName, Sell.numberoftickets FROM Provider JOIN Activity ON Provider.ProvEmail=Activity.ProvEmail JOIN Sell ON Sell.ActID=Activity.ActID ORDER BY Provider.ProvEmail";
+                        //
+                        $response = @mysqli_query($dbc,$query);
+                        if ($response) {
+                            $count = 1;
+                            $row = mysqli_fetch_array($response);
+                            $check_mail = $row['ProvEmail'];
+                            $pmail = $check_mail;
+                            $cname = $row['companyName'];
+                            $amount = $row['numberoftickets'];
+                            ?>
+                            <caption>Δημοφιλεις Παροχοι</caption><table class="table table-striped">
+                            <thead><tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Email Παρόχου</th>
+                                <th scope="col">Όνομα Εταιρίας</th>
+                                <th scope="col">Αριθμός εισιτηρίων</th>
+                            </tr>
+                            </thead><tbody>
+                            <?php
+                            //echo '<tr>';
+                            while($row = mysqli_fetch_array($response)) {
+                                $pmail = $row['ProvEmail'];
+                                $cname = $row['companyName'];
+                                if ($row['ProvEmail']==$check_mail) {
+                                    $amount += $num;
+                                }
+                                else {
+                                    //once we find a different mail we print the line with total numOfTickets we calculated so far
+                                    echo '<tr><th scope="row">'. $count++ .'</th><td align="left">' .
+                                    $pmail . '</td><td align="left">' .
+                                    $cname . '</td><td align="left">' .
+                                    $amount . '</td></tr>';
+
+                                    $amount = 0;
+                                    $check_mail = $row['ProvEmail'];
+                                }
+                            }
+                            //we print the last row
+                            echo '<tr><th scope="row">'. $count++ .'</th><td align="left">' .
+                                $pmail . '</td><td align="left">' .
+                                $cname . '</td><td align="left">' .
+                                $amount . '</td></tr>';
+                            ?>
+                            </tbody></table>
+                            <?php
+                        }
+                        else {
+                            echo "Couldn't issue this database query<br />";
+                            echo mysqli_error($dbc);
+                        }
+
+                        mysqli_close($dbc);
+                    ?>
                 </div>
             </div>
             <!-- footer -->

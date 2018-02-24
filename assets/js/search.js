@@ -56,6 +56,8 @@ function submit_form(page = 1){
     
     form.method = "POST";
     form.action = "search_activities.php";   
+    form.style.display='none'; 
+    
 
     element1.value=search;
     element1.name="search";
@@ -201,4 +203,12 @@ function remove_filter(filter_id){
     }
     
     submit_form(1);
-}    
+}   
+
+function remove_cookies(){
+    console.log("removed cookies");
+    document.cookie = "age=-1";
+    document.cookie = "distance=-1";
+    document.cookie = "act_kind=-1";
+    document.cookie = "interval=-1";
+} 

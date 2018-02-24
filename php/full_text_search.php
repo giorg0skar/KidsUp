@@ -1,5 +1,5 @@
 <?php 
-    require '/opt/lampp/vendor/autoload.php';
+    require './composer/vendor/autoload.php';
     use Elasticsearch\ClientBuilder;
     //DEFINE ('DB_USER', 'root');
     //DEFINE ('DB_PASSWORD', '...');
@@ -101,7 +101,8 @@ function do_search($search)
     mb_http_input("utf-8");
       
     $sql = "SELECT * FROM Activity WHERE ActID IN ($string_ids)";
-    $result = mysqli_query($dbc,$sql);
+    if($string_ids != Null)
+        $result = mysqli_query($dbc,$sql);
 
     //$dbc->close();
 

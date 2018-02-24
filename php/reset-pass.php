@@ -69,7 +69,7 @@
 				$str = "0123456789qwertyuiopasdfghjklzxcvbnm";
 				$str = str_shuffle($str);
 				$str = substr($str , 0 , 15);
-				$url = "http://localhost/php/resetPassword.php?token=$str&email=$email";
+				$url = "https://kidsup.gr/php/resetPassword.php?token=$str&email=$email";
 				
 				$sql = "UPDATE Parent SET token='$str' WHERE ParEmail='$email'";
 				$result = mysqli_query($dbc,$sql);
