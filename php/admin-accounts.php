@@ -1,6 +1,6 @@
 <?php
     session_start();
-    if(!isset($_SESSION['login_user'])){
+    if(!isset($_SESSION['admin_user'])){
         header("location:adminlogin.php");
     }
 ?>
@@ -90,7 +90,7 @@
                 <div class="container-fluid">
                 <?php
 					// session_start();
-					// if(!isset($_SESSION['login_user'])){
+					// if(!isset($_SESSION['admin_user'])){
 					// 	header("location:adminlogin.php");
 					// }
                     mb_internal_encoding('UTF-8');
@@ -161,7 +161,6 @@
                         <tr>
                             <th scope="col">Λογαριασμος</th>
                             <th scope="col">Νεος κωδικος</th>
-                            <th scope="col">Αλλαγη δικαιωματων</th>
                             <th scope="col">Κλειδωμα λογαριασμου</th>
                         </tr>
                         </thead><tbody>';
@@ -184,9 +183,8 @@
                             </form>
                             
                         <?php
-                            echo '</td><td>';
+                            
                         ?>
-                            <button type="button" class="btn btn-link">Αλλαγή δικαιωμάτων</button>
                         <?php
                             echo '</td><td>';
                         ?>
@@ -213,7 +211,6 @@
                         <tr>
                             <th scope="col">Λογαριασμος</th>
                             <th scope="col">Νεος κωδικος</th>
-                            <th scope="col">Αλλαγη δικαιωματων</th>
                             <th scope="col">Κλειδωμα λογαριασμου</th>
                         </tr>
                         </thead><tbody>';
@@ -230,9 +227,8 @@
                                 <input type="text" value= "Provider" name="location" hidden />
                             </form>
                         <?php
-                            echo '</td><td>';
+
                         ?>
-                            <button type="button" class="btn btn-link">Αλλαγή δικαιωμάτων</button>
                             <!-- haven't figured out what this is supposed to do for now -->
                         <?php
                             echo '</td><td>';
