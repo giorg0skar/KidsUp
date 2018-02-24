@@ -69,7 +69,7 @@
                         </a>
                     </li>
                     <li>
-                        <a class="nav-link" href="#statistics">
+                        <a class="nav-link" href="./provider-statistics.php">
                             <i class="ti-panel"></i>
                             <p>Στατιστικά</p>
                         </a>
