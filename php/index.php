@@ -63,7 +63,7 @@
                   <a class="dropdown-item" href="provider-signup.php">Πάροχος</a>
               </div>
             </li>
-<?php 
+<?php
   }else{
 	if(!isset($_SESSION['parent_points'])){
 		session_destroy();
@@ -84,7 +84,7 @@
               <a class="nav-link" href="parent-profile.php"><?php echo $firstname . ' ' . $lastname; ?><br>Πόντοι: <?php echo $Points; ?></a>
             </li>
 <?php
-  } 
+  }
 ?>
           </ul>
         </div>
@@ -107,7 +107,7 @@
                   <div class="col-12 col-md-9 mb-2 mb-md-0" style="display: flex;flex-direction:row">
                     <input  type="search" name="search" class="form-control form-control-md" placeholder="Γράψτε τον όρο αναζήτησης...">
 					          <input  type="search" name="area" class="form-control form-control-md" placeholder="Περιοχή"
-                    <?php 
+                    <?php
                       if(isset($_SESSION['login_user']))
 											  echo "value="."\"".$streetName." ".$streetNumber." ".$town."\"";
 									  ?>
@@ -136,15 +136,15 @@
   }else{
     $page=1;
     $sql = "SELECT COUNT(*) AS Pages FROM Activity WHERE actDate >= CURDATE() AND availableTickets > 0";
-    $result = mysqli_query($dbc,$sql);    
+    $result = mysqli_query($dbc,$sql);
     $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
     $num_pages = ceil($row['Pages'] / $results_per_page);
   }
   $start_from = ($page-1) * $results_per_page;
-  $sql = "SELECT * FROM Activity 
-          WHERE actDate >= CURDATE() AND availableTickets > 0 
+  $sql = "SELECT * FROM Activity
+          WHERE actDate >= CURDATE() AND availableTickets > 0
           ORDER BY ActID ASC LIMIT $start_from, ".$results_per_page;
-  $result = mysqli_query($dbc,$sql); 
+  $result = mysqli_query($dbc,$sql);
 
   for($i=0; $i< mysqli_num_rows($result); $i++){
       $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
@@ -152,7 +152,7 @@
 ?>
           <div class="col-lg-4 col-md-6 mb-4">
             <div class="card h-100">
-              <a href="#"><img class="card-img-top" src= <?php echo $row['pictureURL']; ?> alt="" ></a>
+              <a href="buyTicket.php"><img class="card-img-top" src= <?php echo $row['pictureURL']; ?> alt="" ></a>
               <div class="card-body">
                 <h4 class="card-title">
                   <a href="#" onclick="post_actid(<?php echo $row['ActID'] ?>);return false;">
@@ -160,19 +160,15 @@
 									</a>
                 </h4>
                 <h5>Τιμή εισιτηρίου: <?php echo $row['price']?> πόντοι</h5>
-  		          <p class="card-text">Ημερομηνία: <?php echo $datetime[0]?></p>
-	  	          <p class="card-text">Ώρα: <?php echo $datetime[1]?></p>
-                <p class="card-text">Οργανωτής: <?php echo $row['ProvEmail']?></p>
-		            <p class="card-text">Πόλη: <?php echo $row['town']?></p>
-			          <p class="card-text">Διεύθυνση: <?php echo $row['streetName']?> <?php echo $row['streetNumber']?></p>
-			          <p class="card-text">ΤΚ: <?php echo $row['PostalCode']?></p>
+  		          <p class="card-text"><?php echo $datetime[0], " , ", $datetime[1]?></p>
+			          <p class="card-text"><?php echo $row['town'], " , ", $row['streetName']?> <?php echo $row['streetNumber'], " , ",$row['PostalCode']?></p>
                 <p class="card-text">
                   <?php
-                    $descr = $row['actDescription']; 
+                    $descr = $row['actDescription'];
                     $str = mb_substr($descr, 0, 100);
                     if(mb_strlen($descr, 'utf8') > 100)
                       $str = $str."...";
-                    echo $str;                  
+                    echo $str;
                   ?>
                 </p>
               </div>
@@ -183,7 +179,7 @@
           </div>
 <?php
   }
-?>              
+?>
       </div>
       <!-- /.row -->
 
@@ -197,7 +193,7 @@
             </li>
 <?php
           for($i=1; $i <= $num_pages; $i++){
-?>          
+?>
             <li class="page-item <?php if($i == $page) {echo "active";}?>">
               <a class="page-link" href="index.php?page=<?php echo $i; ?>&num_pages=<?php echo $num_pages; ?>">
                 <?php
@@ -236,21 +232,21 @@
 		<script>
 			function post_actid(id){
         var form = document.createElement("form");
-        
-        var elem = document.createElement("input"); 
-        
+
+        var elem = document.createElement("input");
+
         form.method = "POST";
-        form.action = "buyTicket.php";   
-        form.style.display='none';  
+        form.action = "buyTicket.php";
+        form.style.display='none';
         form.setAttribute("target","_blank");
-    
+
         elem.value=id;
         elem.name="ActId";
-    
-        form.appendChild(elem);  
+
+        form.appendChild(elem);
         document.body.appendChild(form);
-    
-        form.submit();            
+
+        form.submit();
 			}
 		</script>
   </body>
