@@ -5,6 +5,7 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <title>Αλλαγή Κωδικού</title>
+    <link rel="shortcut icon" type="image" href="../assets/img/favicon.ico"/>
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
     <!--     Fonts and icons     -->
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
@@ -38,17 +39,18 @@
                     die('Could not update data: ' . mysqli_error($dbc));
                 }
                 $_SESSION['parent_pwd'] = $Confirmpwd; //only after a successful store in database the session is updated.
+                echo "<script>alert ('Η αλλαγή κωδικού ήταν επιτυχής');</script>";
             }
             else {
-                echo "The passwords you typed in are not identical. Please try again.";
+                echo "<script> alert ('Οι κωδικοί δεν ήταν ίδιοι. Παρακαλώ, ξαναπροσπαθήστε.'); </script>";
             }
             mysqli_close($dbc);
         } 
         if ($_POST["parent-pwd"] && !$_POST["parent-Confirmpwd"]) {
-            echo "You need to confirm the password. Please fill both forms with the identical new password.";
+            echo "<script> alert ('Πρέπει να επιβεβαιώσετε τον κωδικό. Παρακαλώ, εισάγετε και τα δύο πεδία.'); </script>";
         } 
         if (!$_POST["parent-pwd"] && $_POST["parent-Confirmpwd"]) {
-            echo "You need to type in the password. Please fill both forms with the identical new password.";
+            echo "<script> alert ('Πρέπει να εισάγετε κωδικό. Παρακαλώ, εισάγετε και τα δύο πεδία.'); </script>";
         }                        
     }             
 ?>
@@ -128,7 +130,7 @@
                                             <div class="col-md-9">
                                                 <div class="form-group">
                                                     <label for="parent-pwd">Password</label>
-                                                    <input type="text" class="form-control border-input" id="parent-pwd" name="parent-pwd" placeholder="New Password">
+                                                    <input type="password" class="form-control border-input" id="parent-pwd" name="parent-pwd" placeholder="New Password">
                                                 </div>
                                             </div>
                                         </div>
@@ -136,7 +138,7 @@
                                             <div class="col-md-9">
                                                 <div class="form-group">
                                                     <label for="parent-Confirmpwd">Confirm Password</label>
-                                                    <input type="text" class="form-control border-input" id="parent-Confirmpwd" name="parent-Confirmpwd" placeholder="Confirm New Password">
+                                                    <input type="password" class="form-control border-input" id="parent-Confirmpwd" name="parent-Confirmpwd" placeholder="Confirm New Password">
                                                 </div>
                                             </div>
                                         </div>
