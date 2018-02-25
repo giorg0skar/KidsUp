@@ -42,7 +42,12 @@
   </if>
 </target>
 
-<target name="_Elastic" depends="_CHECK">
+<target name="_DROP_Elastic" depends="_CHECK">
+  <echo msg=">> Drop ElasticSearch index" />
+  <exec command="curl -XDELETE 'http://localhost:9200/kidsup_new'"/> 
+</target>
+
+<target name="_Elastic" depends="_DROP_Elastic">
   <echo msg=">> Starting ElasticSearch" />
   <exec command="osascript -e 'tell app &quot;Terminal&quot; to do script &quot;elasticsearch &quot;'"/> 
 </target>
