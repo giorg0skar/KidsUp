@@ -102,6 +102,7 @@
                         <span class="navbar-toggler-bar burger-lines"></span>
                         <span class="navbar-toggler-bar burger-lines"></span>
                     </button>
+
                     <div class="collapse navbar-collapse justify-content-end" id="navigation">
                         <ul class="navbar-nav ml-auto">
                             <li class="nav-item">
@@ -260,12 +261,31 @@
 
 
 </body>
-<!--   Core JS Files   -->
+<!--   Core JS Files
 <script src="../assets/js/core/jquery.3.2.1.min.js" type="text/javascript"></script>
 <script src="../assets/js/core/bootstrap.min.js" type="text/javascript"></script>
 
+Control Center for Light Bootstrap Dashboard: scripts for the example pages etc
+<script src="../assets/js/light-bootstrap-dashboard.js?v=2.0.1" type="text/javascript"></script>
+-->
+
+<!-- Bootstrap core JavaScript
+<script src="../assets/jquery/jquery.min.js"></script>
+<script src="../assets/bootstrap/js/bootstrap.bundle.min.js"></script>
+-->
+<!--   Core JS Files   -->
+<script src="../assets/jquery/jquery.min.js" type="text/javascript"></script>
+<script src="../assets/js/core/popper.min.js" type="text/javascript"></script>
+<script src="../assets/js/core/bootstrap.min.js" type="text/javascript"></script>
+
+<!--  Plugin for Switches, full documentation here: http://www.jque.re/plugins/version3/bootstrap.switch/ -->
+<script src="../assets/js/plugins/bootstrap-switch.js"></script>
+
+
 <!-- Control Center for Light Bootstrap Dashboard: scripts for the example pages etc -->
 <script src="../assets/js/light-bootstrap-dashboard.js?v=2.0.1" type="text/javascript"></script>
+
+
 
 <!--   External JS Files   -->
 <script src="https://code.jquery.com/jquery-1.12.4.js" type="text/javascript"></script>
@@ -277,5 +297,9 @@
         $('#dash-table').DataTable();
     } );
 </script>
+
+
+
+
 
 </html>

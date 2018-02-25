@@ -1,10 +1,16 @@
 /*!
 
-    JS by Creative Tim
+ =========================================================
+ * Light Bootstrap Dashboard - v2.0.1
+ =========================================================
 
- * Free Template: http://www.creative-tim.com/product/light-bootstrap-dashboard
+ * Product Page: http://www.creative-tim.com/product/light-bootstrap-dashboard
  * Copyright 2017 Creative Tim (http://www.creative-tim.com)
  * Licensed under MIT (https://github.com/creativetimofficial/light-bootstrap-dashboard/blob/master/LICENSE.md)
+
+ =========================================================
+
+ * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
  */
 
@@ -34,7 +40,7 @@ $(document).ready(function() {
     }
 
     //  Activate the tooltips
-    $('[rel="tooltip"]').tooltip();
+    //$('[rel="tooltip"]').tooltip();
 
     //      Activate regular switches
     if ($("[data-toggle='switch']").length != 0) {
