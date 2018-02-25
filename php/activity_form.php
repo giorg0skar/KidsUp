@@ -235,7 +235,7 @@
                   &nbsp;&nbsp;&nbsp;
                   <label for="example-date-input" class="col-xs-6 control-label">Date:</label>
                   <div class="col-sm-4">
-                    <input class="form-control" name="actDate" type="date" value="2017-08-19" id="example-date-input">
+                    <input class="form-control" name="actDate" type="date" value="2018-02-27" id="example-date-input">
                     </div>
                   <label for="example-time-input"  class="col-xs-6 control-label">Time:</label>
                   <div class="col-sm-4">
