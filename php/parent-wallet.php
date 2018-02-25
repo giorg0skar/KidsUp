@@ -201,7 +201,7 @@
                                     <div class="row">
                                         <p class="col-md-3 left_margin"><?php echo $actrow['actName']?></p>
                                         <p class="col-md-8">
-                                            <?php echo $actrow['actDate']?> <br> 
+                                            <?php echo $sellrow['SellDate']?> <br> 
                                             Αριθμός Εισητηρίων: <?php echo $sellrow['numberofTickets']?> <br>
                                             Συνολικό Κόστος: <?php echo $sellrow['totalCost'] ?>
                                         </p>
