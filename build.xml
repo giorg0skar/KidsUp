@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="KidsUp" default="Opening Application" phingVersion="2.16.1" basedir="." description="KidsUp Project 2017-2018">
+
+<property name="dir_to_delete" value="/Applications/XAMPP/xamppfiles/htdocs/KidsUp" />
+<property name="db.dir" value="/Applications/XAMPP/xamppfiles/bin/mysql" />
+<property name="db.host" value="localhost" />
+<property name="db.user" value="root" />
+<property name="db.pass" value='' />
+
+<target name="_CHECK" >
+  <if>
+  <and>
+    <available file='../BinaryDependency' type='dir' />
+    <available file='watermark.php'  type="file" filepath="../BinaryDependency" />
+  </and>
+  <then>
+  </then>
+
+  <else>
+    <fail message="Binary Dependancy File must be in same dir with KidsUp" />
+  </else>
+</if>
+</target>
+
+<target name="_CHECK_OS" depends="_CHECK">
+  <if>
+  <os family="windows" />
+  <then>
+    <echo message="This build file is being run on Windows.'" />
+  </then>
+ 
+  <elseif>
+    <os family="mac" />
+    <then>
+      <echo message="This build file is being run on OSX.'" />
+    </then>
+  </elseif>
+ 
+  <else>
+    <echo message="This build file is being run on Linux.'" />
+  </else>
+  </if>
+</target>
+
+<target name="_DROP_Elastic" depends="_CHECK">
+  <echo msg=">> Drop ElasticSearch index" />
+  <exec command="curl -XDELETE 'http://localhost:9200/kidsup_new'"/> 
+</target>
+
+<target name="_Elastic" depends="_DROP_Elastic">
+  <echo msg=">> Starting ElasticSearch" />
+  <exec command="osascript -e 'tell app &quot;Terminal&quot; to do script &quot;elasticsearch &quot;'"/> 
+</target>
+
+<target name="_DB" depends="_Elastic">
+	<echo msg=">> Preparind MySQL DB" />
+  <if>
+    <and>
+      <available file='dbDDL.sql' type="file" filepath="./db" />
+      <available file='data.sql'  type="file" filepath="./db" />
+    </and>
+    <then>
+      <exec
+              command="${db.dir} --host ${db.host} --user ${db.user} --password= &lt; ./db/dbDDL.sql"
+              dir="."
+              checkreturn="false"
+              passthru="false"
+              outputProperty="DB_OUT"
+      />
+
+      <exec
+              command="${db.dir} --host ${db.host} --user ${db.user} --password= &lt; ./db/data.sql"
+              dir="."
+              checkreturn="false"
+              passthru="false"
+              outputProperty="DB_OUT_DATA"
+      />
+      <echo msg=" ${DB_OUT_DATA}" />
+    </then>
+
+    <else>
+      <echo fail="Database files not found !!! Aborting..." />
+    </else>
+  </if>
+</target>
+
+<target name="_DELETE" depends="_DB" description="Delete initial Files">
+	<if>
+   		<available file='${dir_to_delete}' type='dir' />
+    	<then>
+      		<!-- <delete dir="/Applications/XAMPP/xamppfiles/htdocs/KidsUp" includeemptydirs="true" verbose="true" failonerror="true" /> -->
+      		<echo msg="Delete possible pre-existing files" />
+      		<exec command="sudo rm -r ${dir_to_delete}" />
+    	</then>
+  	</if>
+</target>
+
+<target name="_DEPLOY" depends="_DELETE">
+    <copy todir="/Applications/XAMPP/xamppfiles/htdocs/KidsUp">
+        <fileset dir="./">
+            <include name="**"></include>
+        </fileset>
+    </copy>
+</target>
+
+<target name="_Permissions" depends="_DEPLOY">
+	<chmod file="/Applications/XAMPP/xamppfiles/htdocs/KidsUp/uploads" mode="777"/>
+	<chmod file="/Applications/XAMPP/xamppfiles/htdocs/KidsUp/php/composer/vendor/mpdf/mpdf/tmp" mode="777"/>
+</target>
+
+<target name="_Binary_Dependency" depends="_Permissions">
+    <copy todir="/Applications/XAMPP/xamppfiles/htdocs/KidsUp/php">
+        <fileset dir="../BinaryDependency">
+            <include name="watermark.php"></include>
+        </fileset>
+    </copy>
+</target>
+
+<target name="Opening Application" depends="_Binary_Dependency">
+	<echo msg="Last but not least:  Starting Application !!" />
+    <exec command="osascript -e 'tell app &quot;Terminal&quot; to do script &quot;/Applications/Firefox.app/Contents/MacOS/firefox https://kidsup.gr/php/ &quot;'"/> 
+</target>
+
+</project>

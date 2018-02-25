@@ -1,4 +1,6 @@
+drop database KidsUp;
 create database KidsUp CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+use KidsUp;
 
 create table Parent
 (
@@ -96,3 +98,5 @@ create table Sell
     foreign key(ParEmail) references Parent(ParEmail),
     foreign key(ActID) references Activity(ActID)        
 );
+
+exit

@@ -108,7 +108,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="./logoout.php">
+                                <a class="nav-link" href="./logout.php">
                                     <span class="no-icon">Αποσύνδεση</span>
                                 </a>
                             </li>
@@ -147,7 +147,7 @@
                                                     while($row = mysqli_fetch_array($result_active,MYSQLI_ASSOC)){
                                                         echo '<tr>';
                                                                 $image_name = $row['pictureURL'];
-                                                                echo '<td>'. '<img src="'.$image_name.'" alt="HTML5 Icon" style="width:128px;height:128px">'.'</td>';
+                                                                echo '<td>'. '<img src="'.$image_name.'" alt="Καμία Εικόνα" style="width:128px;height:128px">'.'</td>';
                                                                 echo '<td>'. $row['actName'].'</td>';
                                                                 echo '<td>'. $row['actDate'].'</td>';
                                                                 echo '<td>'. $row['visits'].'</td>';
@@ -186,7 +186,7 @@
                                                     while($row = mysqli_fetch_array($result_inactive,MYSQLI_ASSOC)){
                                                         echo '<tr>';
                                                                 $image_name = $row['pictureURL'];
-                                                                echo '<td>'. '<img src="'.$image_name.'" alt="HTML5 Icon" style="width:128px;height:128px">'.'</td>';
+                                                                echo '<td>'. '<img src="'.$image_name.'" alt="Καμία Εικόνα" style="width:128px;height:128px">'.'</td>';
                                                                 echo '<td>'. $row['actName'].'</td>';
                                                                 echo '<td>'. $row['actDate'].'</td>';
                                                                 echo '<td>'. $row['visits'].'</td>';
@@ -243,7 +243,8 @@
 
 </body>
 <!--   Core JS Files   -->
-<script src="../assets/js/core/jquery.3.2.1.min.js" type="text/javascript"></script>
+<script src="../assets/jquery/jquery.min.js" type="text/javascript"></script>
+<script src="../assets/js/core/popper.min.js" type="text/javascript"></script>
 <script src="../assets/js/core/bootstrap.min.js" type="text/javascript"></script>
 
 <!-- Control Center for Light Bootstrap Dashboard: scripts for the example pages etc -->
