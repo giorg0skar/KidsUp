@@ -108,7 +108,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="./logoout.php">
+                                <a class="nav-link" href="./logout.php">
                                     <span class="no-icon">Αποσύνδεση</span>
                                 </a>
                             </li>
