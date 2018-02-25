@@ -72,12 +72,12 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#do_something">
-                                    <span class="no-icon">Επικοινωνία</span>
+                                <a class="nav-link" href="aboutus.php">
+                                    <span class="no-icon">Σχετικά με εμάς</span>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#do_something">
+                                <a class="nav-link" href="logout-admin.php">
                                     <span class="no-icon">Αποσύνδεση</span>
                                 </a>
                             </li>
@@ -136,7 +136,7 @@
                                 <h4 class="card-title">
                                     <a href="#">Έσοδα εφαρμογής</a>
                                 </h4>
-                                <p class="card-text">Ποσό:<?php echo $profits?></p>
+                                <p class="card-text">Ποσό:<?php echo $profits?> €</p>
                                 
                             </div>
                         </div>
@@ -211,12 +211,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="#">
-                                    Επικοινωνία
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
+                                <a href="aboutus.php">
                                     Σχετικά με εμάς
                                 </a>
                             </li>

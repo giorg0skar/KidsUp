@@ -160,8 +160,12 @@
 									</a>
                 </h4>
                 <h5>Τιμή εισιτηρίου: <?php echo $row['price']?> πόντοι</h5>
-  		          <p class="card-text"><?php echo $datetime[0].", ".$datetime[1]?></p>
-			          <p class="card-text"><?php echo $row['town'].", ".$row['streetName'].", ".$row['streetNumber'].", ",$row['PostalCode']?></p>
+                <p class="card-text">Ημερομηνία: <?php echo $datetime[0]?></p>
+                <p class="card-text">Ώρα: <?php echo $datetime[1]?></p>
+                <p class="card-text">Οργανωτής: <?php echo $row['ProvEmail']?></p>
+                <p class="card-text">Πόλη: <?php echo $row['town']?></p>
+                <p class="card-text">Διεύθυνση: <?php echo $row['streetName']?> <?php echo $row['streetNumber']?></p>
+                <p class="card-text">ΤΚ: <?php echo $row['PostalCode']?></p>
                 <p class="card-text">
                   <?php
                     $descr = $row['actDescription'];

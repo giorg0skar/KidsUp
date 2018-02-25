@@ -435,8 +435,13 @@ ini_set('session.cache_limiter', 'private');
 										</a>
 									</h4>
                   <h5>Τιμή εισιτηρίου: <?php echo $activities[$i]['price']?> πόντοι</h5>
-				          <p class="card-text"><?php echo $datetime[0].", ",$datetime[1]?></p>
-				          <p class="card-text"><?php echo $activities[$i]['town'].", ".$activities[$i]['streetName'].", ".$activities[$i]['streetNumber'].", ".$activities[$i]['PostalCode']?></p>
+				  <p class="card-text">Ημερομηνία: <?php echo $datetime[0]?></p>
+				  <p class="card-text">Ώρα: <?php echo $datetime[1]?></p>
+                  <p class="card-text">Οργανωτής: <?php echo $activities[$i]['ProvEmail']?></p>
+				  <p class="card-text">Πόλη: <?php echo $activities[$i]['town']?></p>
+				  <p class="card-text">Διεύθυνση: <?php echo $activities[$i]['streetName']?> <?php echo $activities[$i]['streetNumber']?></p>
+				  <p class="card-text">ΤΚ: <?php echo $activities[$i]['PostalCode']?></p>
+
                   <p class="card-text">
 										<?php
                       $descr = $activities[$i]['actDescription']; 

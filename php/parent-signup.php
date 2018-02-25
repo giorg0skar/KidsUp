@@ -159,13 +159,13 @@
     <div class="container">
         <div class="row mb-3">
             <div class="col-lg-12 well">
-                <h1 align=left>Φόρμα Εγγραφής</h1>
+                <h1 style="margin-left: 2em;">Φόρμα Εγγραφής</h1>
             </div>
         </div>
         <div class="row">
         <div class="col-lg-12 well">
         <div class="row">
-                <div class="row">
+                <div class="row" style="margin-left: 2em; padding-bottom: 6em;">
                     <form action="parent-signup.php" method = "post">
                         <div class="col-sm-12">
                             <div class="row">

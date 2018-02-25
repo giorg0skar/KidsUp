@@ -136,7 +136,7 @@
     
 
 
-    <div class="container">
+    <div class="container" style="padding-bottom: 2em;">
         <div class="row mb-3">
             <div class="col-lg-12 well">
                 <h3 align=left><p>&nbsp;&nbsp;&nbsp;&nbsp; Η διαδικτυακή πλατφόρμα δημιουργήθηκε από την ομάδα Team42 ως εργασία για το μάθημα Τεχνολογίας Λογισμικού στην Σχολή ΗΜΜΥ.</p>

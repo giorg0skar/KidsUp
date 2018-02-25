@@ -43,14 +43,14 @@
             $companyName = $_SESSION['companyName'];
 
             ### Active Activities order by Apixisi ###
-            $sql = "SELECT
-                            SUM(CASE WHEN actDate= 'Ποδόσφαιρο' THEN 1 ELSE 0 END) AS mpala,
-                            FROM Activity WHERE ((ProvEmail = '$provider_user') AND actDate >= NOW()) ORDER BY ((maxTickets-availableTickets)/visits) DESC"; # Order by Apixisi = bought_tickets / visits
-            $result_active = mysqli_query($dbc,$sql);
+            // $sql = "SELECT
+            //                 SUM(CASE WHEN actDate= 'Ποδόσφαιρο' THEN 1 ELSE 0 END) AS mpala,
+            //                 FROM Activity WHERE ((ProvEmail = '$provider_user') AND actDate >= NOW()) ORDER BY ((maxTickets-availableTickets)/visits) DESC"; # Order by Apixisi = bought_tickets / visits
+            // $result_active = mysqli_query($dbc,$sql);
 
             ### Info of total activities [total_activities, total_earnings, total_visits, total_bought_tickets] ###
             $sql_info =  "SELECT COUNT(ActID) as total_activities,
-                                SUM((maxTickets - availableTickets) * price *0.95) AS total_earnings,
+                                SUM((maxTickets - availableTickets) * price *0.095) AS total_earnings,
                                 SUM(maxTickets - availableTickets) AS total_bought_tickets
             FROM Activity WHERE ((ProvEmail = '$provider_user'))";
             $result_info = mysqli_query($dbc,$sql_info);
@@ -58,19 +58,19 @@
 
             ### Earnings per month (Line Chart) ###
             $sql = "SELECT
-                            SUM(CASE WHEN MONTH(actDate) = 1 THEN ((maxTickets - availableTickets) * price * 0.95) ELSE 0 END) AS jan,
-                            SUM(CASE WHEN MONTH(actDate) = 2 THEN ((maxTickets - availableTickets) * price * 0.95) ELSE 0 END) AS feb,
-                            SUM(CASE WHEN MONTH(actDate) = 3 THEN ((maxTickets - availableTickets) * price * 0.95) ELSE 0 END) AS mar,
-                            SUM(CASE WHEN MONTH(actDate) = 4 THEN ((maxTickets - availableTickets) * price * 0.95) ELSE 0 END) AS apr,
-                            SUM(CASE WHEN MONTH(actDate) = 5 THEN ((maxTickets - availableTickets) * price * 0.95) ELSE 0 END) AS may,
-                            SUM(CASE WHEN MONTH(actDate) = 6 THEN ((maxTickets - availableTickets) * price * 0.95) ELSE 0 END) AS jun,
-                            SUM(CASE WHEN MONTH(actDate) = 7 THEN ((maxTickets - availableTickets) * price * 0.95) ELSE 0 END) AS jul,
-                            SUM(CASE WHEN MONTH(actDate) = 8 THEN ((maxTickets - availableTickets) * price * 0.95) ELSE 0 END) AS aug,
-                            SUM(CASE WHEN MONTH(actDate) = 9 THEN ((maxTickets - availableTickets) * price * 0.95) ELSE 0 END) AS sep,
-                            SUM(CASE WHEN MONTH(actDate) = 10 THEN ((maxTickets - availableTickets) * price * 0.95) ELSE 0 END) AS oct,
-                            SUM(CASE WHEN MONTH(actDate) = 11 THEN ((maxTickets - availableTickets) * price * 0.95) ELSE 0 END) AS nov,
-                            SUM(CASE WHEN MONTH(actDate) = 12 THEN ((maxTickets - availableTickets) * price * 0.95) ELSE 0 END) AS dece
-                            FROM Activity WHERE ((ProvEmail = '$provider_user') AND YEAR(actDate) = YEAR(NOW()) AND actDate < NOW())"; # we want only the expired activities
+                            SUM(CASE WHEN MONTH(actDate) = 1 THEN ((maxTickets - availableTickets) * price * 0.095) ELSE 0 END) AS jan,
+                            SUM(CASE WHEN MONTH(actDate) = 2 THEN ((maxTickets - availableTickets) * price * 0.095) ELSE 0 END) AS feb,
+                            SUM(CASE WHEN MONTH(actDate) = 3 THEN ((maxTickets - availableTickets) * price * 0.095) ELSE 0 END) AS mar,
+                            SUM(CASE WHEN MONTH(actDate) = 4 THEN ((maxTickets - availableTickets) * price * 0.095) ELSE 0 END) AS apr,
+                            SUM(CASE WHEN MONTH(actDate) = 5 THEN ((maxTickets - availableTickets) * price * 0.095) ELSE 0 END) AS may,
+                            SUM(CASE WHEN MONTH(actDate) = 6 THEN ((maxTickets - availableTickets) * price * 0.095) ELSE 0 END) AS jun,
+                            SUM(CASE WHEN MONTH(actDate) = 7 THEN ((maxTickets - availableTickets) * price * 0.095) ELSE 0 END) AS jul,
+                            SUM(CASE WHEN MONTH(actDate) = 8 THEN ((maxTickets - availableTickets) * price * 0.095) ELSE 0 END) AS aug,
+                            SUM(CASE WHEN MONTH(actDate) = 9 THEN ((maxTickets - availableTickets) * price * 0.095) ELSE 0 END) AS sep,
+                            SUM(CASE WHEN MONTH(actDate) = 10 THEN ((maxTickets - availableTickets) * price * 0.095) ELSE 0 END) AS oct,
+                            SUM(CASE WHEN MONTH(actDate) = 11 THEN ((maxTickets - availableTickets) * price * 0.095) ELSE 0 END) AS nov,
+                            SUM(CASE WHEN MONTH(actDate) = 12 THEN ((maxTickets - availableTickets) * price * 0.095) ELSE 0 END) AS dece
+                            FROM Activity WHERE ((ProvEmail = '$provider_user') AND YEAR(actDate) = YEAR(NOW()) )"; # we want only the expired activities
 
             $result_earn_count = mysqli_query($dbc,$sql);
             if($result_earn_count) $earn_count = mysqli_fetch_array($result_earn_count,MYSQLI_ASSOC);
@@ -94,7 +94,7 @@
                             SUM(CASE WHEN MONTH(actDate) = 10 THEN ((maxTickets - availableTickets)) ELSE 0 END) AS oct,
                             SUM(CASE WHEN MONTH(actDate) = 11 THEN ((maxTickets - availableTickets)) ELSE 0 END) AS nov,
                             SUM(CASE WHEN MONTH(actDate) = 12 THEN ((maxTickets - availableTickets)) ELSE 0 END) AS dece
-                            FROM Activity WHERE ((ProvEmail = '$provider_user') AND YEAR(actDate) = YEAR(NOW()) AND actDate < NOW())"; # we want only the expired activities
+                            FROM Activity WHERE ((ProvEmail = '$provider_user') AND YEAR(actDate) = YEAR(NOW()))"; # we want only the expired activities
 
             $result_tickets_count = mysqli_query($dbc,$sql);
             if($result_tickets_count) $tickets_count = mysqli_fetch_array($result_tickets_count,MYSQLI_ASSOC);
@@ -120,7 +120,7 @@
             if($result_act_count) $act_count = mysqli_fetch_array($result_act_count,MYSQLI_ASSOC);
             $activities_count = array($act_count['mpala'],$act_count['mpasket'],$act_count['kolibi'],$act_count['mousiki'],$act_count['theatro'],$act_count['parti'],$act_count['xoros'], $act_count['allo']);
             $my_str = implode(",",$activities_count);
-
+            
             ### Activities per age (Pie Chart) ###
             $sql = "SELECT
                         SUM(CASE WHEN ((MaxAge < 1 AND MinAge < 1) OR ( MaxAge >= 3 AND MinAge >= 3)) THEN 0 ELSE 1 END) AS three,
@@ -143,7 +143,7 @@
                         SUM(CASE WHEN ((MaxAge < 9 AND MinAge < 9) OR ( MaxAge >= 12 AND MinAge >= 12)) THEN 0 ELSE ((maxTickets - availableTickets)/maxTickets) END) AS twelve_ap,
                         SUM(CASE WHEN ((MaxAge < 12 AND MinAge < 12) OR ( MaxAge >= 15 AND MinAge >= 15)) THEN 0 ELSE ((maxTickets - availableTickets)/maxTickets) END) AS fifteen_ap,
                         SUM(CASE WHEN ((MaxAge < 15 AND MinAge < 15) OR ( MaxAge >= 17 AND MinAge >= 17)) THEN 0 ELSE ((maxTickets - availableTickets)/maxTickets) END) AS seventeen_ap
-                        FROM Activity WHERE ((ProvEmail = '$provider_user') AND YEAR(actDate) = YEAR(NOW()) AND actDate < NOW())";
+                        FROM Activity WHERE ((ProvEmail = '$provider_user') AND YEAR(actDate) = YEAR(NOW()) )";
 
             $result_ages_ap = mysqli_query($dbc,$sql);
             if($result_ages_ap) $ages_ap = mysqli_fetch_array($result_ages_ap,MYSQLI_ASSOC);
@@ -173,7 +173,7 @@
                         SUM(CASE WHEN actType= 'Παιδικό Πάρτυ' THEN ((maxTickets - availableTickets)/maxTickets) ELSE 0 END) AS parti_ap,
                         SUM(CASE WHEN actType= 'Χορός' THEN ((maxTickets - availableTickets)/maxTickets) ELSE 0 END) AS xoros_ap,
                         SUM(CASE WHEN actType= 'Άλλο' THEN ((maxTickets - availableTickets)/maxTickets) ELSE 0 END) AS allo_ap
-                        FROM Activity WHERE ((ProvEmail = '$provider_user') AND YEAR(actDate) = YEAR(NOW()) AND actDate < NOW())";
+                        FROM Activity WHERE ((ProvEmail = '$provider_user') AND YEAR(actDate) = YEAR(NOW()) )";
 
             $result_act_ap = mysqli_query($dbc,$sql);
             if($result_act_ap) $act_ap = mysqli_fetch_array($result_act_ap,MYSQLI_ASSOC);
@@ -311,7 +311,7 @@
                     </div>
                     <div class="row">
                         <div class="col-sm-6 col-md-6 col-lg-6">
-                            <h5 class="section-title featured">Πωληθέντα Εισιτήρα ανά μήνα</h5>
+                            <h5 class="section-title featured">Πωληθέντα Εισιτήρια ανά μήνα</h5>
                             <canvas id="lineChart" height="345" width="691" style="width: 691px; height: 345px;"></canvas>
                         </div>
                         <div class="col-sm-6 col-md-6 col-lg-6">
@@ -500,7 +500,7 @@ var ctxP = document.getElementById("pieChart").getContext('2d');
 var myPieChart = new Chart(ctxP, {
     type: 'pie',
     data: {
-        labels: ["Ποδόσφαιρο", "Μπάσκετ", "Κολύμβηση", "Μουσική", "Χορός", "Θέατρο", "Παιδικό Πάρτι", "Αλλο"],
+        labels: ["Ποδόσφαιρο", "Μπάσκετ", "Κολύμβηση", "Μουσική", "Θέατρο", "Παιδικό Πάρτι", "Χορός", "Αλλο"],
         datasets: [
             {
                 data: act_data,
@@ -521,7 +521,7 @@ var ctxB = document.getElementById("ap-barChart").getContext('2d');
 var myBarChart = new Chart(ctxB, {
     type: 'bar',
     data: {
-        labels: ["Ποδόσφαιρο", "Μπάσκετ", "Κολύμβηση", "Μουσική", "Χορός", "Θέατρο", "Παιδικό Πάρτι", "Αλλο"],
+        labels: ["Ποδόσφαιρο", "Μπάσκετ", "Κολύμβηση", "Μουσική", "Θέατρο", "Παιδικό Πάρτι", "Χορός", "Αλλο"],
         datasets: [{
             label: 'Απήχηση Κατηγορίας',
             data: act_ap_data,
