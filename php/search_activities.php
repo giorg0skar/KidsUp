@@ -55,6 +55,7 @@
               <a class="nav-link" href="aboutus.php" id="about">Σχετικά με εμάς</a>
             </li>
 <?php
+ini_set('session.cache_limiter', 'private');
 	include("full_text_search.php");
 	mb_internal_encoding('UTF-8');
 	mb_http_input("utf-8");	
@@ -558,9 +559,10 @@
 			document.getElementById("logokidsup").addEventListener("click", function(){remove_cookies(); return true;});
 			document.getElementById("index").addEventListener("click", function(){remove_cookies(); return true;});
 			document.getElementById("about").addEventListener("click", function(){remove_cookies(); return true;});
-			document.getElementById("logout").addEventListener("click", function(){remove_cookies(); return true;});
-			document.getElementById("profile").addEventListener("click", function(){remove_cookies(); return true;});
-
+			if(document.getElementById("logout")!=null){			
+				document.getElementById("logout").addEventListener("click", function(){remove_cookies(); return true;});
+				document.getElementById("profile").addEventListener("click", function(){remove_cookies(); return true;});
+			}
 	  </script>
 		<script>
 			function post_actid(id){
