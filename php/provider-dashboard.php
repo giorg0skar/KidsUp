@@ -212,7 +212,7 @@
                                                     while($row = mysqli_fetch_array($result_active,MYSQLI_ASSOC)){
                                                         echo '<tr>';
                                                                 $image_name = $row['pictureURL'];
-                                                                echo '<td>'. '<img src="'.$image_name.'" alt="HTML5 Icon" style="width:128px;height:128px">'.'</td>';
+                                                                echo '<td>'. '<img src="'.$image_name.'" alt="Καμία Εικόνα" style="width:128px;height:128px">'.'</td>';
                                                                 echo '<td>'. $row['actName'].'</td>';
                                                                 echo '<td>'. $row['actDate'].'</td>';
                                                                 echo '<td>'. $row['visits'].'</td>';
