@@ -69,7 +69,7 @@
 				$str = "0123456789qwertyuiopasdfghjklzxcvbnm";
 				$str = str_shuffle($str);
 				$str = substr($str , 0 , 15);
-				$url = "https://kidsup.gr/KidsUp/php/resetPassword.php?token=$str&email=$email";
+				$url = "https://kidsup.gr/php/resetPassword.php?token=$str&email=$email";
 				
 				$sql = "UPDATE Parent SET token='$str' WHERE ParEmail='$email'";
 				$result = mysqli_query($dbc,$sql);
@@ -99,7 +99,7 @@
 				);
 				$mail->AddAddress($email);
 				//Set the subject line
-				$mail->Subject = 'Reset Password';
+				$mail->Subject = 'Επαναφορά Κωδικού';
 				//Replace the plain text body with one created manually
 				$mail->Body = "KidsUp: Ο σύνδεσμος για την επαναφορά κωδικού $url" ;
 				//send the message, check for errors
@@ -109,7 +109,7 @@
 					?>
 					<div class="container">
 					<h4 class="form-signin" style="text-align:center;"><?php
-					echo "Email sent!";
+					echo "Το email στάλθηκε επιτυχώς!";
 					?> </h4></div> <?php
 				}	
 			}else{
