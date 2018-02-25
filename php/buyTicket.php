@@ -84,7 +84,7 @@
 
 
 	<div class="col-lg-4 col-md-6 mb-4" style="float:left;" id="ticket">
-              <div class="card h-100">
+              <div class="card h-100" style="margin-top: 2rem">
 
 
                  <?php
@@ -185,7 +185,7 @@
 
                                               date_default_timezone_set("Europe/Athens");
                                               $d=strtotime("now");
-                                              $d = date("Y-m-d h:i:sa", $d) ;
+                                              $d = substr(date("Y-m-d H:i:sa", $d), 0, -2) ;
                                               $totalCost= $ticket_count * $price;
 
                                               $q = "INSERT INTO Sell values(NULL,'$ParEmail','$id', '$d', '$ticket_count', '$totalCost')";
@@ -252,7 +252,7 @@
 
 
 
-                <img class="card-img-top" src= <?php echo $pictureURL; ?> alt="" style="width:450px;height:300px;">
+                <img class="card-img-top" src= <?php echo $pictureURL; ?> alt="">
                 <div class="card-body">
                   <h4 class="card-title">
                     <p class="card-text"><b><u>Δραστηριότητα: </u></b><?php echo $actName; ?> </p>
@@ -308,7 +308,7 @@
 
                           <form action="buyTicket.php" id = "myform" method="post" onsubmit="return check_points()">
                               <div class="col-sm-8 form-group">
-                                <input type="number" name='number' onchange="calculateTotal()"  onkeyup="calculateTotal()" id="count"  min = "1" placeholder="Πόσα Εισητήρια Θέλετε?" class="form-control" required>
+                                <input type="number" name='number' onchange="calculateTotal()"  onkeyup="calculateTotal()" id="count"  min = "1" placeholder="Εισιτήρια" class="form-control" required>
                               </div>
 
                               <?php  if (isset($_SESSION['login_user']))  echo " <div id=\"totalPrice\">Total Price: 0</div><br> "; ?>
@@ -361,7 +361,7 @@
   </body>
 
       <!-- Footer -->
-  <footer class="custom py-5 fixed-bottom bg-dark">
+  <footer class="custom py-5 bg-dark">
     <div class="footer container">
         <b>Team 42</b> -
         SoftEng Project 2017 -
