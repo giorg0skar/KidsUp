@@ -33,19 +33,28 @@ function do_search($search)
         'index' => 'kidsup_new',
         'type' => 'activity',
         'body' => [
-            'from' => $from, 'size' => $size,
-            'query' => [
-                'bool' => [
-                    'must' => [
-                        'multi_match' => [
-                            'query' => $search_phrase,
-                            'fields' => ["actname", "acttype", "actdescription"]
-                        ]
-                    ]
-                ]
-            ]
+            'from' => $from, 'size' => $size //,
+            // 'query' => [
+            //     'bool' => [
+            //         'must' => [
+            //             'multi_match' => [
+            //                 'query' => $search_phrase,
+            //                 'fields' => ["actname", "acttype", "actdescription"]
+            //             ]
+            //         ]
+            //     ]
+            // ]
         ]
     ];
+
+    if($search_phrase == ""){
+        $params['body']['query']['bool']['must']['match_all'] = ['boost' => 1.0];
+    }else{
+        $params['body']['query']['bool']['must']['multi_match'] = [
+                            'query' => $search_phrase,
+                            'fields' => ["actname", "acttype", "actdescription"]
+    ];
+    }
 
     $index = 0;
     $params['body']['query']['bool']['filter']['bool']['must'][$index]['match']['availabletickets'] = 'true';

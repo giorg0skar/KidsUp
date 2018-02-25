@@ -3,7 +3,7 @@
 	function add_watermark($im, $name){
 
 		// Load the photo to apply the watermark to
-		if(endsWith($name, 'jpg'))
+		if(endsWith($name, 'jpg') || endsWith($name, 'jpeg'))
 			$im = imagecreatefromjpeg($im);
 		else if(endsWith($name, 'png'))
 			$im = imagecreatefrompng($im);
