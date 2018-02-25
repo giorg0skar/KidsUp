@@ -70,7 +70,7 @@
 		if( $count ==1 ){
 			header("./provider-signin.php");
 		}else{
-			echo "Try again";
+			echo "Δοκιμάστε ξανά";
 		}
     }
 	if( isset($_GET["email"]) && isset($_GET["token"]) ){
@@ -87,7 +87,7 @@
 			?>
 			<div class="container">
 				<form  class="form-signin" action="resetPasswordProv.php" method="post">
-					<input class="form-control" type="password" name="pwd" placeholder="New Password"><br>
+					<input class="form-control" type="password" name="pwd" placeholder="Νέος Κωδικός"><br>
 					<input type="text" value= "<?php echo $email; ?>" name="mail" hidden />
 					<input class="btn btn-sm btn-info" type="submit" name="resPas" value="Set Password" style="width:100%;height:200%;" />
 				</form>
@@ -96,7 +96,7 @@
 			<?php
 			
 		} else{
-			echo "Please check your link";
+			echo "Παρακαλώ ελέγξτε το σύνδεσμο που χρησιμοποιήσατε";
 			
 		}
 		
