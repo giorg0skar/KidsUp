@@ -154,7 +154,7 @@
                             $cname = $row['companyName'];
                             $amount = $row['numberoftickets'];
                             ?>
-                            <caption>Δημοφιλεις Παροχοι</caption><table class="table table-striped">
+                            <caption>Αριθμός εισιτηρίων που πουλήθηκαν ανά πάροχο</caption><table class="table table-striped">
                             <thead><tr>
                                 <th scope="col">#</th>
                                 <th scope="col">Email Παρόχου</th>
@@ -165,10 +165,9 @@
                             <?php
                             //echo '<tr>';
                             while($row = mysqli_fetch_array($response)) {
-                                $pmail = $row['ProvEmail'];
-                                $cname = $row['companyName'];
-                                if ($row['ProvEmail']==$check_mail) {
-                                    $amount += $num;
+                                
+                                if ($row['ProvEmail'] == $check_mail) {
+                                    $amount += $row['numberoftickets'];
                                 }
                                 else {
                                     //once we find a different mail we print the line with total numOfTickets we calculated so far
@@ -177,9 +176,11 @@
                                     $cname . '</td><td align="left">' .
                                     $amount . '</td></tr>';
 
-                                    $amount = 0;
+                                    $amount = $row['numberoftickets'];
                                     $check_mail = $row['ProvEmail'];
                                 }
+                                $pmail = $row['ProvEmail'];
+                                $cname = $row['companyName'];
                             }
                             //we print the last row
                             echo '<tr><th scope="row">'. $count++ .'</th><td align="left">' .
