@@ -262,7 +262,7 @@
                   <p class="card-text"><b><u>Ημερομηνία-Ώρα:</u></b> <?php echo $actDate; ?> </p>
                   <p class="card-text"><b><u>Ελάχιστη Ηλικία:</u></b> <?php echo $MinAge; ?> </p>
                   <p class="card-text"><b><u>Μέγιστη  Ηλικία:</u></b> <?php echo $MaxAge; ?> </p>
-                  <p class="card-text"><b><u>Διαθέσιμα Ειστήρια:</u></b> <?php echo $availableTickets; ?> </p>
+                  <p class="card-text"><b><u>Διαθέσιμα Εισιτήρια:</u></b> <?php echo $availableTickets; ?> </p>
                   <p class="card-text"><b><u>Πόλη:</u></b> <?php echo $town; ?> </p>
                   <p class="card-text"><b><u>Οδός:</u></b> <?php echo $streetName; ?> </p>
                   <p class="card-text"><b><u>Αριθμός:</u></b> <?php echo $streetNumber; ?> </p>
@@ -311,7 +311,9 @@
                                 <input type="number" name='number' onchange="calculateTotal()"  onkeyup="calculateTotal()" id="count"  min = "1" placeholder="Εισιτήρια" class="form-control" required>
                               </div>
 
-                              <?php  if (isset($_SESSION['login_user']))  echo " <div id=\"totalPrice\">Total Price: 0</div><br> "; ?>
+                              <?php  if (isset($_SESSION['login_user']))  echo " <div id=\"totalPrice\">Total Price: 0</div><br> ";
+                                     else echo '<b><u><span style="color:#FF0000 ;text-align:center;">Συνδεθείτε για να αγοράσετε εισιτήρια!</span></u></b>'; 
+                              ?>
 
                               <input id="ActId" name='ActId' type = "hidden" value = <?php echo $id; ?> > </input>
                               <input type="submit" id="submit" class="btn btn-sm btn-info" value="Αγορά Εισιτηρίων" ></input>

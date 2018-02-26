@@ -9,7 +9,8 @@ INSERT INTO `parent` (`ParEmail`, `pwd`, `firstname`, `lastname`, `town`, `stree
 ('ndragazis@outlook.com.gr','$2y$10$8sx5fL4K7tffDsaYrtnMVuXVmKeOw4KNcbM4jmlP/Ce8hPxgn2ZQW','Νίκος','Δράγαζης','Μοσχάτο','Πατρών',4,18345,6984389408,37.954512,23.681912,300,b'1', b'1', NULL),
 ('mike95gr@hotmail.com','$2y$10$8sx5fL4K7tffDsaYrtnMVuXVmKeOw4KNcbM4jmlP/Ce8hPxgn2ZQW','Μιχάλης','Καραμουσαδάκης','Άργους','Αθήνα',104,10441,2103267849,37.989083,23.710793,130,b'1', b'1', NULL),
 ('karakosg@hotmail.gr','$2y$10$8sx5fL4K7tffDsaYrtnMVuXVmKeOw4KNcbM4jmlP/Ce8hPxgn2ZQW','Γιώργος','Καράκος','Τραπεζούντος','Αθήνα',81,18121,2105489623,37.983736,23.654999,350,b'1', b'1', NULL),
-('dimitrisadamis1994@gmail.com','$2y$10$8sx5fL4K7tffDsaYrtnMVuXVmKeOw4KNcbM4jmlP/Ce8hPxgn2ZQW','Δημήτρης','Αδάμης','Φυλλής','Καματερό',230,13451,2105486723,38.082782,23.696269,700,b'1', b'1', NULL);
+('dimitrisadamis1994@gmail.com','$2y$10$8sx5fL4K7tffDsaYrtnMVuXVmKeOw4KNcbM4jmlP/Ce8hPxgn2ZQW','Δημήτρης','Αδάμης','Φυλλής','Καματερό',230,13451,2105486723,38.082782,23.696269,700,b'1', b'1', NULL),
+('tedroark7@gmail.com', '$2y$10$qII202ROU9oswkp.r4lF3utT4v/s85gAL/c8MzoFXfeOkGxz4DVtO', 'Γιωργος', 'Πέτρου', 'Καρπενήσι', 'Ζηνοπούλου', 45, 36100, 2237024123, '38.91283', '21.79536', 1000, b'1', b'1', NULL);
 
 INSERT INTO `provider` (`ProvEmail`, `pwd`, `companyName`, `town`, `streetName`, `streetNumber`, `PostalCode`, `PhoneNumber`, `VAT`, `CompanyDescription`, `IBAN`, `online`, `activated`, `token`) VALUES
 ('KidsUp42+basket@gmail.com', '$2y$10$wZs.XXHE/vy2RMRBAKHlm.Vh/SoV13ABRm0Wbug36yJXTMVgMQ5xe', 'Γυμναστήρια Γκάλης', 'Ίλιον', 'Κωλέττη', 15, 13123, 2104532476, 4539841265, NULL, 6501245346, b'1', b'1', NULL),
@@ -50,11 +51,14 @@ INSERT INTO `activity` (`ActID`, `ProvEmail`, `actName`, `actType`, `actDate`, `
 (22, 'tedroark7+2@gmail.com','Τα μυστικά του ποδοσφαίρου','Ποδόσφαιρο','2018-02-27 18:00:00',150,10,16,70,70,'Παλαιό Φάληρο','Δράκου',3,17561,2104596403,37.964924,23.726470,'Συμβουλές προς τα παιδιά από παλαίμαχους ποδοσφαιριστές για τα μυστικά του ποδοσφαίρου και μύηση στο ευ αγωνίζεσθαι.','../uploads/football_adv.jpeg',50),
 (23, 'tedroark7+2@gmail.com','εφηβικό τουρνουά ποδοσφαίρου','Ποδόσφαιρο','2018-08-07 22:00:00',150,5,15,250,250,'Πειραιάς','Καραολή και Δημητρίου και Σοφιανοπούλου',7,18547,2107777777,37.9483,23.6642,'ποδοσφαιρικοί αγώνες','../uploads/tournament.jpeg',0),
 (24, 'tedroark7+3@gmail.com','πάρτυ με κλόουν','Γενικού Τύπου','2018-10-21 11:00:00',15,3,12,30,30,'Γέρακας','Μιαούλη',18,15344,2103546782,38.0123,23.8461,'ψυχαγωγικές δραστηριότητες με την παρουσία κλόουν','../uploads/party.jpeg',0),
-(25, 'tedroark7+3@gmail.com','Μαθήματα Κολύμβησης για Νήπια','Κολύμβηση','2018-05-20 12:00:00',50,1,3,50,50,'Πειραιάς','Πραξιτέλους',30,18547,2104762891,37.946776,23.652594,'Μία πρώτη επαφή και προσπάθεια εξοικείωσης των μικρών παιδιών με το νερό.','../uploads/swimm_baby_lessons.jpeg',0);
+(25, 'tedroark7+3@gmail.com','Μαθήματα Κολύμβησης για Νήπια','Κολύμβηση','2018-05-20 12:00:00',50,1,3,50,50,'Πειραιάς','Πραξιτέλους',30,18547,2104762891,37.946776,23.652594,'Μία πρώτη επαφή και προσπάθεια εξοικείωσης των μικρών παιδιών με το νερό.','../uploads/swimm_baby_lessons.jpeg',0),
+(26, 'tedroark7@gmail.com', 'Παιδικός Χορός', 'Χορός', '2018-01-27 13:45:00', 30, 3, 15, 50, 30, 'Καρπενήσι', 'Ζηνοπούλου', 100, 36100, 2237012345, '38.91235', '21.79648', 'Παιδικός Χορός', '../uploads/dance.jpg', 0);
 
 INSERT INTO `sell` (`SellID`, `ParEmail`, `ActID`, `SellDate`, `numberofTickets`, `totalCost`) VALUES
 (1, 'KidsUp42+mariapapa@gmail.com', 4, '2018-02-25 03:41:58', 2, 50),
 (2, 'KidsUp42+pantelism@gmail.com', 5, '2018-02-25 03:48:26', 4, 240),
-(3, 'KidsUp42+pantelism@gmail.com', 5, '2018-02-25 03:48:32', 4, 240);
+(3, 'KidsUp42+pantelism@gmail.com', 5, '2018-02-25 03:48:32', 4, 240),
+(4, 'tedroark7@gmail.com', 15, '2018-02-25 18:53:58', 10, 150),
+(5, 'tedroark7@gmail.com', 17, '2018-02-25 19:22:52', 50, 500);
 
 exit
